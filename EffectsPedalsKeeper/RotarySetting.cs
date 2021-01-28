@@ -6,6 +6,11 @@ namespace EffectsPedalsKeeper
 {
     public class RotarySetting : ISetting
     {
+        public RotarySetting(string[] options)
+        {
+
+        }
+
         public int CurrentValue { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public int MinValue => throw new NotImplementedException();
