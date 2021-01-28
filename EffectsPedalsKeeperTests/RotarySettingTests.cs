@@ -6,11 +6,12 @@ namespace EffectsPedalsKeeper.Tests
     {
         private string[] _options;
         private RotarySetting _rotary;
+        private string _testLabel = "Type";
 
         public RotarySettingTests()
         {
             _options = new string[] { "Tape", "Digital", "Echo", "Fade", "Mod" };
-            _rotary = new RotarySetting(_options);
+            _rotary = new RotarySetting(_testLabel, _options);
         }
 
         [Fact()]
@@ -48,7 +49,7 @@ namespace EffectsPedalsKeeper.Tests
         }
 
         [Fact()]
-        public void StepUpAlreadyAtMaxValue()
+        public void StepUpAlreadyAtMaxValueTest()
         {
             var target = _rotary;
             target.CurrentValue = _options.Length - 1;
@@ -59,7 +60,7 @@ namespace EffectsPedalsKeeper.Tests
         }
 
         [Fact()]
-        public void StepDownAlreadyAtMinValue()
+        public void StepDownAlreadyAtMinValueTest()
         {
             var target = _rotary;
             target.CurrentValue = 0;
@@ -67,6 +68,20 @@ namespace EffectsPedalsKeeper.Tests
             int expected = 0;
 
             Assert.Equal(_rotary.StepDown(), expected);
+        }
+
+        [Fact()]
+        public void ToStringTest()
+        {
+            int targetIndex = 1;
+            _rotary.CurrentValue = targetIndex;
+            var target = _rotary.ToString();
+
+            string expectedOption = _options[targetIndex];
+            string expectedLabel = _testLabel;
+
+            Assert.Contains(expectedOption, target);
+            Assert.Contains(expectedLabel, target);
         }
     }
 }
