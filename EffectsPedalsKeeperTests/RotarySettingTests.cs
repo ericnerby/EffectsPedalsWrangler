@@ -1,17 +1,29 @@
-﻿using Xunit;
+﻿using System.Linq;
+using Xunit;
 
 namespace EffectsPedalsKeeper.Tests
 {
     public class RotarySettingTests
     {
-        static string[] _options = new string[] { "Tape", "Digital", "Echo", "Fade", "Mod"};
-        static RotarySetting _rotary = new RotarySetting(_options);
+        private string[] _options;
+        private RotarySetting _rotary;
+
+        public RotarySettingTests()
+        {
+            _options = new string[] { "Tape", "Digital", "Echo", "Fade", "Mod" };
+            _rotary = new RotarySetting(_options);
+        }
 
         [Fact()]
         public void DisplayTest()
         {
-            int index = 1;
-            string[] target = _rotary.Display();
+            for(int index = 0; index < _options.Length; index++)
+            {
+                _rotary.CurrentValue = index;
+                string expected = _options[index];
+                string[] target = _rotary.Display();
+                Assert.Contains(target, item => item.Contains(expected));
+            }
         }
 
         [Fact()]
