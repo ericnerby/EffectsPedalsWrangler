@@ -5,6 +5,8 @@
     /// </summary>
     interface ISetting
     {
+        string Label { get; }
+
         int CurrentValue { get; set; }
         /// <summary>
         ///  Minimum value allowed for setting

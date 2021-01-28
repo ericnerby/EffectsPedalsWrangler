@@ -7,6 +7,10 @@ namespace EffectsPedalsKeeper
     public class RotarySetting : ISetting
     {
         public string[] Options { get; private set; }
+        public string Label { get; }
+
+        public int MinValue { get; } = 0;
+        public int MaxValue { get; }
 
         private int _currentValue;
         public int CurrentValue
@@ -28,11 +32,7 @@ namespace EffectsPedalsKeeper
             }
         }
 
-        public int MinValue { get; } = 0;
-
-        public int MaxValue { get; }
-
-        public RotarySetting(string[] options)
+        public RotarySetting(string label, string[] options)
         {
             MaxValue = options.Length - 1;
             Options = options;
