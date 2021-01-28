@@ -6,17 +6,37 @@ namespace EffectsPedalsKeeper
 {
     public class RotarySetting : ISetting
     {
-        public RotarySetting(string[] options)
-        {
+        public string[] Options { get; private set; }
 
+        private int _currentValue;
+        public int CurrentValue
+        {
+            get
+            {
+                return _currentValue;
+            }
+            set
+            {
+                if (value >= MinValue && value <= MaxValue)
+                {
+                    _currentValue = value;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException($"'{nameof(value)}' must be between {nameof(MinValue)} and {nameof(MaxValue)}");
+                }
+            }
         }
 
-        public int CurrentValue { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int MinValue { get; } = 0;
 
-        public int MinValue => throw new NotImplementedException();
+        public int MaxValue { get; }
 
-        public int MaxValue => throw new NotImplementedException();
-
+        public RotarySetting(string[] options)
+        {
+            MaxValue = options.Length - 1;
+            Options = options;
+        }
         public string[] Display()
         {
             throw new NotImplementedException();
@@ -24,12 +44,26 @@ namespace EffectsPedalsKeeper
 
         public int StepDown()
         {
-            throw new NotImplementedException();
+            if(CurrentValue <= 0)
+            {
+                return CurrentValue;
+            }
+            else
+            {
+                return --CurrentValue;
+            }
         }
 
         public int StepUp()
         {
-            throw new NotImplementedException();
+            if (CurrentValue >= MaxValue)
+            {
+                return CurrentValue;
+            }
+            else
+            {
+                return ++CurrentValue;
+            }
         }
     }
 }

@@ -10,12 +10,8 @@ namespace EffectsPedalsKeeper.Tests
         [Fact()]
         public void DisplayTest()
         {
+            int index = 1;
             string[] target = _rotary.Display();
-
-            for (int i = 0; i < _options.Length; i++)
-            {
-                Assert.Contains(_options[i], target[i]);
-            }
         }
 
         [Fact()]
@@ -59,7 +55,7 @@ namespace EffectsPedalsKeeper.Tests
 
             int expected = 0;
 
-            Assert.Equal(_rotary.StepUp(), expected);
+            Assert.Equal(_rotary.StepDown(), expected);
         }
     }
 }
