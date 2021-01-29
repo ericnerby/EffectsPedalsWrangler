@@ -8,12 +8,12 @@ namespace EffectsPedalsKeeper
     {
 
         public KnobSetting(string label, string minClockPosition, string maxClockPosition)
-            : base(label, 0, 120)
+            : base(label, 10, 110)
         {
         }
 
         public KnobSetting(string label, int minKnobValue, int maxKnobValue)
-            : base(label, 0, 120)
+            : base(label, 10, 110)
         {
         }
 
