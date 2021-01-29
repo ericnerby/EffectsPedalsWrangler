@@ -21,16 +21,30 @@ namespace EffectsPedalsKeeper.Tests
         }
 
         [Fact()]
-        public void DisplayTest()
+        public void DisplayTestNumbered()
         {
-            Assert.True(false, "This test needs an implementation");
+            int testValue = 90;
+            _knobNumbered.CurrentValue = testValue;
+            string expected = "7.";
+            var target = _knobNumbered.Display();
+            Assert.Contains(target, item => item.Contains(expected));
+        }
+
+        [Fact()]
+        public void DisplayTestClockFace()
+        {
+            int testValue = 30;
+            _knobSetting.CurrentValue = testValue;
+            string expected = "9:00";
+            var target = _knobSetting.Display();
+            Assert.Contains(target, item => item.Contains(expected));
         }
 
         [Fact()]
         public void StepDownTest()
         {
             var target = _knobSetting;
-            target.CurrentValue = 5;
+            target.CurrentValue = 15;
 
             int expected = target.CurrentValue - 1;
 
@@ -41,7 +55,7 @@ namespace EffectsPedalsKeeper.Tests
         public void StepUpTest()
         {
             var target = _knobSetting;
-            target.CurrentValue = 5;
+            target.CurrentValue = 15;
 
             int expected = _knobSetting.CurrentValue + 1;
 
