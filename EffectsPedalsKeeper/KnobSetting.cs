@@ -4,6 +4,11 @@ using System.Text;
 
 namespace EffectsPedalsKeeper
 {
+    /// <summary>
+    ///  A knob rotates with no set positions. It can either
+    ///  have numbers on the dial, or the position can be
+    ///  indicated by position on a clock face, eg. '3:00'.
+    /// </summary>
     public class KnobSetting : Setting
     {
 
