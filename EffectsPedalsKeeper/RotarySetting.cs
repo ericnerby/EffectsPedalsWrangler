@@ -32,11 +32,15 @@ namespace EffectsPedalsKeeper
             }
         }
 
+        public string CurrentOption => Options[CurrentValue];
+
         public RotarySetting(string label, string[] options)
         {
+            Label = label;
             MaxValue = options.Length - 1;
             Options = options;
         }
+
         public string[] Display()
         {
             throw new NotImplementedException();
@@ -64,6 +68,11 @@ namespace EffectsPedalsKeeper
             {
                 return ++CurrentValue;
             }
+        }
+
+        public override string ToString()
+        {
+            return $"{Label}: {CurrentOption}";
         }
     }
 }
