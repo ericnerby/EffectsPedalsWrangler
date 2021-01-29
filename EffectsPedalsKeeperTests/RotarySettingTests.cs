@@ -10,9 +10,9 @@ namespace EffectsPedalsKeeper.Tests
 
         public RotarySettingTests()
         {
+            _testLabel = "Type";
             _options = new string[] { "Tape", "Digital", "Echo", "Fade", "Mod" };
             _rotary = new RotarySetting(_testLabel, _options);
-            _testLabel = "Type";
         }
 
         [Fact()]
