@@ -23,7 +23,7 @@ namespace EffectsPedalsKeeper.Tests
         [Fact()]
         public void DisplayTestNumbered()
         {
-            int testValue = 90;
+            int testValue = 108;
             _knobNumbered.CurrentValue = testValue;
             string expected = "7.";
             var target = _knobNumbered.Display();
@@ -33,7 +33,7 @@ namespace EffectsPedalsKeeper.Tests
         [Fact()]
         public void DisplayTestClockFace()
         {
-            int testValue = 30;
+            int testValue = 36;
             _knobSetting.CurrentValue = testValue;
             string expected = "9:00";
             var target = _knobSetting.Display();
@@ -87,7 +87,7 @@ namespace EffectsPedalsKeeper.Tests
         [Fact()]
         public void ToStringTestMiddleClockFace()
         {
-            int targetValue = 60;
+            int targetValue = 72;
             _knobSetting.CurrentValue = targetValue;
             var target = _knobSetting.ToString();
 
@@ -101,7 +101,7 @@ namespace EffectsPedalsKeeper.Tests
         [Fact()]
         public void ToStringTestMiddleNumbered()
         {
-            int targetValue = 60;
+            int targetValue = 72;
             _knobNumbered.CurrentValue = targetValue;
             var target = _knobNumbered.ToString();
 
