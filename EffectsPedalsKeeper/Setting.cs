@@ -12,13 +12,18 @@ namespace EffectsPedalsKeeper
         /// <summary>
         ///  Minimum value allowed for setting
         /// </summary>
-        int MinValue { get; }
+        public int MinValue { get; protected set; }
         /// <summary>
         ///  Maximum value allowed for setting
         /// </summary>
-        int MaxValue { get; }
+        public int MaxValue { get; protected set; }
+
 
         private int _currentValue;
+        /// <summary>
+        ///  Current Value of setting. Can be set directly as long
+        ///  as given value is between MinValue and MaxValue.
+        /// </summary>
         public int CurrentValue
         {
             get
@@ -33,7 +38,8 @@ namespace EffectsPedalsKeeper
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException($"'{nameof(value)}' must be between {nameof(MinValue)} and {nameof(MaxValue)}.");
+                    throw new ArgumentOutOfRangeException(
+                        $"'{nameof(value)}' must be between {nameof(MinValue)} and {nameof(MaxValue)}.");
                 }
             }
         }
@@ -42,7 +48,8 @@ namespace EffectsPedalsKeeper
         {
             if(maxValue <= minValue)
             {
-                throw new ArgumentOutOfRangeException($"{nameof(maxValue)} must be greater than {nameof(minValue)}.");
+                throw new ArgumentOutOfRangeException(
+                    $"{nameof(maxValue)} must be greater than {nameof(minValue)}.");
             }
             Label = label;
             MinValue = minValue;

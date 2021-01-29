@@ -8,16 +8,14 @@ namespace EffectsPedalsKeeper
     {
 
         public KnobSetting(string label, string minClockPosition, string maxClockPosition)
+            : base(label, 0, 120)
         {
         }
 
         public KnobSetting(string label, int minKnobValue, int maxKnobValue)
+            : base(label, 0, 120)
         {
         }
-
-        public int MinValue => throw new NotImplementedException();
-
-        public int MaxValue => throw new NotImplementedException();
 
         public override string[] Display()
         {
