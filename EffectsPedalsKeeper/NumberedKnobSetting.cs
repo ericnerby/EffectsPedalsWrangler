@@ -11,17 +11,19 @@ namespace EffectsPedalsKeeper
     /// </summary>
     public class NumberedKnobSetting : Setting
     {
-        public override string CurrentValueDisplay => _IntToDoubleString(CurrentValue);
+        public override string CurrentValueDisplay
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
 
         public NumberedKnobSetting(string label, int minKnobValue, int maxKnobValue)
             : base(label, 0,
                    (maxKnobValue - minKnobValue) * 10)
         {}
-
-        private static string _IntToDoubleString(int value)
-        {
-            throw new NotImplementedException();
-        }
 
         public override string[] Display()
         {
