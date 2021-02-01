@@ -17,6 +17,10 @@ namespace EffectsPedalsKeeper
                 {
                     _maxIntRange = value;
                 }
+                else
+                {
+                    throw new ArgumentOutOfRangeException($"{nameof(value)} must be greater than 0.");
+                }
             }
         }
 
