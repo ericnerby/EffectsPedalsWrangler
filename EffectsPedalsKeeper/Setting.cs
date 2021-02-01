@@ -18,6 +18,8 @@ namespace EffectsPedalsKeeper
         /// </summary>
         public int MaxValue { get; protected set; }
 
+        public abstract string CurrentValueDisplay { get; }
+
 
         private int _currentValue;
         /// <summary>

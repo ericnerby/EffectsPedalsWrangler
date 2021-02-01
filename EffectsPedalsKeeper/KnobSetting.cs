@@ -13,33 +13,16 @@ namespace EffectsPedalsKeeper
     {
         public bool Numbered { get; }
 
-        public string CurrentSettingDisplay
-        {
-            get
-            {
-                if (Numbered)
-                {
-                    return "filler";
-                }
-                else
-                {
-                    return IntToTimeString(CurrentValue);
-                }
-            }
-        }
+        public override string CurrentValueDisplay => _IntToTimeString(CurrentValue);
 
         public KnobSetting(string label, string minClockPosition, string maxClockPosition)
-            : base(label, StringTimeToInt(minClockPosition), StringTimeToInt(maxClockPosition))
-        {
-            Numbered = false;
-        }
+            : base(label, _StringTimeToInt(minClockPosition), _StringTimeToInt(maxClockPosition))
+        {}
 
         public KnobSetting(string label, int minKnobValue, int maxKnobValue)
-            : base(label, 0, 
+            : base(label, 0,
                    (maxKnobValue - minKnobValue) * 10)
-        {
-            Numbered = true;
-        }
+        {}
 
         public override string[] Display()
         {
@@ -58,7 +41,7 @@ namespace EffectsPedalsKeeper
 
         public override string ToString()
         {
-            return $"{Label}: {CurrentSettingDisplay}";
+            return $"{Label}: {CurrentValueDisplay}";
         }
 
         /// <summary>
@@ -66,7 +49,7 @@ namespace EffectsPedalsKeeper
         /// </summary>
         /// <param name="value">int between 1 and 144 to convert</param>
         /// <returns>int[] with hours and minutes</returns>
-        private static int[] ConvertToClockDigits(int value)
+        private static int[] _ConvertToClockDigits(int value)
         {
             if (value <= 0)
             {
@@ -86,7 +69,7 @@ namespace EffectsPedalsKeeper
             return result;
         }
 
-        private static int ConvertFromClockDigits(int hours, int minutes)
+        private static int _ConvertFromClockDigits(int hours, int minutes)
         {
             if(hours <= 0 || hours > 12)
             {
@@ -107,17 +90,7 @@ namespace EffectsPedalsKeeper
             return result;
         }
 
-        private static string IntToTimeString(int value)
-        {
-            int[] timeDigits = ConvertToClockDigits(value);
-            if (timeDigits[1] == 0)
-            {
-                return $"{timeDigits[0]}:00";
-            }
-            return $"{timeDigits[0]}:{timeDigits[1]}";
-        }
-
-        private static int StringTimeToInt(string timeString)
+        private static int _StringTimeToInt(string timeString)
         {
             string[] time = timeString.Split(':');
             int[] timeDigits = new int[2];
@@ -125,7 +98,19 @@ namespace EffectsPedalsKeeper
             {
                 throw new ArgumentException($"{nameof(timeString)} must be in the format '6:55'");
             }
-            return ConvertFromClockDigits(timeDigits[0], timeDigits[1]);
+            return _ConvertFromClockDigits(timeDigits[0], timeDigits[1]);
+        }
+
+        private static string _IntToTimeString(int value)
+        {
+            int[] timeDigits = _ConvertToClockDigits(value);
+            return $"{timeDigits[0]}: "
+                + ((timeDigits[1] == 0) ? "00" : timeDigits[1].ToString());
+        }
+
+        private static string _IntToDoubleString(int value)
+        {
+            throw new NotImplementedException();
         }
     }
 }

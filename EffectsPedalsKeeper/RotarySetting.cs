@@ -12,7 +12,7 @@ namespace EffectsPedalsKeeper
     {
         public string[] Options { get; private set; }
 
-        public string CurrentOption => Options[CurrentValue];
+        public override string CurrentValueDisplay => Options[CurrentValue];
 
         public RotarySetting(string label, string[] options)
             : base(label, 0, options.Length - 1)
@@ -51,7 +51,7 @@ namespace EffectsPedalsKeeper
 
         public override string ToString()
         {
-            return $"{Label}: {CurrentOption}";
+            return $"{Label}: {CurrentValueDisplay}";
         }
     }
 }
