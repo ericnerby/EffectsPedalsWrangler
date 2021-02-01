@@ -24,34 +24,5 @@ namespace EffectsPedalsKeeper
         {
             throw new NotImplementedException();
         }
-
-        public override int StepDown()
-        {
-            if(CurrentValue <= 0)
-            {
-                return CurrentValue;
-            }
-            else
-            {
-                return --CurrentValue;
-            }
-        }
-
-        public override int StepUp()
-        {
-            if (CurrentValue >= MaxValue)
-            {
-                return CurrentValue;
-            }
-            else
-            {
-                return ++CurrentValue;
-            }
-        }
-
-        public override string ToString()
-        {
-            return $"{Label}: {CurrentValueDisplay}";
-        }
     }
 }

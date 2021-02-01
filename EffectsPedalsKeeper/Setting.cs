@@ -62,16 +62,42 @@ namespace EffectsPedalsKeeper
         ///  Positive incremental adjustment to CurrentValue
         /// </summary>
         /// <returns>New CurrentValue</returns>
-        public abstract int StepUp();
+        public int StepUp()
+        {
+            if (CurrentValue >= MaxValue)
+            {
+                return CurrentValue;
+            }
+            else
+            {
+                return ++CurrentValue;
+            }
+        }
+
         /// <summary>
         ///  Negative incremental adjustment to CurrentValue
         /// </summary>
         /// <returns>New CurrentValue</returns>
-        public abstract int StepDown();
+        public int StepDown()
+        {
+            if (CurrentValue <= MinValue)
+            {
+                return CurrentValue;
+            }
+            else
+            {
+                return --CurrentValue;
+            }
+        }
 
         /// <summary>
         ///  Generate string/visual representation of Setting
         /// </summary>
         public abstract string[] Display();
+
+        public override string ToString()
+        {
+            return $"{Label}: {CurrentValueDisplay}";
+        }
     }
 }

@@ -29,21 +29,6 @@ namespace EffectsPedalsKeeper
             throw new NotImplementedException();
         }
 
-        public override int StepDown()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override int StepUp()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override string ToString()
-        {
-            return $"{Label}: {CurrentValueDisplay}";
-        }
-
         /// <summary>
         ///  Converts value between 1 and 144 to clock face position.
         /// </summary>
@@ -104,13 +89,8 @@ namespace EffectsPedalsKeeper
         private static string _IntToTimeString(int value)
         {
             int[] timeDigits = _ConvertToClockDigits(value);
-            return $"{timeDigits[0]}: "
+            return $"{timeDigits[0]}:"
                 + ((timeDigits[1] == 0) ? "00" : timeDigits[1].ToString());
-        }
-
-        private static string _IntToDoubleString(int value)
-        {
-            throw new NotImplementedException();
         }
     }
 }

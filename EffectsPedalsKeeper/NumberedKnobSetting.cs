@@ -9,7 +9,7 @@ namespace EffectsPedalsKeeper
     ///  have numbers on the dial, or the position can be
     ///  indicated by position on a clock face, eg. '3:00'.
     /// </summary>
-    public class NumberedKnobSetting : KnobSetting
+    public class NumberedKnobSetting : Setting
     {
         public override string CurrentValueDisplay => _IntToDoubleString(CurrentValue);
 
@@ -19,6 +19,11 @@ namespace EffectsPedalsKeeper
         {}
 
         private static string _IntToDoubleString(int value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string[] Display()
         {
             throw new NotImplementedException();
         }

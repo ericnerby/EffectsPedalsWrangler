@@ -9,25 +9,12 @@ namespace EffectsPedalsKeeper.Tests
     public class KnobSettingTests
     {
         private KnobSetting _knobSetting;
-        private KnobSetting _knobNumbered;
         private string _knobSettingLabel = "Treble";
-        private string _knobNumberedLabel = "Gain";
 
         public KnobSettingTests()
         {
             _knobSetting = new KnobSetting(_knobSettingLabel, "6:30", "5:30");
-            _knobNumbered = new KnobSetting(_knobNumberedLabel, 1, 10);
 
-        }
-
-        [Fact()]
-        public void DisplayTestNumbered()
-        {
-            int testValue = 108;
-            _knobNumbered.CurrentValue = testValue;
-            string expected = "7.";
-            var target = _knobNumbered.Display();
-            Assert.Contains(target, item => item.Contains(expected));
         }
 
         [Fact()]
@@ -93,20 +80,6 @@ namespace EffectsPedalsKeeper.Tests
 
             string expectedDisplayValue = "12:00";
             string expectedLabel = _knobSettingLabel;
-
-            Assert.Contains(expectedDisplayValue, target);
-            Assert.Contains(expectedLabel, target);
-        }
-
-        [Fact()]
-        public void ToStringTestMiddleNumbered()
-        {
-            int targetValue = 72;
-            _knobNumbered.CurrentValue = targetValue;
-            var target = _knobNumbered.ToString();
-
-            string expectedDisplayValue = "5.5";
-            string expectedLabel = _knobNumberedLabel;
 
             Assert.Contains(expectedDisplayValue, target);
             Assert.Contains(expectedLabel, target);
