@@ -11,19 +11,12 @@ namespace EffectsPedalsKeeper
     /// </summary>
     public class KnobSetting : Setting
     {
-        private static ClockFaceConverter _clockFaceConverter = new ClockFaceConverter();
-
-        public bool Numbered { get; }
+        private static ClockFaceConverter _clockFaceConverter = new ClockFaceConverter(PrecisionValue.Five);
 
         public override string CurrentValueDisplay => _clockFaceConverter.IntToTimeString(CurrentValue);
 
         public KnobSetting(string label, string minClockPosition, string maxClockPosition)
             : base(label, _clockFaceConverter.StringTimeToInt(minClockPosition), _clockFaceConverter.StringTimeToInt(maxClockPosition))
-        {}
-
-        public KnobSetting(string label, int minKnobValue, int maxKnobValue)
-            : base(label, 0,
-                   (maxKnobValue - minKnobValue) * 10)
         {}
 
         public override string[] Display()

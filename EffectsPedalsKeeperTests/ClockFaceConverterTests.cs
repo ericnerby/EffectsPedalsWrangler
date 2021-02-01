@@ -1,8 +1,4 @@
 ﻿using Xunit;
-using EffectsPedalsKeeper;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EffectsPedalsKeeper.Tests
 {
@@ -12,7 +8,7 @@ namespace EffectsPedalsKeeper.Tests
 
         public ClockFaceConverterTests()
         {
-            _clockFaceConverter = new ClockFaceConverter();
+            _clockFaceConverter = new ClockFaceConverter(PrecisionValue.Five);
         }
 
         [Fact()]

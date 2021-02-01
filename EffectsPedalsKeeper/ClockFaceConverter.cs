@@ -6,32 +6,19 @@ namespace EffectsPedalsKeeper
 {
     public class ClockFaceConverter
     {
-        private int _maxIntRange;
-        public int MaxIntRange {
-            get
-            {
-                return _maxIntRange;
-            } set
-            {
-                if (value > 0)
-                {
-                    _maxIntRange = value;
-                }
-                else
-                {
-                    throw new ArgumentOutOfRangeException($"{nameof(value)} must be greater than 0.");
-                }
-            }
-        }
+        private int _conversionValue;
+
+        public int MaxIntRange { get; }
 
         /// <summary>
         ///  Create a ClockFaceConverter to convert between clockface
         ///  and integer values ranging from 1 to the given range.
         /// </summary>
         /// <param name="maxIntRange"></param>
-        public ClockFaceConverter()
+        public ClockFaceConverter(PrecisionValue precisionValue)
         {
-            _maxIntRange = 144;
+            _conversionValue = (int)precisionValue;
+            MaxIntRange = 720 / _conversionValue;
         }
 
         public int StringTimeToInt(string timeString)
@@ -52,11 +39,6 @@ namespace EffectsPedalsKeeper
                 + ((timeDigits[1] == 0) ? "00" : timeDigits[1].ToString());
         }
 
-        /// <summary>
-        ///  Converts value between 1 and 144 to clock face position.
-        /// </summary>
-        /// <param name="value">int between 1 and 'MaxIntRange' to convert</param>
-        /// <returns>int[] with hours and minutes</returns>
         private int[] _ConvertToClockDigits(int value)
         {
             if (value <= 0 || value > MaxIntRange)
@@ -64,7 +46,7 @@ namespace EffectsPedalsKeeper
                 throw new ArgumentOutOfRangeException($"{nameof(value)} must be between 1 and {nameof(MaxIntRange)}: {MaxIntRange}.");
             }
             var result = new int[2];
-            int minutes = value * 5;
+            int minutes = value * _conversionValue;
             int hours = minutes / 60;
 
             // Since 0 would be 6:00, add 6 hours
@@ -93,7 +75,7 @@ namespace EffectsPedalsKeeper
             // Since 6:00 would be 0, subtract 6hr * 60min
             result -= 360;
 
-            result = (int)(result / 5);
+            result = (int)(result / _conversionValue);
             if (result < 0)
             {
                 result = MaxIntRange + result;
@@ -104,5 +86,14 @@ namespace EffectsPedalsKeeper
             }
             return result;
         }
+    }
+
+    public enum PrecisionValue : int
+    {
+        One = 1,
+        Five = 5,
+        Fifteen = 15,
+        Thirty = 30,
+        Sixty = 60
     }
 }
