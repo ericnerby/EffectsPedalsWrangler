@@ -4,7 +4,7 @@ namespace EffectsPedalsKeeper.Tests
 {
     public class RotarySettingTests
     {
-        private string[] _options;
+        protected string[] _options;
         private RotarySetting _rotary;
         private string _testLabel;
 
