@@ -13,6 +13,21 @@ namespace EffectsPedalsKeeper
     {
         public bool Numbered { get; }
 
+        public string CurrentSettingDisplay
+        {
+            get
+            {
+                if (Numbered)
+                {
+                    return "filler";
+                }
+                else
+                {
+                    return IntToTimeString(CurrentValue);
+                }
+            }
+        }
+
         public KnobSetting(string label, string minClockPosition, string maxClockPosition)
             : base(label, StringTimeToInt(minClockPosition), StringTimeToInt(maxClockPosition))
         {
@@ -43,7 +58,7 @@ namespace EffectsPedalsKeeper
 
         public override string ToString()
         {
-            return base.ToString();
+            return $"{Label}: {CurrentSettingDisplay}";
         }
 
         /// <summary>
@@ -95,6 +110,10 @@ namespace EffectsPedalsKeeper
         private static string IntToTimeString(int value)
         {
             int[] timeDigits = ConvertToClockDigits(value);
+            if (timeDigits[1] == 0)
+            {
+                return $"{timeDigits[0]}:00";
+            }
             return $"{timeDigits[0]}:{timeDigits[1]}";
         }
 
