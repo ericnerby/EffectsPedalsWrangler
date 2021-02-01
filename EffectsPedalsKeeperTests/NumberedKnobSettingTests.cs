@@ -21,7 +21,7 @@ namespace EffectsPedalsKeeper.Tests
         {
             int testValue = 0;
             _numberedKnobSetting.CurrentValue = testValue;
-            string expected = "1";
+            string expected = "1.0";
             var target = _numberedKnobSetting.Display();
             Assert.Contains(target, item => item.Contains(expected));
         }
@@ -78,6 +78,34 @@ namespace EffectsPedalsKeeper.Tests
             var target = _numberedKnobSetting.ToString();
 
             string expectedDisplayValue = "5.5";
+            string expectedLabel = _numberedKnobSettingLabel;
+
+            Assert.Contains(expectedDisplayValue, target);
+            Assert.Contains(expectedLabel, target);
+        }
+
+        [Fact()]
+        public void ToStringTestMax()
+        {
+            int targetValue = _numberedKnobSetting.MaxValue;
+            _numberedKnobSetting.CurrentValue = targetValue;
+            var target = _numberedKnobSetting.ToString();
+
+            string expectedDisplayValue = "10.0";
+            string expectedLabel = _numberedKnobSettingLabel;
+
+            Assert.Contains(expectedDisplayValue, target);
+            Assert.Contains(expectedLabel, target);
+        }
+
+        [Fact()]
+        public void ToStringTestMin()
+        {
+            int targetValue = _numberedKnobSetting.MinValue;
+            _numberedKnobSetting.CurrentValue = targetValue;
+            var target = _numberedKnobSetting.ToString();
+
+            string expectedDisplayValue = "1.0";
             string expectedLabel = _numberedKnobSettingLabel;
 
             Assert.Contains(expectedDisplayValue, target);
