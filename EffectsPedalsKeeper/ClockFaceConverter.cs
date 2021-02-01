@@ -34,6 +34,24 @@ namespace EffectsPedalsKeeper
             _maxIntRange = 144;
         }
 
+        public int StringTimeToInt(string timeString)
+        {
+            string[] time = timeString.Split(':');
+            int[] timeDigits = new int[2];
+            if (!int.TryParse(time[0], out timeDigits[0]) || !int.TryParse(time[1], out timeDigits[1]))
+            {
+                throw new ArgumentException($"{nameof(timeString)} must be in the format '6:55'");
+            }
+            return _ConvertFromClockDigits(timeDigits[0], timeDigits[1]);
+        }
+
+        public string IntToTimeString(int value)
+        {
+            int[] timeDigits = _ConvertToClockDigits(value);
+            return $"{timeDigits[0]}:"
+                + ((timeDigits[1] == 0) ? "00" : timeDigits[1].ToString());
+        }
+
         /// <summary>
         ///  Converts value between 1 and 144 to clock face position.
         /// </summary>
@@ -47,7 +65,7 @@ namespace EffectsPedalsKeeper
             }
             var result = new int[2];
             int minutes = value * 5;
-            int hours = (int)(minutes / 60);
+            int hours = minutes / 60;
 
             // Since 0 would be 6:00, add 6 hours
             hours += 6;
@@ -76,26 +94,15 @@ namespace EffectsPedalsKeeper
             result -= 360;
 
             result = (int)(result / 5);
-            if (result < 0) { result = MaxIntRange + result; }
-            return result;
-        }
-
-        public int StringTimeToInt(string timeString)
-        {
-            string[] time = timeString.Split(':');
-            int[] timeDigits = new int[2];
-            if (!int.TryParse(time[0], out timeDigits[0]) || !int.TryParse(time[1], out timeDigits[1]))
+            if (result < 0)
             {
-                throw new ArgumentException($"{nameof(timeString)} must be in the format '6:55'");
+                result = MaxIntRange + result;
             }
-            return _ConvertFromClockDigits(timeDigits[0], timeDigits[1]);
-        }
-
-        public string IntToTimeString(int value)
-        {
-            int[] timeDigits = _ConvertToClockDigits(value);
-            return $"{timeDigits[0]}:"
-                + ((timeDigits[1] == 0) ? "00" : timeDigits[1].ToString());
+            else if (result == 0)
+            {
+                result = MaxIntRange;
+            }
+            return result;
         }
     }
 }
