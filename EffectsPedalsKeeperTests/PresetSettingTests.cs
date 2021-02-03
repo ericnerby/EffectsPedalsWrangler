@@ -103,7 +103,7 @@ namespace EffectsPedalsKeeper.Tests
             target.AddPreset(newPreset);
 
             Assert.Equal(expectedMaxValue, target.MaxValue);
-            Assert.Contains(newPreset, target.Presets);
+            Assert.Contains(newPreset, target.Options);
         }
 
         [Fact()]
@@ -113,12 +113,12 @@ namespace EffectsPedalsKeeper.Tests
             int startingMaxValue = target.MaxValue;
             int expectedMaxValue = startingMaxValue - 1;
             int indexToRemove = 1;
-            string removedItem = target.Presets[indexToRemove];
+            string removedItem = target.Options[indexToRemove];
 
             target.RemovePreset(indexToRemove);
 
             Assert.Equal(expectedMaxValue, target.MaxValue);
-            Assert.DoesNotContain(removedItem, target.Presets);
+            Assert.DoesNotContain(removedItem, target.Options);
 
         }
     }

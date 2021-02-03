@@ -5,30 +5,39 @@ namespace EffectsPedalsKeeper
 {
     public class PresetSetting : Setting
     {
-        public override int MaxValue => Presets.Count - 1;
+        public override int MaxValue => Options.Count - 1;
 
-        public List<string> Presets { get; private set; }
+        public List<string> Options { get; private set; }
 
-        public PresetSetting(string label, IList<string> presets)
-            : base(label, 0, presets.Count)
+        public PresetSetting(string label, IList<string> options)
+            : base(label, 0, options.Count)
         {
-            Presets = (List<string>)presets;
+            Options = (List<string>)options;
         }
 
         public PresetSetting(string label)
             : base(label, 0, 1)
         {
-            Presets = new List<string>();
+            Options = new List<string>();
         }
 
-        public void AddPreset(string preset)
+        public bool AddPreset(string option)
         {
-            throw new NotImplementedException();
+            if(Options.Contains(option))
+            {
+                return false;
+            }
+            Options.Add(option);
+            return true;
         }
 
         public void RemovePreset(int index)
         {
-            throw new NotImplementedException();
+            if(index >= Options.Count || index < 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            Options.RemoveAt(index);
         }
 
         public override string CurrentValueDisplay => throw new NotImplementedException();
