@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace EffectsPedalsKeeper
 {
@@ -14,7 +12,11 @@ namespace EffectsPedalsKeeper
         public List<Setting> Settings { get; private set; }
 
         public Pedal(string maker, string name)
-        { }
+        {
+            Maker = maker;
+            Name = name;
+            Settings = new List<Setting>();
+        }
 
         public bool AddSettings(IList<Setting> settings)
         {
