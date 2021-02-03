@@ -8,10 +8,13 @@ namespace EffectsPedalsKeeper.Tests
 {
     public class PedalTests
     {
-        [Fact()]
-        public void PedalTest()
+        private Pedal _pedal;
+        private string _maker = "Ibanez";
+        private string _name = "Tubescreamer";
+
+        public PedalTests()
         {
-            Assert.True(false, "This test needs an implementation");
+            _pedal = new Pedal(_maker, _name);
         }
 
         [Fact()]
