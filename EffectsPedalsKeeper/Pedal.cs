@@ -18,12 +18,23 @@ namespace EffectsPedalsKeeper
 
         public bool AddSettings(IList<Setting> settings)
         {
-            throw new NotImplementedException();
+            var startingCount = Settings.Count;
+            Settings.AddRange(settings);
+            if(startingCount + settings.Count == Settings.Count)
+            {
+                return true;
+            }
+            return false;
         }
 
         public string[] PrintSettingDetails()
         {
-            throw new NotImplementedException();
+            var output = new string[Settings.Count];
+            for(var i = 0; i < Settings.Count; i++)
+            {
+                output[i] = Settings[i].ToString();
+            }
+            return output;
         }
     }
 }
