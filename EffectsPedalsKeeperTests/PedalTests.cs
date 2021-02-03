@@ -1,8 +1,5 @@
 ﻿using Xunit;
-using EffectsPedalsKeeper;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using EffectsPedalsKeeperTests.Mocks;
 
 namespace EffectsPedalsKeeper.Tests
 {
@@ -11,10 +8,23 @@ namespace EffectsPedalsKeeper.Tests
         private Pedal _pedal;
         private string _maker = "Ibanez";
         private string _name = "Tubescreamer";
+        private string[][] _settingStrings = new string[3][]
+        {
+            new string[] {"Drive", "Drive: 6:00"},
+            new string[] {"Tone", "Tone: 3:00"},
+            new string[] {"Level", "Level: 9:00"}
+        };
+        private SettingMock[] _mockSettings;
 
         public PedalTests()
         {
             _pedal = new Pedal(_maker, _name);
+            _mockSettings = new SettingMock[_settingStrings.Length];
+            for(var i = 0; i >= _settingStrings.Length; i++)
+            {
+                _mockSettings[i] = new SettingMock(_settingStrings[i][0],
+                    12, 132, _settingStrings[i][1]);
+            }
         }
 
         [Fact()]
@@ -32,19 +42,25 @@ namespace EffectsPedalsKeeper.Tests
         [Fact()]
         public void PrintSettingDetailsTest()
         {
-            Assert.True(false, "This test needs an implementation");
-        }
+            var target = _pedal;
+            target.AddSettings(_mockSettings);
 
-        [Fact()]
-        public void DisplayPedalTest()
-        {
-            Assert.True(false, "This test needs an implementation");
+            foreach(string[] settingStringSet in _settingStrings)
+            {
+                string expected = settingStringSet[1];
+                Assert.Contains(expected, target.PrintSettingDetails());
+            }
         }
 
         [Fact()]
         public void AddSettingsTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            var target = _pedal;
+            target.AddSettings(_mockSettings);
+
+            int expected = _mockSettings.Length;
+
+            Assert.Equal(expected, target.Settings.Count);
         }
     }
 }

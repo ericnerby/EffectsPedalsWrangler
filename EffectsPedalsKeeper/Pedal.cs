@@ -25,11 +25,5 @@ namespace EffectsPedalsKeeper
         {
             throw new NotImplementedException();
         }
-
-        public string[] DisplayPedal()
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }
