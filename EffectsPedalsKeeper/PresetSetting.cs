@@ -5,6 +5,8 @@ namespace EffectsPedalsKeeper
 {
     public class PresetSetting : Setting
     {
+        public override int MaxValue => Presets.Count - 1;
+
         public List<string> Presets { get; private set; }
 
         public PresetSetting(string label, IList<string> presets)

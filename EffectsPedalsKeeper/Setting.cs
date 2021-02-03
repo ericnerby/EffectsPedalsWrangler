@@ -16,7 +16,7 @@ namespace EffectsPedalsKeeper
         /// <summary>
         ///  Maximum value allowed for setting
         /// </summary>
-        public int MaxValue { get; protected set; }
+        public virtual int MaxValue { get; protected set; }
 
         /// <summary>
         ///  CurrentValue converted to the appropriate string for the particular Setting type.
@@ -51,10 +51,10 @@ namespace EffectsPedalsKeeper
 
         public Setting(string label, int minValue, int maxValue)
         {
-            if(maxValue <= minValue)
+            if(maxValue < minValue)
             {
                 throw new ArgumentOutOfRangeException(
-                    $"{nameof(maxValue)} must be greater than {nameof(minValue)}.");
+                    $"{nameof(maxValue)} must be greater than or equal to {nameof(minValue)}.");
             }
             Label = label;
             MinValue = minValue;
