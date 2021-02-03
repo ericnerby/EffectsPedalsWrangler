@@ -38,5 +38,10 @@ namespace EffectsPedalsKeeper
             }
             return output;
         }
+
+        public override string ToString()
+        {
+            return $"{Name} by {Maker}";
+        }
     }
 }
