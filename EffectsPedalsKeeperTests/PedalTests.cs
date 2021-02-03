@@ -18,6 +18,18 @@ namespace EffectsPedalsKeeper.Tests
         }
 
         [Fact()]
+        public void ToStringTest()
+        {
+            string target = _pedal.ToString();
+
+            string expectedMaker = _maker;
+            string expectedName = _name;
+
+            Assert.Contains(expectedMaker, target);
+            Assert.Contains(expectedName, target);
+        }
+
+        [Fact()]
         public void PrintSettingDetailsTest()
         {
             Assert.True(false, "This test needs an implementation");
