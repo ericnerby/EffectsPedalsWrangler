@@ -5,22 +5,29 @@ namespace EffectsPedalsKeeper.Tests
 {
     public class PresetSettingTests
     {
-        protected List<string> _options = new List<string> { "Edge", "Slapback", "Etherial", "Reverse", "Spooky" };
+        protected List<string> _presets = new List<string> { "Edge", "Slapback", "Etherial", "Reverse", "Spooky" };
         private string _testLabel = "Preset";
         private PresetSetting _preset;
 
         public PresetSettingTests()
         {
-            _preset = new PresetSetting(_testLabel, _options);
+            _preset = new PresetSetting(_testLabel, _presets);
+        }
+
+        [Fact()]
+        public void ConstructorWithNoListTest()
+        {
+            var noListPreset = new PresetSetting("Preset");
+            Assert.NotNull(noListPreset);
         }
 
         [Fact()]
         public void DisplayTest()
         {
-            for (int index = 0; index < _options.Count; index++)
+            for (int index = 0; index < _presets.Count; index++)
             {
                 _preset.CurrentValue = index;
-                string expected = _options[index];
+                string expected = _presets[index];
                 string[] target = _preset.Display();
                 Assert.Contains(target, item => item.Contains(expected));
             }
@@ -77,7 +84,7 @@ namespace EffectsPedalsKeeper.Tests
             _preset.CurrentValue = targetIndex;
             var target = _preset.ToString();
 
-            string expectedOption = _options[targetIndex];
+            string expectedOption = _presets[targetIndex];
             string expectedLabel = _testLabel;
 
             Assert.Contains(expectedOption, target);
