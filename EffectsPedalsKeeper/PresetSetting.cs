@@ -19,6 +19,16 @@ namespace EffectsPedalsKeeper
             Presets = new List<string>();
         }
 
+        public void AddPreset(string preset)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemovePreset(int index)
+        {
+            throw new NotImplementedException();
+        }
+
         public override string CurrentValueDisplay => throw new NotImplementedException();
 
         public override string[] Display()

@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using EffectsPedalsKeeper;
+using Xunit;
 using System.Collections.Generic;
 
 namespace EffectsPedalsKeeper.Tests
@@ -89,6 +90,36 @@ namespace EffectsPedalsKeeper.Tests
 
             Assert.Contains(expectedOption, target);
             Assert.Contains(expectedLabel, target);
+        }
+
+        [Fact()]
+        public void AddPresetTest()
+        {
+            var target = _preset;
+            int startingMaxValue = target.MaxValue;
+            int expectedMaxValue = startingMaxValue + 1;
+            string newPreset = "New Preset";
+
+            target.AddPreset(newPreset);
+
+            Assert.Equal(expectedMaxValue, target.MaxValue);
+            Assert.Contains(newPreset, target.Presets);
+        }
+
+        [Fact()]
+        public void RemovePresetTest()
+        {
+            var target = _preset;
+            int startingMaxValue = target.MaxValue;
+            int expectedMaxValue = startingMaxValue - 1;
+            int indexToRemove = 1;
+            string removedItem = target.Presets[indexToRemove];
+
+            target.RemovePreset(indexToRemove);
+
+            Assert.Equal(expectedMaxValue, target.MaxValue);
+            Assert.DoesNotContain(removedItem, target.Presets);
+
         }
     }
 }
