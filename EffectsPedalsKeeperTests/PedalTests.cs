@@ -10,9 +10,9 @@ namespace EffectsPedalsKeeper.Tests
         private string _name = "Tubescreamer";
         private string[][] _settingStrings = new string[3][]
         {
-            new string[] {"Drive", "Drive: 6:00"},
-            new string[] {"Tone", "Tone: 3:00"},
-            new string[] {"Level", "Level: 9:00"}
+            new string[] {"Drive", "6:00"},
+            new string[] {"Tone", "3:00"},
+            new string[] {"Level", "9:00"}
         };
         private SettingMock[] _mockSettings;
 
@@ -47,7 +47,7 @@ namespace EffectsPedalsKeeper.Tests
 
             foreach(string[] settingStringSet in _settingStrings)
             {
-                string expected = settingStringSet[1];
+                string expected = $"{settingStringSet[0]}: {settingStringSet[1]}";
                 Assert.Contains(expected, target.PrintSettingDetails());
             }
         }
