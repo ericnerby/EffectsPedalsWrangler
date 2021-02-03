@@ -5,12 +5,18 @@ namespace EffectsPedalsKeeper
 {
     public class PresetSetting : Setting
     {
-        public List<string> Options { get; private set; }
+        public List<string> Presets { get; private set; }
 
-        public PresetSetting(string label, IList<string> options)
-            : base(label, 0, options.Count)
+        public PresetSetting(string label, IList<string> presets)
+            : base(label, 0, presets.Count)
         {
-            Options = (List<string>)options;
+            Presets = (List<string>)presets;
+        }
+
+        public PresetSetting(string label)
+            : base(label, 0, 1)
+        {
+            Presets = new List<string>();
         }
 
         public override string CurrentValueDisplay => throw new NotImplementedException();
