@@ -7,7 +7,7 @@ namespace EffectsPedalsKeeper.Tests
     {
         protected List<string> _options = new List<string> { "Edge", "Slapback", "Etherial", "Reverse", "Spooky" };
         private string _testLabel = "Preset";
-        private RotarySetting _preset;
+        private PresetSetting _preset;
 
         public PresetSettingTests()
         {
@@ -84,5 +84,4 @@ namespace EffectsPedalsKeeper.Tests
             Assert.Contains(expectedLabel, target);
         }
     }
-}
 }

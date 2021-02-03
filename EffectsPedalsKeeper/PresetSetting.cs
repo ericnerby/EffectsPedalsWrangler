@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EffectsPedalsKeeper
 {
     public class PresetSetting : Setting
     {
-        public PresetSetting(string label, IList<string> Options)
-            : base(label, 0, Options.Count)
+        public List<string> Options { get; private set; }
+
+        public PresetSetting(string label, IList<string> options)
+            : base(label, 0, options.Count)
         {
+            Options = (List<string>)options;
         }
 
         public override string CurrentValueDisplay => throw new NotImplementedException();
