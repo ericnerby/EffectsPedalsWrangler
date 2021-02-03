@@ -9,6 +9,8 @@ namespace EffectsPedalsKeeper
 
         public List<string> Options { get; private set; }
 
+        public override string CurrentValueDisplay => Options[CurrentValue];
+
         public PresetSetting(string label, IList<string> options)
             : base(label, 0, options.Count)
         {
@@ -16,7 +18,7 @@ namespace EffectsPedalsKeeper
         }
 
         public PresetSetting(string label)
-            : base(label, 0, 1)
+            : base(label, 0, 0)
         {
             Options = new List<string>();
         }
@@ -39,8 +41,6 @@ namespace EffectsPedalsKeeper
             }
             Options.RemoveAt(index);
         }
-
-        public override string CurrentValueDisplay => throw new NotImplementedException();
 
         public override string[] Display()
         {
