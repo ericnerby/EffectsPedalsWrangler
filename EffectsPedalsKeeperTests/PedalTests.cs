@@ -20,7 +20,7 @@ namespace EffectsPedalsKeeper.Tests
         {
             _pedal = new Pedal(_maker, _name);
             _mockSettings = new SettingMock[_settingStrings.Length];
-            for(var i = 0; i >= _settingStrings.Length; i++)
+            for(var i = 0; i < _settingStrings.Length; i++)
             {
                 _mockSettings[i] = new SettingMock(_settingStrings[i][0],
                     12, 132, _settingStrings[i][1]);
