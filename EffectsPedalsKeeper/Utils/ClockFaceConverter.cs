@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace EffectsPedalsKeeper
+namespace EffectsPedalsKeeper.Utils
 {
     public class ClockFaceConverter
     {

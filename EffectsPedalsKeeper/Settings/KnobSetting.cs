@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using EffectsPedalsKeeper.Utils;
+using System;
 
 namespace EffectsPedalsKeeper.Settings
 {
