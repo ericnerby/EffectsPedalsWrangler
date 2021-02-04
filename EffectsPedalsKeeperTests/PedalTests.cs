@@ -62,5 +62,19 @@ namespace EffectsPedalsKeeper.Tests
 
             Assert.Equal(expected, target.Settings.Count);
         }
+
+        [Fact()]
+        public void AddSettingsParamsTest()
+        {
+            var target = _pedal;
+            target.AddSettings(
+                new SettingMock("Level", 0, 100, "5.5"),
+                new SettingMock("Gain", 0, 100, "9.0")
+            );
+
+            int expected = 2;
+
+            Assert.Equal(expected, target.Settings.Count);
+        }
     }
 }

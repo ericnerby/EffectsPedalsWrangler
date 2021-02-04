@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace EffectsPedalsKeeper
 {
@@ -27,6 +28,11 @@ namespace EffectsPedalsKeeper
                 return true;
             }
             return false;
+        }
+
+        public bool AddSettings(params Setting[] settings)
+        {
+            throw new NotImplementedException();
         }
 
         public string[] PrintSettingDetails()
