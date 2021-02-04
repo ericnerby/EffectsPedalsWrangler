@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace EffectsPedalsKeeper
+namespace EffectsPedalsKeeper.Settings
 {
     /// <summary>
     ///  A knob rotates with no set positions. It can either

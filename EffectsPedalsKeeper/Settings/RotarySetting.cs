@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EffectsPedalsKeeper
+namespace EffectsPedalsKeeper.Settings
 {
     /// <summary>
     ///  A RotarySetting has fixed positions, or 'Options', that are labeled.

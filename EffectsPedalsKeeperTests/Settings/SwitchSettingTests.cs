@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using EffectsPedalsKeeper.Settings;
+using Xunit;
 
 namespace EffectsPedalsKeeper.Tests
 {

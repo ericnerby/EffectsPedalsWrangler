@@ -1,4 +1,4 @@
-﻿namespace EffectsPedalsKeeper
+﻿namespace EffectsPedalsKeeper.Settings
 {
     public class SwitchSetting : RotarySetting
     {

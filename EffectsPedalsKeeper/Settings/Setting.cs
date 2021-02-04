@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace EffectsPedalsKeeper
+namespace EffectsPedalsKeeper.Settings
 {
     /// <summary>
     ///  Generic Interface for Pedal Settings
     /// </summary>
-    public abstract class Setting
+    public abstract class Setting : ISetting
     {
         public string Label { get; }
 
@@ -98,9 +98,6 @@ namespace EffectsPedalsKeeper
         /// </summary>
         public abstract string[] Display();
 
-        public override string ToString()
-        {
-            return $"{Label}: {CurrentValueDisplay}";
-        }
+        public override string ToString() => $"{Label}: {CurrentValueDisplay}";
     }
 }

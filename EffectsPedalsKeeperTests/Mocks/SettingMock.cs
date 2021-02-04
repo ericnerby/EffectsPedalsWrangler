@@ -2,19 +2,41 @@
 
 namespace EffectsPedalsKeeperTests.Mocks
 {
-    public class SettingMock : EffectsPedalsKeeper.Setting
+    public class SettingMock : EffectsPedalsKeeper.Settings.ISetting
     {
         private string _valueDisplayText;
 
         public SettingMock(string label, int minValue, int maxValue, string valueDisplayText)
-            : base(label, minValue, maxValue)
         {
+            Label = label;
+            MinValue = minValue;
+            MaxValue = maxValue;
             _valueDisplayText = valueDisplayText;
         }
 
-        public override string CurrentValueDisplay => _valueDisplayText;
+        public string CurrentValueDisplay => _valueDisplayText;
 
-        public override string[] Display()
+        public string Label { get; }
+
+        public int MinValue { get; }
+
+        public int MaxValue { get; }
+
+        public int CurrentValue => throw new NotImplementedException();
+
+        public override string ToString() => $"{Label}: {CurrentValueDisplay}";
+
+        public string[] Display()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int StepDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int StepUp()
         {
             throw new NotImplementedException();
         }
