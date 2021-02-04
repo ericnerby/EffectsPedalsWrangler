@@ -32,7 +32,13 @@ namespace EffectsPedalsKeeper
 
         public bool AddSettings(params Setting[] settings)
         {
-            throw new NotImplementedException();
+            var startingCount = Settings.Count;
+            Settings.AddRange(settings);
+            if (startingCount + settings.Length == Settings.Count)
+            {
+                return true;
+            }
+            return false;
         }
 
         public string[] PrintSettingDetails()
