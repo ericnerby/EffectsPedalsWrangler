@@ -9,6 +9,7 @@ namespace EffectsPedalsKeeper
 
         public string Maker { get; }
         public string Name { get; }
+        public EffectType EffectType { get; }
 
         public List<ISetting> Settings { get; }
 
@@ -17,5 +18,14 @@ namespace EffectsPedalsKeeper
         public bool AddSettings(params ISetting[] settings);
 
         public string[] PrintSettingDetails();
+    }
+
+    public enum EffectType
+    {
+        Drive,
+        Mod,
+        Multi,
+        Delay,
+        Reverb
     }
 }

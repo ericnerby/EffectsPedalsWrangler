@@ -58,13 +58,4 @@ namespace EffectsPedalsKeeper
             return $"{Name} by {Maker} ({EffectType})";
         }
     }
-
-    public enum EffectType
-    {
-        Drive,
-        Mod,
-        Multi,
-        Delay,
-        Reverb
-    }
 }
