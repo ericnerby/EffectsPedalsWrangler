@@ -4,15 +4,15 @@ using System.Collections.Generic;
 
 namespace EffectsPedalsKeeper
 {
-    public class Preset : IList<Pedal>
+    public class Preset : IList<IPedal>
     {
-        public Pedal this[int index] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IPedal this[int index] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public int Count => throw new NotImplementedException();
 
         public bool IsReadOnly => throw new NotImplementedException();
 
-        public void Add(Pedal item)
+        public void Add(IPedal item)
         {
             throw new NotImplementedException();
         }
@@ -22,32 +22,32 @@ namespace EffectsPedalsKeeper
             throw new NotImplementedException();
         }
 
-        public bool Contains(Pedal item)
+        public bool Contains(IPedal item)
         {
             throw new NotImplementedException();
         }
 
-        public void CopyTo(Pedal[] array, int arrayIndex)
+        public void CopyTo(IPedal[] array, int arrayIndex)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerator<Pedal> GetEnumerator()
+        public IEnumerator<IPedal> GetEnumerator()
         {
             throw new NotImplementedException();
         }
 
-        public int IndexOf(Pedal item)
+        public int IndexOf(IPedal item)
         {
             throw new NotImplementedException();
         }
 
-        public void Insert(int index, Pedal item)
+        public void Insert(int index, IPedal item)
         {
             throw new NotImplementedException();
         }
 
-        public bool Remove(Pedal item)
+        public bool Remove(IPedal item)
         {
             throw new NotImplementedException();
         }
