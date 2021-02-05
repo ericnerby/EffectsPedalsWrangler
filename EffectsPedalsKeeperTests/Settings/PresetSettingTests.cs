@@ -1,8 +1,7 @@
 ﻿using Xunit;
 using System.Collections.Generic;
-using EffectsPedalsKeeper.Settings;
 
-namespace EffectsPedalsKeeper.Tests
+namespace EffectsPedalsKeeper.Settings.Tests
 {
     public class PresetSettingTests
     {

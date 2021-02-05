@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EffectsPedalsKeeperTests.Mocks
+namespace EffectsPedalsKeeper.Tests.Mocks
 {
     public class SettingMock : EffectsPedalsKeeper.Settings.ISetting
     {

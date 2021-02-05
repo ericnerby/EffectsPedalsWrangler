@@ -4,6 +4,13 @@ namespace EffectsPedalsKeeper.Tests
 {
     public class PresetTests
     {
+        private Preset _preset;
+
+        public PresetTests()
+        {
+            _preset = new Preset();
+        }
+
         [Fact()]
         public void AddTest()
         {

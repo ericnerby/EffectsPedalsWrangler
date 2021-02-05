@@ -1,7 +1,6 @@
 ﻿using Xunit;
-using EffectsPedalsKeeper.Settings;
 
-namespace EffectsPedalsKeeper.Tests
+namespace EffectsPedalsKeeper.Settings.Tests
 {
     public class KnobSettingTests
     {

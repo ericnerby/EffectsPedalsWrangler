@@ -1,7 +1,6 @@
-﻿using EffectsPedalsKeeper.Settings;
-using Xunit;
+﻿using Xunit;
 
-namespace EffectsPedalsKeeper.Tests
+namespace EffectsPedalsKeeper.Settings.Tests
 {
     public class SwitchSettingTests
     {

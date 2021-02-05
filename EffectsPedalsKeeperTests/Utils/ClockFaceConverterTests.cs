@@ -1,7 +1,6 @@
-﻿using EffectsPedalsKeeper.Utils;
-using Xunit;
+﻿using Xunit;
 
-namespace EffectsPedalsKeeper.Tests
+namespace EffectsPedalsKeeper.Utils.Tests
 {
     public class ClockFaceConverterTests
     {
