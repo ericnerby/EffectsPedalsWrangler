@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using EffectsPedalsKeeper.Settings;
 
 namespace EffectsPedalsKeeper
@@ -10,6 +9,7 @@ namespace EffectsPedalsKeeper
 
         public string Maker { get; }
         public string Name { get; }
+        public EffectType EffectType { get; }
 
         public List<ISetting> Settings { get; private set; }
 
@@ -17,6 +17,7 @@ namespace EffectsPedalsKeeper
         {
             Maker = maker;
             Name = name;
+            EffectType = effectType;
             Settings = new List<ISetting>();
         }
 
@@ -54,7 +55,7 @@ namespace EffectsPedalsKeeper
 
         public override string ToString()
         {
-            return $"{Name} by {Maker}";
+            return $"{Name} by {Maker} ({EffectType})";
         }
     }
 
