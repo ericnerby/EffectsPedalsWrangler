@@ -1,65 +1,79 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 
 namespace EffectsPedalsKeeper
 {
     public class Preset : IList<IPedal>
     {
-        public IPedal this[int index] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        private List<IPedal> _pedals;
 
-        public int Count => throw new NotImplementedException();
+        public Preset()
+        {
+            _pedals = new List<IPedal>();
+        }
+        public IPedal this[int index] {
+            get
+            {
+                return _pedals[index]; 
+            } 
+            set
+            {
+                _pedals[index] = value;
+            }
+        }
 
-        public bool IsReadOnly => throw new NotImplementedException();
+        public int Count => _pedals.Count;
+
+        public bool IsReadOnly => false;
 
         public void Add(IPedal item)
         {
-            throw new NotImplementedException();
+            _pedals.Add(item);
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            _pedals.Clear();
         }
 
         public bool Contains(IPedal item)
         {
-            throw new NotImplementedException();
+            return _pedals.Contains(item);
         }
 
         public void CopyTo(IPedal[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            _pedals.CopyTo(array, arrayIndex);
         }
 
         public IEnumerator<IPedal> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return _pedals.GetEnumerator();
         }
 
         public int IndexOf(IPedal item)
         {
-            throw new NotImplementedException();
+            return _pedals.IndexOf(item);
         }
 
         public void Insert(int index, IPedal item)
         {
-            throw new NotImplementedException();
+            _pedals.Insert(index, item);
         }
 
         public bool Remove(IPedal item)
         {
-            throw new NotImplementedException();
+            return _pedals.Remove(item);
         }
 
         public void RemoveAt(int index)
         {
-            throw new NotImplementedException();
+            _pedals.RemoveAt(index);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetEnumerator();
         }
     }
 }
