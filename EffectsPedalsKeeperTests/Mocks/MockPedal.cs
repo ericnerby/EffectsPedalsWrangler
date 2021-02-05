@@ -38,7 +38,7 @@ namespace EffectsPedalsKeeper.Tests.Mocks
 
         public string[] PrintSettingDetails()
         {
-            throw new NotImplementedException();
+            return _mockSettingDetails.ToArray();
         }
     }
 }
