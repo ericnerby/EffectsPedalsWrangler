@@ -13,16 +13,6 @@ namespace EffectsPedalsKeeper.Settings.Tests
         }
 
         [Fact()]
-        public void DisplayTest()
-        {
-            int testValue = 0;
-            _numberedKnobSetting.CurrentValue = testValue;
-            string expected = "1.0";
-            var target = _numberedKnobSetting.Display();
-            Assert.Contains(target, item => item.Contains(expected));
-        }
-
-        [Fact()]
         public void StepDownTest()
         {
             var target = _numberedKnobSetting;

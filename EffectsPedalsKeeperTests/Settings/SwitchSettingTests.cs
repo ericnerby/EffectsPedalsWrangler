@@ -13,24 +13,6 @@ namespace EffectsPedalsKeeper.Settings.Tests
         }
 
         [Fact()]
-        public void DisplayTestOff()
-        {
-            string expected = "Off";
-            _switch.CurrentValue = 0;
-            string[] target = _switch.Display();
-            Assert.Contains(target, item => item.Contains(expected));
-        }
-
-        [Fact()]
-        public void DisplayTestOn()
-        {
-            string expected = "On";
-            _switch.CurrentValue = 1;
-            string[] target = _switch.Display();
-            Assert.Contains(target, item => item.Contains(expected));
-        }
-
-        [Fact()]
         public void StepDownTest()
         {
             var target = _switch;

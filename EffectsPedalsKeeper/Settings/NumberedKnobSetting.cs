@@ -28,10 +28,5 @@ namespace EffectsPedalsKeeper.Settings
         {
             _minKnobValue = minKnobValue;
         }
-
-        public override string[] Display()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

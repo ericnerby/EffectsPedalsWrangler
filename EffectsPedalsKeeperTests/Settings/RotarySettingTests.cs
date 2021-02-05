@@ -16,18 +16,6 @@ namespace EffectsPedalsKeeper.Settings.Tests
         }
 
         [Fact()]
-        public void DisplayTest()
-        {
-            for(int index = 0; index < _options.Length; index++)
-            {
-                _rotary.CurrentValue = index;
-                string expected = _options[index];
-                string[] target = _rotary.Display();
-                Assert.Contains(target, item => item.Contains(expected));
-            }
-        }
-
-        [Fact()]
         public void StepDownTest()
         {
             var target = _rotary;

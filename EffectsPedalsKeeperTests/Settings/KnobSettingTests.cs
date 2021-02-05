@@ -14,16 +14,6 @@ namespace EffectsPedalsKeeper.Settings.Tests
         }
 
         [Fact()]
-        public void DisplayTestClockFace()
-        {
-            int testValue = 36;
-            _knobSetting.CurrentValue = testValue;
-            string expected = "9:00";
-            var target = _knobSetting.Display();
-            Assert.Contains(target, item => item.Contains(expected));
-        }
-
-        [Fact()]
         public void StepDownTest()
         {
             var target = _knobSetting;

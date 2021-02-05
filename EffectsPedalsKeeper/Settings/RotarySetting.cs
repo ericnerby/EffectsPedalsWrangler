@@ -17,10 +17,5 @@ namespace EffectsPedalsKeeper.Settings
         {
             Options = options;
         }
-
-        public override string[] Display()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

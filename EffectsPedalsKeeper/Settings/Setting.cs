@@ -93,11 +93,6 @@ namespace EffectsPedalsKeeper.Settings
             }
         }
 
-        /// <summary>
-        ///  Generate string/visual representation of Setting
-        /// </summary>
-        public abstract string[] Display();
-
         public override string ToString() => $"{Label}: {CurrentValueDisplay}";
     }
 }

@@ -41,10 +41,5 @@ namespace EffectsPedalsKeeper.Settings
             }
             Options.RemoveAt(index);
         }
-
-        public override string[] Display()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

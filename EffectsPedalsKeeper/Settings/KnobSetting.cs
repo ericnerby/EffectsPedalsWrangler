@@ -17,10 +17,5 @@ namespace EffectsPedalsKeeper.Settings
         public KnobSetting(string label, string minClockPosition, string maxClockPosition)
             : base(label, _clockFaceConverter.StringTimeToInt(minClockPosition), _clockFaceConverter.StringTimeToInt(maxClockPosition))
         {}
-
-        public override string[] Display()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
