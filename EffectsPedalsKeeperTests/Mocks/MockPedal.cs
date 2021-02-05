@@ -1,5 +1,4 @@
-﻿using EffectsPedalsKeeper;
-using EffectsPedalsKeeper.Settings;
+﻿using EffectsPedalsKeeper.Settings;
 using System;
 using System.Collections.Generic;
 
@@ -7,13 +6,25 @@ namespace EffectsPedalsKeeper.Tests.Mocks
 {
     class MockPedal : IPedal
     {
-        public bool Engaged { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        private List<string> _mockSettingDetails;
+        public bool Engaged { get; set; }
 
-        public string Maker => throw new NotImplementedException();
+        public string Maker { get; }
 
-        public string Name => throw new NotImplementedException();
+        public string Name { get; }
 
         public List<ISetting> Settings => throw new NotImplementedException();
+
+        public EffectType EffectType { get; }
+
+        public MockPedal(string name, string maker,
+            EffectType effectType, IList<string> mockSettingDetails)
+        {
+            Name = name;
+            Maker = maker;
+            EffectType = effectType;
+            _mockSettingDetails = (List<string>)mockSettingDetails;
+        }
 
         public bool AddSettings(IList<ISetting> settings)
         {
