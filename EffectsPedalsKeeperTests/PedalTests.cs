@@ -18,7 +18,7 @@ namespace EffectsPedalsKeeper.Tests
 
         public PedalTests()
         {
-            _pedal = new Pedal(_maker, _name);
+            _pedal = new Pedal(_maker, _name, EffectType.Drive);
             _mockSettings = new SettingMock[_settingStrings.Length];
             for(var i = 0; i < _settingStrings.Length; i++)
             {
@@ -34,9 +34,11 @@ namespace EffectsPedalsKeeper.Tests
 
             string expectedMaker = _maker;
             string expectedName = _name;
+            string expectedType = "Drive";
 
             Assert.Contains(expectedMaker, target);
             Assert.Contains(expectedName, target);
+            Assert.Contains(expectedType, target);
         }
 
         [Fact()]

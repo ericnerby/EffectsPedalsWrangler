@@ -13,7 +13,7 @@ namespace EffectsPedalsKeeper
 
         public List<ISetting> Settings { get; private set; }
 
-        public Pedal(string maker, string name)
+        public Pedal(string maker, string name, EffectType effectType)
         {
             Maker = maker;
             Name = name;
@@ -56,5 +56,14 @@ namespace EffectsPedalsKeeper
         {
             return $"{Name} by {Maker}";
         }
+    }
+
+    public enum EffectType
+    {
+        Drive,
+        Mod,
+        Multi,
+        Delay,
+        Reverb
     }
 }
