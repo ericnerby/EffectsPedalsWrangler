@@ -7,10 +7,6 @@ namespace EffectsPedalsKeeper
     {
         private List<IPedal> _pedals;
 
-        public Preset()
-        {
-            _pedals = new List<IPedal>();
-        }
         public IPedal this[int index] {
             get
             {
@@ -25,6 +21,10 @@ namespace EffectsPedalsKeeper
         public int Count => _pedals.Count;
 
         public bool IsReadOnly => false;
+        public Preset(string name)
+        {
+            _pedals = new List<IPedal>();
+        }
 
         public void Add(IPedal item)
         {

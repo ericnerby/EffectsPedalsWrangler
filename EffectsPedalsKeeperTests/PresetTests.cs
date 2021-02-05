@@ -7,11 +7,12 @@ namespace EffectsPedalsKeeper.Tests
     public class PresetTests
     {
         private Preset _preset;
+        private string _presetName = "Test the System";
         private List<IPedal> _pedals;
         private List<List<string>> _pedalNames = new List<List<string>>() {
             new List<string>() {"TubeScreamer", "Ibanez"},
             new List<string>() {"Bad Stone", "Electro-Harmonix"},
-            new List<string>() {"Carbon Copy", "MXR" },
+            new List<string>() {"Carbon Copy", "MXR"},
         };
         private List<EffectType> _pedalEffectTypes = new List<EffectType>() {
             EffectType.Drive,
@@ -21,13 +22,13 @@ namespace EffectsPedalsKeeper.Tests
         private List<List<string>> _pedalSettings = new List<List<string>>()
         {
             new List<string>() {"Drive: 11:30", "Tone: 1:00", "Level: 8:00"},
-            new List<string>() { "Rate: 3:00", "Feedback: 7:30", "Manual Shift: 12:00"},
-            new List<string>() { "Regen: 10:00", "Mix: 12:00", "Delay: 9:00"},
+            new List<string>() {"Rate: 3:00", "Feedback: 7:30", "Manual Shift: 12:00"},
+            new List<string>() {"Regen: 10:00", "Mix: 12:00", "Delay: 9:00"},
         };
 
         public PresetTests()
         {
-            _preset = new Preset();
+            _preset = new Preset(_presetName);
             _pedals = new List<IPedal>();
             for (var i = 0; i < _pedalNames.Count; i++)
             {
@@ -133,7 +134,15 @@ namespace EffectsPedalsKeeper.Tests
             _preset.RemoveAt(indexToRemove);
 
             Assert.DoesNotContain(pedalToRemove, _preset);
+        }
 
+        [Fact()]
+        public void ToStringTest()
+        {
+            var expectedName = _presetName;
+            var target = _preset.ToString();
+
+            Assert.Contains(expectedName, target);
         }
     }
 }
