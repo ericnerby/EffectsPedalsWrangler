@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace EffectsPedalsKeeper.Tests.Mocks
 {
-    class MockPedal : IPedal
+    class PedalMock : IPedal
     {
         private List<string> _mockSettingDetails;
         public bool Engaged { get; set; }
@@ -17,7 +17,7 @@ namespace EffectsPedalsKeeper.Tests.Mocks
 
         public EffectType EffectType { get; }
 
-        public MockPedal(string name, string maker,
+        public PedalMock(string name, string maker,
             EffectType effectType, IList<string> mockSettingDetails)
         {
             Name = name;

@@ -32,7 +32,7 @@ namespace EffectsPedalsKeeper.Tests
             _pedals = new List<IPedal>();
             for (var i = 0; i < _pedalNames.Count; i++)
             {
-                _pedals.Add(new MockPedal(
+                _pedals.Add(new PedalMock(
                     _pedalNames[i][0], _pedalNames[i][1],
                     _pedalEffectTypes[i], _pedalSettings[i]));
             }
