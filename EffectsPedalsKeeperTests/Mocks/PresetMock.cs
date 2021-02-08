@@ -1,21 +1,36 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EffectsPedalsKeeper.Tests.Mocks
 {
     class PresetMock : IPreset
     {
-        public IPedal this[int index] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        private List<IPedal> _pedals;
+        public string Name { get; }
+        public string Description { get; set; }
 
-        public string Name => throw new NotImplementedException();
+        public PresetMock(string name, IList<IPedal> pedals)
+        {
+            Name = name;
+            _pedals = (List<IPedal>)pedals;
+        }
 
-        public string Description { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IPedal this[int index]
+        {
+            get
+            {
+                return _pedals[index];
+            }
+            set
+            {
+                _pedals[index] = value;
+            }
+        }
 
-        public int Count => throw new NotImplementedException();
+        public int Count => _pedals.Count;
 
-        public bool IsReadOnly => throw new NotImplementedException();
+        public bool IsReadOnly => false;
 
         public void Add(IPedal item)
         {
@@ -34,13 +49,10 @@ namespace EffectsPedalsKeeper.Tests.Mocks
 
         public void CopyTo(IPedal[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            _pedals.CopyTo(array, arrayIndex);
         }
 
-        public IEnumerator<IPedal> GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerator<IPedal> GetEnumerator() => _pedals.GetEnumerator();
 
         public int IndexOf(IPedal item)
         {
@@ -62,9 +74,6 @@ namespace EffectsPedalsKeeper.Tests.Mocks
             throw new NotImplementedException();
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

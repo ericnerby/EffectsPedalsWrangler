@@ -22,5 +22,10 @@ namespace EffectsPedalsKeeper
         {
             throw new NotImplementedException();
         }
+
+        public bool AddPedals(params IPedal[] pedals)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
