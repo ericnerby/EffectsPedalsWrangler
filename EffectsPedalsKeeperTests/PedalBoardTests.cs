@@ -29,14 +29,14 @@ namespace EffectsPedalsKeeper.Tests
 
         public PedalBoardTests()
         {
-            var pedals = new List<IPedal>();
+            _pedalMocks = new List<IPedal>();
             for (var i = 0; i < _pedalNames.Count; i++)
             {
-                pedals.Add(new PedalMock(
+                _pedalMocks.Add(new PedalMock(
                     _pedalNames[i][0], _pedalNames[i][1],
                     _pedalEffectTypes[i], _pedalSettings[i]));
             }
-            _presetMock = new PresetMock(_boardName, pedals);
+            _presetMock = new PresetMock(_boardName, _pedalMocks);
             _pedalBoard = new PedalBoard();
         }
 
