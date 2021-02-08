@@ -4,11 +4,13 @@ using System.Linq;
 
 namespace EffectsPedalsKeeper
 {
-    public class Preset : IList<IPedal>
+    public class Preset : IPreset
     {
         private List<IPedal> _pedals;
 
         public string Name { get; }
+
+        public string Description { get; set; }
 
         public IPedal this[int index] {
             get
