@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace EffectsPedalsKeeper
 {
     public class Preset : IList<IPedal>
     {
         private List<IPedal> _pedals;
+
+        public string Name { get; }
 
         public IPedal this[int index] {
             get
@@ -23,7 +26,20 @@ namespace EffectsPedalsKeeper
         public bool IsReadOnly => false;
         public Preset(string name)
         {
+            Name = name;
             _pedals = new List<IPedal>();
+        }
+
+        public override string ToString()
+        {
+            string output = Name;
+            if (_pedals.Count > 0)
+            {
+                int engagedPedals = _pedals.Where(p => p.Engaged).Count();
+                int totalPedals = _pedals.Count;
+                output += $"{engagedPedals}/{totalPedals} pedals engaged";
+            }
+            return output;
         }
 
         public void Add(IPedal item)
