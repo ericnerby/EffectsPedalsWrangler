@@ -1,9 +1,18 @@
-﻿using Xunit;
+﻿using System;
+using Xunit;
 
 namespace EffectsPedalsKeeper.Utils.Tests
 {
     public class VersionListTests
     {
+        private VersionList<TestObject> _versionList;
+        public static TestObject CopyMethod(TestObject item) => item.MakeCopy();
+
+        public VersionListTests()
+        {
+            _versionList = new VersionList<TestObject>(CopyMethod);
+        }
+
         [Fact()]
         public void CheckOutVersionTest()
         {
@@ -86,6 +95,17 @@ namespace EffectsPedalsKeeper.Utils.Tests
         public void RemoveAtTest()
         {
             Assert.True(false, "This test needs an implementation");
+        }
+    }
+
+    public class TestObject
+    {
+        public string Name { get; set; }
+        public int CurrentValue { get; set; }
+
+        public TestObject MakeCopy()
+        {
+            return (TestObject)this.MemberwiseClone();
         }
     }
 }

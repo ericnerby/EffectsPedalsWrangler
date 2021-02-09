@@ -12,6 +12,9 @@ namespace EffectsPedalsKeeper.Utils
     /// <typeparam name="T">Type T must be a reference type</typeparam>
     public class VersionList<T> : IList<T> where T : class
     {
+        public VersionList(Func<T, T> copyMethod)
+        {}
+
         public void CheckOutVersion(int index)
         {
             throw new NotImplementedException();
