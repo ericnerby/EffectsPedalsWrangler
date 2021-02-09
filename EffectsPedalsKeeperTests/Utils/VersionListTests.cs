@@ -13,13 +13,20 @@ namespace EffectsPedalsKeeper.Utils.Tests
         public VersionListTests()
         {
             _versionList = new VersionList<TestObject>(CopyMethod);
-            _testObjects = new List<TestObject>()
+            _testObjects = new List<TestObject>
             {
                 new TestObject() { Name = "Drive", CurrentValue = 10},
                 new TestObject() { Name = "Rotary", CurrentValue = 2},
                 new TestObject() { Name = "Delay", CurrentValue = 5},
                 new TestObject() { Name = "Volume", CurrentValue = 12}
             };
+        }
+
+        private static void _AddTestObjects(
+            VersionList<TestObject> versionList,
+            List<TestObject> testObjects)
+        {
+            versionList.AddRange(testObjects.ToArray());
         }
 
         [Fact()]
@@ -44,13 +51,29 @@ namespace EffectsPedalsKeeper.Utils.Tests
         [Fact()]
         public void SaveAsVersionTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            _AddTestObjects(_versionList, _testObjects);
+
+            Assert.True(_versionList.SaveAsVersion("first version test"));
+            Assert.NotEmpty(_versionList.ListVersions());
         }
 
         [Fact()]
         public void ListVersionsTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            _AddTestObjects(_versionList, _testObjects);
+
+            var firstVersionName = "first version test";
+            var secondVersionName = "second version test";
+
+            _versionList.SaveAsVersion(firstVersionName);
+
+            _versionList[2].CurrentValue += 2;
+            _versionList.SaveAsVersion(secondVersionName);
+
+            var target = _versionList.ListVersions().Values;
+
+            Assert.Contains(firstVersionName, target);
+            Assert.Contains(secondVersionName, target);
         }
 
         [Fact()]

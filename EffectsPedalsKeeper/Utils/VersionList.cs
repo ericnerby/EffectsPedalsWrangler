@@ -12,8 +12,12 @@ namespace EffectsPedalsKeeper.Utils
     /// <typeparam name="T">Type T must be a reference type</typeparam>
     public class VersionList<T> : IList<T> where T : class
     {
+        private List<T> _checkedOutList;
+
         public VersionList(Func<T, T> copyMethod)
-        {}
+        {
+            _checkedOutList = new List<T>();
+        }
 
         public void CheckOutVersion(int index)
         {
@@ -65,6 +69,11 @@ namespace EffectsPedalsKeeper.Utils
         public void CopyTo(T[] array, int arrayIndex)
         {
             throw new NotImplementedException();
+        }
+
+        public void AddRange(IEnumerable<T> collection)
+        {
+            _checkedOutList.AddRange(collection);
         }
 
         public IEnumerator<T> GetEnumerator()
