@@ -30,12 +30,6 @@ namespace EffectsPedalsKeeper.Utils.Tests
         }
 
         [Fact()]
-        public void CheckOutVersionTest()
-        {
-            Assert.True(false, "This test needs an implementation");
-        }
-
-        [Fact()]
         public void CheckOutVersionOutsideRangeTest()
         {
             Assert.Throws<IndexOutOfRangeException>(
@@ -136,43 +130,110 @@ namespace EffectsPedalsKeeper.Utils.Tests
         [Fact()]
         public void ContainsTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            _AddTestObjects(_versionedList, _testObjects);
+
+            Assert.Contains(_testObjects[0], _versionedList);
         }
 
         [Fact()]
         public void CopyToTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            _AddTestObjects(_versionedList, _testObjects);
+
+            var target = new TestObject[_versionedList.Count];
+
+            _versionedList.CopyTo(target, 0);
+
+            Assert.All(target, item => Assert.NotNull(item)); 
         }
 
         [Fact()]
         public void GetEnumeratorTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            _AddTestObjects(_versionedList, _testObjects);
+
+            Assert.IsAssignableFrom<IEnumerator<TestObject>>(_versionedList.GetEnumerator());
         }
 
         [Fact()]
         public void IndexOfTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            _AddTestObjects(_versionedList, _testObjects);
+
+            var testIndex = 1;
+            var testObject = _testObjects[testIndex];
+
+            Assert.Equal(testIndex, _versionedList.IndexOf(testObject));
         }
 
         [Fact()]
         public void InsertTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            _versionedList.Add(_testObjects[0]);
+            _versionedList.Add(_testObjects[2]);
+            _versionedList.SaveAsVersion("first test version");
+
+            _versionedList.Insert(1, _testObjects[1]);
+
+            _versionedList.SaveAsVersion("second test version");
+
+            var expected = _testObjects[1];
+
+            _versionedList.CheckOutVersion(0);
+            var target = _versionedList[1];
+
+            Assert.Equal(expected, target);
+
+            _versionedList.CheckOutVersion(1);
+            target = _versionedList[1];
+
+            Assert.Equal(expected, target);
         }
 
         [Fact()]
         public void RemoveTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            _AddTestObjects(_versionedList, _testObjects);
+
+            var itemToRemove = _testObjects[1];
+
+            _versionedList.SaveAsVersion("first test version");
+
+            _versionedList.Remove(itemToRemove);
+
+            _versionedList.SaveAsVersion("second test version");
+
+            _versionedList.CheckOutVersion(0);
+
+            Assert.DoesNotContain(itemToRemove, _versionedList);
+
+            _versionedList.CheckOutVersion(1);
+
+            Assert.DoesNotContain(itemToRemove, _versionedList);
         }
 
         [Fact()]
         public void RemoveAtTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            _AddTestObjects(_versionedList, _testObjects);
+
+            var indexToRemove = 1;
+
+            var itemToRemove = _testObjects[indexToRemove];
+
+            _versionedList.SaveAsVersion("first test version");
+
+            _versionedList.RemoveAt(indexToRemove);
+
+            _versionedList.SaveAsVersion("second test version");
+
+            _versionedList.CheckOutVersion(0);
+
+            Assert.DoesNotContain(itemToRemove, _versionedList);
+
+            _versionedList.CheckOutVersion(1);
+
+            Assert.DoesNotContain(itemToRemove, _versionedList);
         }
 
         [Fact()]
