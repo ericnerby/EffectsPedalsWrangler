@@ -10,11 +10,11 @@ namespace EffectsPedalsKeeper.Utils
     /// but their properties can be set differently.
     /// </summary>
     /// <typeparam name="T">Type T must be a reference type</typeparam>
-    public class VersionList<T> : IList<T> where T : class
+    public class VersionedList<T> : IList<T> where T : class
     {
         private List<T> _checkedOutList;
 
-        public VersionList(Func<T, T> copyMethod)
+        public VersionedList(Func<T, T> copyMethod)
         {
             _checkedOutList = new List<T>();
         }

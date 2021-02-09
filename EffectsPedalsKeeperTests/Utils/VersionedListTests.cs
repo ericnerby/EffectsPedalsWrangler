@@ -4,15 +4,15 @@ using Xunit;
 
 namespace EffectsPedalsKeeper.Utils.Tests
 {
-    public class VersionListTests
+    public class VersionedListTests
     {
-        private VersionList<TestObject> _versionList;
+        private VersionedList<TestObject> _versionedList;
         private List<TestObject> _testObjects;
         public static TestObject CopyMethod(TestObject item) => item.MakeCopy();
 
-        public VersionListTests()
+        public VersionedListTests()
         {
-            _versionList = new VersionList<TestObject>(CopyMethod);
+            _versionedList = new VersionedList<TestObject>(CopyMethod);
             _testObjects = new List<TestObject>
             {
                 new TestObject() { Name = "Drive", CurrentValue = 10},
@@ -23,7 +23,7 @@ namespace EffectsPedalsKeeper.Utils.Tests
         }
 
         private static void _AddTestObjects(
-            VersionList<TestObject> versionList,
+            VersionedList<TestObject> versionList,
             List<TestObject> testObjects)
         {
             versionList.AddRange(testObjects.ToArray());
@@ -39,13 +39,13 @@ namespace EffectsPedalsKeeper.Utils.Tests
         public void CheckOutVersionOutsideRangeTest()
         {
             Assert.Throws<IndexOutOfRangeException>(
-                () => _versionList.CheckOutVersion(_versionList.Count));
+                () => _versionedList.CheckOutVersion(_versionedList.Count));
         }
 
         [Fact()]
         public void SaveVersionTest()
         {
-            _AddTestObjects(_versionList, _testObjects);
+            _AddTestObjects(_versionedList, _testObjects);
 
             var firstVersionName = "first version test";
             var secondVersionName = "second version test";
@@ -53,20 +53,20 @@ namespace EffectsPedalsKeeper.Utils.Tests
             var targetIndex = 1;
             var expected = _testObjects[targetIndex].CurrentValue;
 
-            _versionList.SaveAsVersion(firstVersionName);
-            _versionList.SaveAsVersion(secondVersionName);
+            _versionedList.SaveAsVersion(firstVersionName);
+            _versionedList.SaveAsVersion(secondVersionName);
 
-            _versionList[1].CurrentValue += testDifference;
+            _versionedList[1].CurrentValue += testDifference;
 
-            Assert.True(_versionList.SaveVersion());
+            Assert.True(_versionedList.SaveVersion());
 
-            _versionList.CheckOutVersion(0);
-            var target = _versionList[targetIndex].CurrentValue;
+            _versionedList.CheckOutVersion(0);
+            var target = _versionedList[targetIndex].CurrentValue;
 
             Assert.Equal(expected, target);
 
-            _versionList.CheckOutVersion(1);
-            target = _versionList[targetIndex].CurrentValue;
+            _versionedList.CheckOutVersion(1);
+            target = _versionedList[targetIndex].CurrentValue;
             expected += testDifference;
             Assert.Equal(expected, target);
         }
@@ -74,26 +74,26 @@ namespace EffectsPedalsKeeper.Utils.Tests
         [Fact()]
         public void SaveAsVersionTest()
         {
-            _AddTestObjects(_versionList, _testObjects);
+            _AddTestObjects(_versionedList, _testObjects);
 
-            Assert.True(_versionList.SaveAsVersion("first version test"));
-            Assert.NotEmpty(_versionList.ListVersions());
+            Assert.True(_versionedList.SaveAsVersion("first version test"));
+            Assert.NotEmpty(_versionedList.ListVersions());
         }
 
         [Fact()]
         public void ListVersionsTest()
         {
-            _AddTestObjects(_versionList, _testObjects);
+            _AddTestObjects(_versionedList, _testObjects);
 
             var firstVersionName = "first version test";
             var secondVersionName = "second version test";
 
-            _versionList.SaveAsVersion(firstVersionName);
+            _versionedList.SaveAsVersion(firstVersionName);
 
-            _versionList[2].CurrentValue += 2;
-            _versionList.SaveAsVersion(secondVersionName);
+            _versionedList[2].CurrentValue += 2;
+            _versionedList.SaveAsVersion(secondVersionName);
 
-            var target = _versionList.ListVersions().Values;
+            var target = _versionedList.ListVersions().Values;
 
             Assert.Contains(firstVersionName, target);
             Assert.Contains(secondVersionName, target);
@@ -102,31 +102,35 @@ namespace EffectsPedalsKeeper.Utils.Tests
         [Fact()]
         public void AddTest()
         {
-            _AddTestObjects(_versionList, _testObjects);
+            _AddTestObjects(_versionedList, _testObjects);
 
-            var startingValue = _versionList.Count;
+            var startingValue = _versionedList.Count;
 
-            _versionList.SaveAsVersion("first version test");
-            _versionList.SaveAsVersion("second version test");
+            _versionedList.SaveAsVersion("first version test");
+            _versionedList.SaveAsVersion("second version test");
 
-            _versionList.Add(new TestObject()
+            _versionedList.Add(new TestObject()
             { Name = "Reverb", CurrentValue = 1 });
 
             var expected = startingValue += 1;
 
-            _versionList.CheckOutVersion(0);
+            _versionedList.CheckOutVersion(0);
 
-            Assert.Equal(expected, _versionList.Count);
+            Assert.Equal(expected, _versionedList.Count);
 
-            _versionList.CheckOutVersion(1);
+            _versionedList.CheckOutVersion(1);
 
-            Assert.Equal(expected, _versionList.Count);
+            Assert.Equal(expected, _versionedList.Count);
         }
 
         [Fact()]
         public void ClearTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            _AddTestObjects(_versionedList, _testObjects);
+
+            _versionedList.Clear();
+
+            Assert.Empty(_versionedList);
         }
 
         [Fact()]
@@ -169,6 +173,17 @@ namespace EffectsPedalsKeeper.Utils.Tests
         public void RemoveAtTest()
         {
             Assert.True(false, "This test needs an implementation");
+        }
+
+        [Fact()]
+        public void AddRangeTest()
+        {
+            _versionedList.AddRange(_testObjects.ToArray());
+
+            var expected = _testObjects.Count;
+            var target = _versionedList.Count;
+
+            Assert.Equal(expected, target);
         }
     }
 
