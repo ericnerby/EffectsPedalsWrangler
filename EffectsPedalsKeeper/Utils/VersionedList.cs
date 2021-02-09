@@ -35,7 +35,11 @@ namespace EffectsPedalsKeeper.Utils
 
         public bool SaveAsVersion(string name)
         {
-            throw new NotImplementedException();
+
+            var startingCount = _versions.Count;
+            var newVersion = new Version<T>(name, startingCount, _checkedOutList);
+            _versions.Add(newVersion);
+            return _versions.Count > startingCount;
         }
 
         public Dictionary<int, string> ListVersions()
