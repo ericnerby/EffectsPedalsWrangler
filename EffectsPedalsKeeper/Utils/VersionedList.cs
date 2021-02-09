@@ -13,10 +13,14 @@ namespace EffectsPedalsKeeper.Utils
     public class VersionedList<T> : IList<T> where T : class
     {
         private List<T> _checkedOutList;
+        private List<Version<T>> _versions;
+        private Func<T, T> _InternalCopy;
 
         public VersionedList(Func<T, T> copyMethod)
         {
+            _InternalCopy = copyMethod;
             _checkedOutList = new List<T>();
+            _versions = new List<Version<T>>();
         }
 
         public void CheckOutVersion(int index)
@@ -48,7 +52,11 @@ namespace EffectsPedalsKeeper.Utils
 
         public void Add(T item)
         {
-            throw new NotImplementedException();
+            _checkedOutList.Add(item);
+            foreach(var version in _versions)
+            {
+                version.Items.Add(_InternalCopy(item));
+            }
         }
 
         public void Clear()
@@ -101,4 +109,18 @@ namespace EffectsPedalsKeeper.Utils
             throw new NotImplementedException();
         }
     }
+
+    public class Version<T>
+    {
+        public Version(string name, int iD, List<T> items)
+        {
+            Name = name;
+            ID = iD;
+            Items = items;
+        }
+        public string Name { get; set; }
+        public int ID { get; }
+        public List<T> Items { get; set; }
+    }
+
 }
