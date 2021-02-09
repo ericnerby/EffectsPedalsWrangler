@@ -42,7 +42,7 @@ namespace EffectsPedalsKeeper.Utils
         // IList implementation
         public T this[int index] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        public int Count => throw new NotImplementedException();
+        public int Count => _checkedOutList.Count;
 
         public bool IsReadOnly => throw new NotImplementedException();
 
