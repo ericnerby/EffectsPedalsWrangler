@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace EffectsPedalsKeeper.Utils.Tests
@@ -6,17 +7,32 @@ namespace EffectsPedalsKeeper.Utils.Tests
     public class VersionListTests
     {
         private VersionList<TestObject> _versionList;
+        private List<TestObject> _testObjects;
         public static TestObject CopyMethod(TestObject item) => item.MakeCopy();
 
         public VersionListTests()
         {
             _versionList = new VersionList<TestObject>(CopyMethod);
+            _testObjects = new List<TestObject>()
+            {
+                new TestObject() { Name = "Drive", CurrentValue = 10},
+                new TestObject() { Name = "Rotary", CurrentValue = 2},
+                new TestObject() { Name = "Delay", CurrentValue = 5},
+                new TestObject() { Name = "Volume", CurrentValue = 12}
+            };
         }
 
         [Fact()]
         public void CheckOutVersionTest()
         {
             Assert.True(false, "This test needs an implementation");
+        }
+
+        [Fact()]
+        public void CheckOutVersionOutsideRangeTest()
+        {
+            Assert.Throws<IndexOutOfRangeException>(
+                () => _versionList.CheckOutVersion(_versionList.Count));
         }
 
         [Fact()]
