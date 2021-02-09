@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using EffectsPedalsKeeper;
+using Xunit;
 using EffectsPedalsKeeper.Tests.Mocks;
 using System.Collections.Generic;
 
@@ -120,6 +121,12 @@ namespace EffectsPedalsKeeper.Tests
 
         [Fact()]
         public void GetEnumeratorTest()
+        {
+            Assert.True(false, "This test needs an implementation");
+        }
+
+        [Fact()]
+        public void SaveCurrentPedalsTest()
         {
             Assert.True(false, "This test needs an implementation");
         }

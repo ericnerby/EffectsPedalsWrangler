@@ -34,17 +34,17 @@ namespace EffectsPedalsKeeper.Tests.Mocks
 
         public void Add(IPedal item)
         {
-            throw new NotImplementedException();
+            _pedals.Add(item);
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            _pedals.Clear();
         }
 
         public bool Contains(IPedal item)
         {
-            throw new NotImplementedException();
+            return _pedals.Contains(item);
         }
 
         public void CopyTo(IPedal[] array, int arrayIndex)
@@ -56,22 +56,22 @@ namespace EffectsPedalsKeeper.Tests.Mocks
 
         public int IndexOf(IPedal item)
         {
-            throw new NotImplementedException();
+            return _pedals.IndexOf(item);
         }
 
         public void Insert(int index, IPedal item)
         {
-            throw new NotImplementedException();
+            _pedals.Insert(index, item);
         }
 
         public bool Remove(IPedal item)
         {
-            throw new NotImplementedException();
+            return _pedals.Remove(item);
         }
 
         public void RemoveAt(int index)
         {
-            throw new NotImplementedException();
+            _pedals.RemoveAt(index);
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

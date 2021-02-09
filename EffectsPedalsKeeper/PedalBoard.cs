@@ -6,9 +6,9 @@ namespace EffectsPedalsKeeper
 {
     public class PedalBoard : IPreset
     {
-        public Dictionary<int, string> PresetList => throw new NotImplementedException();
-        public IPreset WorkingPreset { get; }
         private List<IPreset> _presets { get; set; }
+        public Dictionary<int, string> PresetList => throw new NotImplementedException();
+        public IPreset WorkingPreset { get; set; }
 
         public string Name => throw new NotImplementedException();
 
@@ -21,6 +21,11 @@ namespace EffectsPedalsKeeper
         public IPedal this[int index] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public void CheckOutPreset(int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool SaveCurrentPedals()
         {
             throw new NotImplementedException();
         }
