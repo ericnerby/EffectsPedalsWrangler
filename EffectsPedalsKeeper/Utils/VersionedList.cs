@@ -25,7 +25,15 @@ namespace EffectsPedalsKeeper.Utils
 
         public void CheckOutVersion(int index)
         {
-            throw new NotImplementedException();
+            if (index >= _versions.Count || index < 0)
+            {
+                throw new IndexOutOfRangeException();
+            }
+            _checkedOutList.Clear();
+            foreach(T item in _versions[index].Items)
+            {
+                _checkedOutList.Add(_InternalCopy(item));
+            }
         }
 
         public bool SaveVersion()
@@ -37,7 +45,7 @@ namespace EffectsPedalsKeeper.Utils
         {
 
             var startingCount = _versions.Count;
-            var newVersion = new Version<T>(name, startingCount, _checkedOutList);
+            var newVersion = new Version<T>(name, _checkedOutList);
             _versions.Add(newVersion);
             return _versions.Count > startingCount;
         }
@@ -116,14 +124,12 @@ namespace EffectsPedalsKeeper.Utils
 
     public class Version<T>
     {
-        public Version(string name, int iD, List<T> items)
+        public Version(string name, List<T> items)
         {
             Name = name;
-            ID = iD;
             Items = items;
         }
         public string Name { get; set; }
-        public int ID { get; }
         public List<T> Items { get; set; }
     }
 
