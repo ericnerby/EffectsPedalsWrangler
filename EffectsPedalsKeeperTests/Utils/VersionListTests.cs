@@ -45,7 +45,30 @@ namespace EffectsPedalsKeeper.Utils.Tests
         [Fact()]
         public void SaveVersionTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            _AddTestObjects(_versionList, _testObjects);
+
+            var firstVersionName = "first version test";
+            var secondVersionName = "second version test";
+            var testDifference = 5;
+            var targetIndex = 1;
+            var expected = _testObjects[targetIndex].CurrentValue;
+
+            _versionList.SaveAsVersion(firstVersionName);
+            _versionList.SaveAsVersion(secondVersionName);
+
+            _versionList[1].CurrentValue += testDifference;
+
+            Assert.True(_versionList.SaveVersion());
+
+            _versionList.CheckOutVersion(0);
+            var target = _versionList[targetIndex].CurrentValue;
+
+            Assert.Equal(expected, target);
+
+            _versionList.CheckOutVersion(1);
+            target = _versionList[targetIndex].CurrentValue;
+            expected += testDifference;
+            Assert.Equal(expected, target);
         }
 
         [Fact()]
@@ -77,15 +100,27 @@ namespace EffectsPedalsKeeper.Utils.Tests
         }
 
         [Fact()]
-        public void SaveItemsTest()
-        {
-            Assert.True(false, "This test needs an implementation");
-        }
-
-        [Fact()]
         public void AddTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            _AddTestObjects(_versionList, _testObjects);
+
+            var startingValue = _versionList.Count;
+
+            _versionList.SaveAsVersion("first version test");
+            _versionList.SaveAsVersion("second version test");
+
+            _versionList.Add(new TestObject()
+            { Name = "Reverb", CurrentValue = 1 });
+
+            var expected = startingValue += 1;
+
+            _versionList.CheckOutVersion(0);
+
+            Assert.Equal(expected, _versionList.Count);
+
+            _versionList.CheckOutVersion(1);
+
+            Assert.Equal(expected, _versionList.Count);
         }
 
         [Fact()]

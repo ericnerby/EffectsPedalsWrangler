@@ -39,11 +39,6 @@ namespace EffectsPedalsKeeper.Utils
             throw new NotImplementedException();
         }
 
-        public bool SaveItems()
-        {
-            throw new NotImplementedException();
-        }
-
         // IList implementation
         public T this[int index] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
