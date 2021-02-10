@@ -56,11 +56,21 @@ namespace EffectsPedalsKeeper.Utils
 
         public Dictionary<int, string> ListVersions()
         {
-            throw new NotImplementedException();
+            var count = _versions.Count;
+            var output = new Dictionary<int, string>(count);
+            for (var i = 0; i < count; i++)
+            {
+                output.Add(i, _versions[i].Name);
+            }
+            return output;
         }
 
         // IList implementation
-        public T this[int index] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public T this[int index]
+        {
+            get => _checkedOutList[index];
+            set => _checkedOutList[index] = value;
+        }
 
         public int Count => _checkedOutList.Count;
 
