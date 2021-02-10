@@ -7,21 +7,29 @@ namespace EffectsPedalsKeeper.Settings
     {
         public override int MaxValue => Options.Count - 1;
 
-        public List<string> Options { get; private set; }
+        public List<string> Options { get; private set; } = new List<string>();
 
-        public override string CurrentValueDisplay => Options[CurrentValue];
+        public override string CurrentValueDisplay
+        {
+            get
+            {
+                if (CurrentValue == -1)
+                {
+                    return "no preset chosen";
+                }
+                return Options[CurrentValue];
+            }
+        }
 
         public PresetSetting(string label, IList<string> options)
-            : base(label, 0, options.Count)
+            : base(label, -1, options.Count - 1)
         {
             Options = (List<string>)options;
         }
 
         public PresetSetting(string label)
-            : base(label, 0, 0)
-        {
-            Options = new List<string>();
-        }
+            : base(label, -1, -1)
+        {}
 
         public bool AddPreset(string option)
         {
