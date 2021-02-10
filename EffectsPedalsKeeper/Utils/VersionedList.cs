@@ -16,11 +16,30 @@ namespace EffectsPedalsKeeper.Utils
         private List<Version<T>> _versions;
         private Func<T, T> _InternalCopy;
 
+        /// <summary>
+        /// Index of CheckedOutVersion.
+        /// -1 if no version saved.
+        /// </summary>
+        public int CheckedOutVersionIndex { get; private set; }
+
+        public string CheckedOutVersionName
+        {
+            get
+            {
+                if (_versions.Count == 0)
+                {
+                    return null;
+                }
+                return _versions[CheckedOutVersionIndex].Name;
+            }
+        }
+
         public VersionedList(Func<T, T> copyMethod)
         {
             _InternalCopy = copyMethod;
             _checkedOutList = new List<T>();
             _versions = new List<Version<T>>();
+            CheckedOutVersionIndex = -1;
         }
 
         public void CheckOutVersion(int index)
@@ -29,7 +48,10 @@ namespace EffectsPedalsKeeper.Utils
             {
                 throw new IndexOutOfRangeException();
             }
+
+            CheckedOutVersionIndex = index;
             _checkedOutList.Clear();
+
             foreach(T item in _versions[index].Items)
             {
                 _checkedOutList.Add(_InternalCopy(item));
@@ -38,7 +60,13 @@ namespace EffectsPedalsKeeper.Utils
 
         public bool SaveVersion()
         {
-            throw new NotImplementedException();
+            if (_versions.Count == 0) return false;
+            var destination = _versions[CheckedOutVersionIndex].Items;
+            for(var i = 0; i < _checkedOutList.Count; i++)
+            {
+                destination[i] = _InternalCopy(_checkedOutList[i]);
+            }
+            return true;
         }
 
         public bool SaveAsVersion(string name)
@@ -51,6 +79,7 @@ namespace EffectsPedalsKeeper.Utils
                 newVersion.Items.Add(_InternalCopy(item));
             }
             _versions.Add(newVersion);
+            CheckedOutVersionIndex = _versions.IndexOf(newVersion);
             return _versions.Count > startingCount;
         }
 
@@ -89,6 +118,7 @@ namespace EffectsPedalsKeeper.Utils
         {
             _checkedOutList.Clear();
             _versions.Clear();
+            CheckedOutVersionIndex = -1;
         }
 
         public bool Contains(T item) => _checkedOutList.Contains(item);
