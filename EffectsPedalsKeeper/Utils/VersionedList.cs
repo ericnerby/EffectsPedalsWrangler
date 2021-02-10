@@ -109,17 +109,29 @@ namespace EffectsPedalsKeeper.Utils
 
         public void Insert(int index, T item)
         {
-            throw new NotImplementedException();
+            _checkedOutList.Insert(index, item);
+            foreach(var version in _versions)
+            {
+                version.Items.Insert(index, item);
+            }
         }
 
         public bool Remove(T item)
         {
-            throw new NotImplementedException();
+            var index = IndexOf(item);
+            if (index == -1) return false;
+
+            RemoveAt(index);
+            return true;
         }
 
         public void RemoveAt(int index)
         {
-            throw new NotImplementedException();
+            _checkedOutList.RemoveAt(index);
+            foreach(var version in _versions)
+            {
+                version.Items.RemoveAt(index);
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
