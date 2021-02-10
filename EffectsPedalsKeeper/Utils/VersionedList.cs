@@ -69,7 +69,7 @@ namespace EffectsPedalsKeeper.Utils
         public T this[int index]
         {
             get => _checkedOutList[index];
-            set => _checkedOutList[index] = value;
+            set => throw new NotImplementedException();
         }
 
         public int Count => _checkedOutList.Count;
@@ -87,18 +87,13 @@ namespace EffectsPedalsKeeper.Utils
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            _checkedOutList.Clear();
+            _versions.Clear();
         }
 
-        public bool Contains(T item)
-        {
-            throw new NotImplementedException();
-        }
+        public bool Contains(T item) => _checkedOutList.Contains(item);
 
-        public void CopyTo(T[] array, int arrayIndex)
-        {
-            throw new NotImplementedException();
-        }
+        public void CopyTo(T[] array, int arrayIndex) => _checkedOutList.CopyTo(array, arrayIndex);
 
         public void AddRange(IEnumerable<T> collection)
         {
@@ -108,15 +103,9 @@ namespace EffectsPedalsKeeper.Utils
             }
         }
 
-        public IEnumerator<T> GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerator<T> GetEnumerator() => _checkedOutList.GetEnumerator();
 
-        public int IndexOf(T item)
-        {
-            throw new NotImplementedException();
-        }
+        public int IndexOf(T item) => _checkedOutList.IndexOf(item);
 
         public void Insert(int index, T item)
         {
@@ -133,10 +122,7 @@ namespace EffectsPedalsKeeper.Utils
             throw new NotImplementedException();
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
     public class Version<T>
