@@ -82,7 +82,7 @@ namespace EffectsPedalsKeeper.Settings.Tests
             var notExpected = _knobSetting.CurrentValue;
 
             Assert.NotEqual(notExpected, target);
-            Assert.IsAssignableFrom<KnobSetting>(target);
+            Assert.IsAssignableFrom<KnobSetting>(copy);
         }
     }
 }
