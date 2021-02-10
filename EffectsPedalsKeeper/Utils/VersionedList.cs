@@ -45,7 +45,11 @@ namespace EffectsPedalsKeeper.Utils
         {
 
             var startingCount = _versions.Count;
-            var newVersion = new Version<T>(name, _checkedOutList);
+            var newVersion = new Version<T>(name);
+            foreach(var item in _checkedOutList)
+            {
+                newVersion.Items.Add(_InternalCopy(item));
+            }
             _versions.Add(newVersion);
             return _versions.Count > startingCount;
         }
@@ -60,7 +64,7 @@ namespace EffectsPedalsKeeper.Utils
 
         public int Count => _checkedOutList.Count;
 
-        public bool IsReadOnly => throw new NotImplementedException();
+        public bool IsReadOnly => false;
 
         public void Add(T item)
         {
@@ -88,7 +92,10 @@ namespace EffectsPedalsKeeper.Utils
 
         public void AddRange(IEnumerable<T> collection)
         {
-            _checkedOutList.AddRange(collection);
+            foreach(var item in collection)
+            {
+                Add(item);
+            }
         }
 
         public IEnumerator<T> GetEnumerator()
@@ -124,10 +131,10 @@ namespace EffectsPedalsKeeper.Utils
 
     public class Version<T>
     {
-        public Version(string name, List<T> items)
+        public Version(string name)
         {
             Name = name;
-            Items = items;
+            Items = new List<T>();
         }
         public string Name { get; set; }
         public List<T> Items { get; set; }
