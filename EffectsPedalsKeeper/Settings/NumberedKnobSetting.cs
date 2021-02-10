@@ -5,9 +5,9 @@ using System.Text;
 namespace EffectsPedalsKeeper.Settings
 {
     /// <summary>
-    ///  A knob rotates with no set positions. It can either
-    ///  have numbers on the dial, or the position can be
-    ///  indicated by position on a clock face, eg. '3:00'.
+    ///  A knob rotates with no set positions.
+    ///  A NumberedKnob's value is indicated by
+    ///  a string version of a double.
     /// </summary>
     public class NumberedKnobSetting : Setting
     {

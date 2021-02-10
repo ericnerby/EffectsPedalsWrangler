@@ -17,8 +17,7 @@ namespace EffectsPedalsKeeper.Utils
         private Func<T, T> _InternalCopy;
 
         /// <summary>
-        /// Index of CheckedOutVersion.
-        /// -1 if no version saved.
+        /// Index of CheckedOutVersion. -1 if no version saved.
         /// </summary>
         public int CheckedOutVersionIndex { get; private set; }
 
