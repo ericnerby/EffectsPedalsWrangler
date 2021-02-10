@@ -59,6 +59,7 @@ namespace EffectsPedalsKeeper.Settings
             Label = label;
             MinValue = minValue;
             MaxValue = maxValue;
+            CurrentValue = MinValue;
         }
 
         /// <summary>
@@ -94,5 +95,10 @@ namespace EffectsPedalsKeeper.Settings
         }
 
         public override string ToString() => $"{Label}: {CurrentValueDisplay}";
+
+        protected T _InternalCopy<T>()
+        {
+            return (T)this.MemberwiseClone();
+        }
     }
 }

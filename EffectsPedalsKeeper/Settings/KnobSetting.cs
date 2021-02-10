@@ -1,5 +1,4 @@
 ﻿using EffectsPedalsKeeper.Utils;
-using System;
 
 namespace EffectsPedalsKeeper.Settings
 {
@@ -7,7 +6,7 @@ namespace EffectsPedalsKeeper.Settings
     ///  A knob rotates with no set positions. The position is
     ///  indicated by position on a clock face, eg. '3:00'.
     /// </summary>
-    public class KnobSetting : Setting
+    public class KnobSetting : Setting, ICopyable<KnobSetting>
     {
         private static ClockFaceConverter _clockFaceConverter = new ClockFaceConverter(PrecisionValue.Five);
 
@@ -16,5 +15,10 @@ namespace EffectsPedalsKeeper.Settings
         public KnobSetting(string label, string minClockPosition, string maxClockPosition)
             : base(label, _clockFaceConverter.StringTimeToInt(minClockPosition), _clockFaceConverter.StringTimeToInt(maxClockPosition))
         {}
+
+        public KnobSetting Copy()
+        {
+            return _InternalCopy<KnobSetting>();
+        }
     }
 }

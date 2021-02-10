@@ -1,4 +1,6 @@
-﻿namespace EffectsPedalsKeeper.Settings
+﻿using System;
+
+namespace EffectsPedalsKeeper.Settings
 {
     public interface ISetting
     {

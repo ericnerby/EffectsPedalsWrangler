@@ -70,5 +70,19 @@ namespace EffectsPedalsKeeper.Settings.Tests
             Assert.Contains(expectedDisplayValue, target);
             Assert.Contains(expectedLabel, target);
         }
+
+        [Fact()]
+        public void CopyTest()
+        {
+            KnobSetting copy = _knobSetting.Copy();
+
+            copy.CurrentValue += 5;
+
+            var target = copy.CurrentValue;
+            var notExpected = _knobSetting.CurrentValue;
+
+            Assert.NotEqual(notExpected, target);
+            Assert.IsAssignableFrom<KnobSetting>(target);
+        }
     }
 }
