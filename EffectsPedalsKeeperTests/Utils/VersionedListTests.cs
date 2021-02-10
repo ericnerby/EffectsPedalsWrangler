@@ -257,5 +257,20 @@ namespace EffectsPedalsKeeper.Utils.Tests
         {
             return (TestObject)this.MemberwiseClone();
         }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is TestObject))
+            {
+                return false;
+            }
+            var that = (TestObject)obj;
+            return that.Name == Name && that.CurrentValue == CurrentValue;
+        }
+
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode() + CurrentValue;
+        }
     }
 }
