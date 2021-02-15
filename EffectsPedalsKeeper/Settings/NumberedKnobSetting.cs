@@ -9,7 +9,7 @@ namespace EffectsPedalsKeeper.Settings
     ///  A NumberedKnob's value is indicated by
     ///  a string version of a double.
     /// </summary>
-    public class NumberedKnobSetting : Setting
+    public class NumberedKnobSetting : Setting, ICopyable<NumberedKnobSetting>
     {
         private int _minKnobValue;
 
@@ -27,6 +27,11 @@ namespace EffectsPedalsKeeper.Settings
                    (maxKnobValue - minKnobValue) * 10)
         {
             _minKnobValue = minKnobValue;
+        }
+
+        public NumberedKnobSetting Copy()
+        {
+            throw new NotImplementedException();
         }
     }
 }
