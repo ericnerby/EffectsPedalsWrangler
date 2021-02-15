@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EffectsPedalsKeeper.Settings
+﻿namespace EffectsPedalsKeeper.Settings
 {
-    /// <summary>
-    ///  A knob rotates with no set positions.
-    ///  A NumberedKnob's value is indicated by
-    ///  a string version of a double.
-    /// </summary>
     public class NumberedKnobSetting : Setting, ICopyable<NumberedKnobSetting>
     {
         private int _minKnobValue;
@@ -31,7 +22,7 @@ namespace EffectsPedalsKeeper.Settings
 
         public NumberedKnobSetting Copy()
         {
-            throw new NotImplementedException();
+            return _InternalCopy<NumberedKnobSetting>();
         }
     }
 }

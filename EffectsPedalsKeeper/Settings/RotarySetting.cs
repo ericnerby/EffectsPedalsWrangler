@@ -2,10 +2,6 @@
 
 namespace EffectsPedalsKeeper.Settings
 {
-    /// <summary>
-    ///  A RotarySetting has fixed positions, or 'Options', that are labeled.
-    ///  This could also represent a three way switch.
-    /// </summary>
     public class RotarySetting : Setting
     {
         public string[] Options { get; private set; }

@@ -2,33 +2,17 @@
 
 namespace EffectsPedalsKeeper.Settings
 {
-    /// <summary>
-    ///  Generic Interface for Pedal Settings
-    /// </summary>
     public abstract class Setting : ISetting
     {
         public string Label { get; }
 
-        /// <summary>
-        ///  Minimum value allowed for setting
-        /// </summary>
         public int MinValue { get; protected set; }
-        /// <summary>
-        ///  Maximum value allowed for setting
-        /// </summary>
         public virtual int MaxValue { get; protected set; }
 
-        /// <summary>
-        ///  CurrentValue converted to the appropriate string for the particular Setting type.
-        /// </summary>
         public abstract string CurrentValueDisplay { get; }
 
 
         private int _currentValue;
-        /// <summary>
-        ///  Current Value of setting. Can be set directly as long
-        ///  as given value is between MinValue and MaxValue.
-        /// </summary>
         public int CurrentValue
         {
             get
@@ -62,10 +46,6 @@ namespace EffectsPedalsKeeper.Settings
             CurrentValue = MinValue;
         }
 
-        /// <summary>
-        ///  Positive incremental adjustment to CurrentValue
-        /// </summary>
-        /// <returns>New CurrentValue</returns>
         public int StepUp()
         {
             if (CurrentValue >= MaxValue)
@@ -78,10 +58,6 @@ namespace EffectsPedalsKeeper.Settings
             }
         }
 
-        /// <summary>
-        ///  Negative incremental adjustment to CurrentValue
-        /// </summary>
-        /// <returns>New CurrentValue</returns>
         public int StepDown()
         {
             if (CurrentValue <= MinValue)
