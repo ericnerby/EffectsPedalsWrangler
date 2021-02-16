@@ -16,7 +16,7 @@ namespace EffectsPedalsKeeper.Settings
 
         public RotarySetting Copy()
         {
-            throw new NotImplementedException();
+            return _InternalCopy<RotarySetting>();
         }
     }
 }

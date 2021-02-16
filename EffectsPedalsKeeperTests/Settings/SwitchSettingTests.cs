@@ -68,5 +68,32 @@ namespace EffectsPedalsKeeper.Settings.Tests
             Assert.Contains(expectedOption, target);
             Assert.Contains(expectedLabel, target);
         }
+
+        [Fact()]
+        public void CopyTest()
+        {
+            SwitchSetting copy = _switch.Copy();
+
+            copy.CurrentValue += 1;
+
+            var target = copy.CurrentValue;
+            var notExpected = _switch.CurrentValue;
+
+            Assert.NotEqual(notExpected, target);
+            Assert.IsAssignableFrom<SwitchSetting>(copy);
+        }
+
+        [Fact()]
+        public void CopyDisplayTest()
+        {
+            SwitchSetting copy = _switch.Copy();
+
+            copy.CurrentValue = copy.MaxValue;
+
+            var target = copy.ToString();
+            var expected = "On";
+
+            Assert.Contains(expected, target);
+        }
     }
 }
