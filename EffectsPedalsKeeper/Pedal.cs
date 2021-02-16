@@ -3,7 +3,7 @@ using EffectsPedalsKeeper.Settings;
 
 namespace EffectsPedalsKeeper
 {
-    public class Pedal : IPedal
+    public class Pedal : IPedal, ICopyable<Pedal>
     {
         public bool Engaged { get; set; }
 
@@ -56,6 +56,11 @@ namespace EffectsPedalsKeeper
         public override string ToString()
         {
             return $"{Name} by {Maker} ({EffectType})";
+        }
+
+        public Pedal Copy()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

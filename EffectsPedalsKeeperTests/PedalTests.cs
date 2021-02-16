@@ -78,5 +78,20 @@ namespace EffectsPedalsKeeper.Tests
 
             Assert.Equal(expected, target.Settings.Count);
         }
+
+        [Fact()]
+        public void CopyTest()
+        {
+            _pedal.AddSettings(_mockSettings);
+            Pedal copy = _pedal.Copy();
+
+            copy.Settings[2] = new SettingMock("Level", 12, 132, "12:00");
+
+            var notExpected = _pedal.Settings[2];
+            var target = copy.Settings[2];
+
+            Assert.NotEqual(notExpected, target);
+            Assert.IsAssignableFrom<Pedal>(copy);
+        }
     }
 }

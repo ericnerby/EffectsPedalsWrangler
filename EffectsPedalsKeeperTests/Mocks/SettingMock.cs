@@ -2,7 +2,7 @@
 
 namespace EffectsPedalsKeeper.Tests.Mocks
 {
-    public class SettingMock : EffectsPedalsKeeper.Settings.ISetting
+    public class SettingMock : Settings.ISetting
     {
         private string _valueDisplayText;
 
