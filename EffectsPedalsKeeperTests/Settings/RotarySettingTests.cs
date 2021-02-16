@@ -72,5 +72,32 @@ namespace EffectsPedalsKeeper.Settings.Tests
             Assert.Contains(expectedOption, target);
             Assert.Contains(expectedLabel, target);
         }
+
+        [Fact()]
+        public void CopyTest()
+        {
+            RotarySetting copy = _rotary.Copy();
+
+            copy.CurrentValue += 1;
+
+            var target = copy.CurrentValue;
+            var notExpected = _rotary.CurrentValue;
+
+            Assert.NotEqual(notExpected, target);
+            Assert.IsAssignableFrom<RotarySetting>(copy);
+        }
+
+        [Fact()]
+        public void CopyDisplayTest()
+        {
+            RotarySetting copy = _rotary.Copy();
+
+            copy.CurrentValue = copy.MaxValue;
+
+            var target = copy.ToString();
+            var expected = _options[_options.Length - 1];
+
+            Assert.Contains(expected, target);
+        }
     }
 }
