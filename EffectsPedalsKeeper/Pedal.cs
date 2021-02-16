@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using EffectsPedalsKeeper.Settings;
 
 namespace EffectsPedalsKeeper
 {
-    public class Pedal : IPedal, ICopyable<Pedal>
+    public class Pedal : IPedal, ICopyable
     {
         public bool Engaged { get; set; }
 
@@ -58,9 +59,23 @@ namespace EffectsPedalsKeeper
             return $"{Name} by {Maker} ({EffectType})";
         }
 
-        public Pedal Copy()
+        public object Copy()
         {
-            throw new System.NotImplementedException();
+            var newPedal = new Pedal(Maker, Name, EffectType);
+            newPedal.Engaged = Engaged;
+
+            var newSettings = new ISetting[Settings.Count];
+            for(var i = 0; i < Settings.Count; i++)
+            {
+                if (Settings[i] is ICopyable)
+                {
+                    var oldSetting = (ICopyable)Settings[i];
+                    newSettings[i] = (ISetting)oldSetting.Copy();
+                }
+            }
+            newPedal.AddSettings(newSettings);
+
+            return newPedal;
         }
     }
 }

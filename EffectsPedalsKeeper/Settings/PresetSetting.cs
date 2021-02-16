@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EffectsPedalsKeeper.Settings
 {
-    public class PresetSetting : Setting, ICopyable<PresetSetting>
+    public class PresetSetting : Setting, ICopyable
     {
         public override int MaxValue => Options.Count - 1;
 
@@ -50,7 +50,7 @@ namespace EffectsPedalsKeeper.Settings
             Options.RemoveAt(index);
         }
 
-        public PresetSetting Copy()
+        public object Copy()
         {
             return _InternalCopy<PresetSetting>();
         }

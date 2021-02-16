@@ -2,7 +2,7 @@
 
 namespace EffectsPedalsKeeper.Settings
 {
-    public class KnobSetting : Setting, ICopyable<KnobSetting>
+    public class KnobSetting : Setting, ICopyable
     {
         private static ClockFaceConverter _clockFaceConverter = new ClockFaceConverter(PrecisionValue.Five);
 
@@ -12,7 +12,7 @@ namespace EffectsPedalsKeeper.Settings
             : base(label, _clockFaceConverter.StringTimeToInt(minClockPosition), _clockFaceConverter.StringTimeToInt(maxClockPosition))
         {}
 
-        public KnobSetting Copy()
+        public object Copy()
         {
             return _InternalCopy<KnobSetting>();
         }

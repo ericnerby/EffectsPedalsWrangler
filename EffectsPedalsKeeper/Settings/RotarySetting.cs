@@ -2,7 +2,7 @@
 
 namespace EffectsPedalsKeeper.Settings
 {
-    public class RotarySetting : Setting, ICopyable<RotarySetting>
+    public class RotarySetting : Setting, ICopyable
     {
         public string[] Options { get; private set; }
 
@@ -14,7 +14,7 @@ namespace EffectsPedalsKeeper.Settings
             Options = options;
         }
 
-        public RotarySetting Copy()
+        public object Copy()
         {
             return _InternalCopy<RotarySetting>();
         }

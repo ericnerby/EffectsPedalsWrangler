@@ -83,7 +83,7 @@ namespace EffectsPedalsKeeper.Tests
         public void CopyTest()
         {
             _pedal.AddSettings(_mockSettings);
-            Pedal copy = _pedal.Copy();
+            Pedal copy = (Pedal)_pedal.Copy();
 
             copy.Settings[2] = new SettingMock("Level", 12, 132, "12:00");
 

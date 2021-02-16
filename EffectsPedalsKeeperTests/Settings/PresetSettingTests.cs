@@ -111,7 +111,7 @@ namespace EffectsPedalsKeeper.Settings.Tests
         [Fact()]
         public void CopyTest()
         {
-            PresetSetting copy = _presetSetting.Copy();
+            PresetSetting copy = (PresetSetting)_presetSetting.Copy();
 
             copy.CurrentValue += 1;
 
@@ -125,7 +125,7 @@ namespace EffectsPedalsKeeper.Settings.Tests
         [Fact()]
         public void CopyDisplayTest()
         {
-            PresetSetting copy = _presetSetting.Copy();
+            PresetSetting copy = (PresetSetting)_presetSetting.Copy();
 
             copy.CurrentValue = copy.MaxValue;
 

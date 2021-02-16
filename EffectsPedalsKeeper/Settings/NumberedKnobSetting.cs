@@ -1,6 +1,6 @@
 ﻿namespace EffectsPedalsKeeper.Settings
 {
-    public class NumberedKnobSetting : Setting, ICopyable<NumberedKnobSetting>
+    public class NumberedKnobSetting : Setting, ICopyable
     {
         private int _minKnobValue;
 
@@ -20,7 +20,7 @@
             _minKnobValue = minKnobValue;
         }
 
-        public NumberedKnobSetting Copy()
+        public object Copy()
         {
             return _InternalCopy<NumberedKnobSetting>();
         }

@@ -1,7 +1,7 @@
 ﻿namespace EffectsPedalsKeeper
 {
-    interface ICopyable<T>
+    interface ICopyable
     {
-        public T Copy();
+        public object Copy();
     }
 }

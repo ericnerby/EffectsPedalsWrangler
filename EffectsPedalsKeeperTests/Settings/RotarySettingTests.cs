@@ -76,7 +76,7 @@ namespace EffectsPedalsKeeper.Settings.Tests
         [Fact()]
         public void CopyTest()
         {
-            RotarySetting copy = _rotary.Copy();
+            RotarySetting copy = (RotarySetting)_rotary.Copy();
 
             copy.CurrentValue += 1;
 
@@ -90,7 +90,7 @@ namespace EffectsPedalsKeeper.Settings.Tests
         [Fact()]
         public void CopyDisplayTest()
         {
-            RotarySetting copy = _rotary.Copy();
+            RotarySetting copy = (RotarySetting)_rotary.Copy();
 
             copy.CurrentValue = copy.MaxValue;
 

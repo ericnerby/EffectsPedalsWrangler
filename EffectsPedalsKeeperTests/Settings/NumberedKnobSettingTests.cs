@@ -101,7 +101,7 @@ namespace EffectsPedalsKeeper.Settings.Tests
         [Fact()]
         public void CopyTest()
         {
-            NumberedKnobSetting copy = _numberedKnobSetting.Copy();
+            NumberedKnobSetting copy = (NumberedKnobSetting)_numberedKnobSetting.Copy();
 
             copy.CurrentValue += 5;
 
@@ -115,7 +115,7 @@ namespace EffectsPedalsKeeper.Settings.Tests
         [Fact()]
         public void CopyDisplayTest()
         {
-            NumberedKnobSetting copy = _numberedKnobSetting.Copy();
+            NumberedKnobSetting copy = (NumberedKnobSetting)_numberedKnobSetting.Copy();
 
             copy.CurrentValue = copy.MaxValue;
 

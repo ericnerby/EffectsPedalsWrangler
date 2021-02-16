@@ -74,7 +74,7 @@ namespace EffectsPedalsKeeper.Settings.Tests
         [Fact()]
         public void CopyTest()
         {
-            KnobSetting copy = _knobSetting.Copy();
+            KnobSetting copy = (KnobSetting)_knobSetting.Copy();
 
             copy.CurrentValue += 5;
 
