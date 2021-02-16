@@ -130,7 +130,7 @@ namespace EffectsPedalsKeeper.Settings.Tests
             copy.CurrentValue = copy.MaxValue;
 
             var target = copy.ToString();
-            var expected = _presets[-1];
+            var expected = _presets[_presets.Count - 1];
 
             Assert.Contains(expected, target);
         }
