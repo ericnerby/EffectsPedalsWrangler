@@ -6,7 +6,7 @@ namespace EffectsPedalsKeeper.Settings
     {
         public string Label { get; }
 
-        public int MinValue { get; }\
+        public int MinValue { get; }
         public int MaxValue { get; }
 
         /// <summary>
