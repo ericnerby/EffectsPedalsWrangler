@@ -41,7 +41,7 @@ namespace EffectsPedalsKeeper
                 Console.WriteLine("Choose from the following options:");
                 for(var i = 0; i < _menuItems.Length; i++)
                 {
-                    Console.WriteLine($"{(i + 1)}. {_menuItems[i]}");
+                    Console.WriteLine($"{i + 1}. {_menuItems[i]}");
                 }
                 var input = Console.ReadLine();
                 if(CheckForQuitOrHelp(input))
@@ -72,12 +72,32 @@ namespace EffectsPedalsKeeper
 
         static void ViewExistingPedals()
         {
-            Console.WriteLine("Existing Pedals");
+            if(Pedals.Count > 0)
+            {
+                foreach (Pedal pedal in Pedals)
+                {
+                    Console.WriteLine($"{pedal} ({pedal.EffectType})");
+                }
+            }
+            else
+            {
+                Console.WriteLine("No pedals have been added yet.");
+            }
         }
 
         static void ViewExistingBoards()
         {
-            Console.WriteLine("Existing Boards");
+            if (PedalBoards.Count > 0)
+            {
+                foreach (PedalBoard board in PedalBoards)
+                {
+                    Console.WriteLine(board);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No Pedal Boards have been created yet.");
+            }
         }
 
         static void AddNewPedals()
