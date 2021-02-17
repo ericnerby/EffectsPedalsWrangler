@@ -1,15 +1,15 @@
 ﻿using EffectsPedalsKeeper.Utils;
-using System;
 
 namespace EffectsPedalsKeeper
 {
-    public class PedalBoard : VersionedList<IPedal>
+    public class PedalBoard : VersionedList<Pedal>
     {
-        private static IPedal _CopyMethod(IPedal item) => throw new NotImplementedException();
+        public string Name { get; set; }
+        private static Pedal _CopyMethod(Pedal item) => (Pedal)item.Copy();
 
         public PedalBoard(string name) : base(_CopyMethod)
         {
-            throw new NotImplementedException();
+            Name = name;
         }
     }
 }
