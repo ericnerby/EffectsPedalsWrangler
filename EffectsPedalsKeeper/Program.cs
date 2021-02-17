@@ -5,11 +5,11 @@ namespace EffectsPedalsKeeper
 {
     class Program
     {
-        static string WelcomeText =
-            "Welcome to the Effects Pedals Wrangler.\n"
-            + "At any time, type '-q' to quit or '-h' for help.";
+        static string _globalOptionsText = "Type '-q' to quit or '-h' for help";
+        static string _welcomeText =
+            $"Welcome to the Effects Pedals Wrangler.\n{_globalOptionsText}.";
 
-        static string[] MenuItems = 
+        static string[] _menuItems = 
         {
             "View existing pedals",
             "View existing boards",
@@ -17,13 +17,58 @@ namespace EffectsPedalsKeeper
             "Create new board"
         };
 
-        static Action[] MenuActions =
+        static Action[] _menuActions =
         {
             () => ViewExistingPedals(),
             () => ViewExistingBoards(),
             () => AddNewPedals(),
             () => CreateNewBoard()
         };
+
+        public static List<Pedal> Pedals = new List<Pedal>();
+        public static List<PedalBoard> PedalBoards = new List<PedalBoard>();
+
+        static void Main(string[] args)
+        {
+            Console.WriteLine(_welcomeText);
+            InputLoop();
+        }
+
+        static void InputLoop()
+        {
+            while(true)
+            {
+                Console.WriteLine("Choose from the following options:");
+                for(var i = 0; i < _menuItems.Length; i++)
+                {
+                    Console.WriteLine($"{(i + 1)}. {_menuItems[i]}");
+                }
+                var input = Console.ReadLine();
+                if(CheckForQuitOrHelp(input))
+                {
+                    break;
+                }
+                int option;
+                if(int.TryParse(input, out option))
+                {
+                    option -= 1;
+                    if(option >= 0 && option < _menuActions.Length)
+                    {
+                        _menuActions[option]();
+                    }
+                    else
+                    {
+                        Console.WriteLine(
+                            $"Please choose a number from the list\n{_globalOptionsText}.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine(
+                        $"Please enter your option as a number\n{_globalOptionsText}.");
+                }
+            }
+        }
 
         static void ViewExistingPedals()
         {
@@ -37,12 +82,12 @@ namespace EffectsPedalsKeeper
 
         static void AddNewPedals()
         {
-            while(true)
+            while (true)
             {
                 Pedals.Add(Builder.BuildPedal());
                 Console.Write("Would you like to add another pedal? [N/y]  ");
                 var input = Console.ReadLine();
-                if(input.ToLower() != "y")
+                if (input.ToLower() != "y")
                 {
                     break;
                 }
@@ -52,53 +97,6 @@ namespace EffectsPedalsKeeper
         static void CreateNewBoard()
         {
             Console.WriteLine("New Board");
-        }
-
-        public static List<Pedal> Pedals = new List<Pedal>();
-        public static List<PedalBoard> PedalBoards = new List<PedalBoard>();
-
-        static void Main(string[] args)
-        {
-            Console.WriteLine(WelcomeText);
-            InputLoop();
-        }
-
-        static void InputLoop()
-        {
-            while(true)
-            {
-                Console.WriteLine("Choose from the following options:");
-                for(var i = 0; i < MenuItems.Length; i++)
-                {
-                    Console.WriteLine($"{(i + 1)}. {MenuItems[i]}");
-                }
-                var input = Console.ReadLine();
-                if(CheckForQuitOrHelp(input))
-                {
-                    break;
-                }
-                int option;
-                if(int.TryParse(input, out option))
-                {
-                    option -= 1;
-                    if(option >= 0 && option < MenuActions.Length)
-                    {
-                        MenuActions[option]();
-                    }
-                    else
-                    {
-                        Console.WriteLine(
-                            "Please choose a number from the list\n"
-                            + "Type '-q' to quit or '-h' for help");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine(
-                        "Please enter your option as a number\n"
-                        + "Type '-q' to quit or '-h' for help");
-                }
-            }
         }
 
         static bool CheckForQuitOrHelp(string input)
