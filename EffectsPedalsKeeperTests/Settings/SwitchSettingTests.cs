@@ -72,7 +72,7 @@ namespace EffectsPedalsKeeper.Settings.Tests
         [Fact()]
         public void CopyTest()
         {
-            SwitchSetting copy = _switch.Copy();
+            SwitchSetting copy = (SwitchSetting)_switch.Copy();
 
             copy.CurrentValue += 1;
 
@@ -86,7 +86,7 @@ namespace EffectsPedalsKeeper.Settings.Tests
         [Fact()]
         public void CopyDisplayTest()
         {
-            SwitchSetting copy = _switch.Copy();
+            SwitchSetting copy = (SwitchSetting)_switch.Copy();
 
             copy.CurrentValue = copy.MaxValue;
 

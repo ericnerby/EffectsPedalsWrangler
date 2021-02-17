@@ -12,7 +12,7 @@ namespace EffectsPedalsKeeper.Settings
             : base(label, _clockFaceConverter.StringTimeToInt(minClockPosition), _clockFaceConverter.StringTimeToInt(maxClockPosition))
         {}
 
-        public object Copy()
+        public override object Copy()
         {
             return _InternalCopy<KnobSetting>();
         }

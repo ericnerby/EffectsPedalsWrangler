@@ -14,7 +14,7 @@ namespace EffectsPedalsKeeper.Settings
             Options = options;
         }
 
-        public object Copy()
+        public override object Copy()
         {
             return _InternalCopy<RotarySetting>();
         }

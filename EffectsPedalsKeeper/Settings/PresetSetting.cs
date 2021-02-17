@@ -50,7 +50,7 @@ namespace EffectsPedalsKeeper.Settings
             Options.RemoveAt(index);
         }
 
-        public object Copy()
+        public override object Copy()
         {
             return _InternalCopy<PresetSetting>();
         }

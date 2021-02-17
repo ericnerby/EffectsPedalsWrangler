@@ -20,7 +20,7 @@
             _minKnobValue = minKnobValue;
         }
 
-        public object Copy()
+        public override object Copy()
         {
             return _InternalCopy<NumberedKnobSetting>();
         }

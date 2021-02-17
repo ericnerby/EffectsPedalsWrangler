@@ -2,7 +2,7 @@
 
 namespace EffectsPedalsKeeper.Settings
 {
-    public abstract class Setting : ISetting
+    public abstract class Setting : ISetting, ICopyable
     {
         public string Label { get; }
 
@@ -75,6 +75,11 @@ namespace EffectsPedalsKeeper.Settings
         protected T _InternalCopy<T>()
         {
             return (T)this.MemberwiseClone();
+        }
+
+        public virtual object Copy()
+        {
+            return _InternalCopy<Setting>();
         }
     }
 }

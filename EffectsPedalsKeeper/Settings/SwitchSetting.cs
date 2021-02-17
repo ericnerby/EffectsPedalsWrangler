@@ -6,7 +6,7 @@
             : base(label, new string[] { "Off", "On" })
         { }
 
-        public new SwitchSetting Copy()
+        public override object Copy()
         {
             return _InternalCopy<SwitchSetting>();
         }
