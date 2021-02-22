@@ -76,6 +76,11 @@ namespace EffectsPedalsKeeper
                 Console.Write("Choose a number for the setting type.\n"
                     + "Type 'c' to cancel adding setting:  ");
                 var input = Console.ReadLine();
+                if(input.ToLower() == "c")
+                {
+                    break;
+                }
+
                 int typeIndex;
                 if(int.TryParse(input, out typeIndex))
                 {
@@ -140,7 +145,31 @@ namespace EffectsPedalsKeeper
 
         private static NumberedKnobSetting CreateNumberedKnobSetting(string label)
         {
-            throw new NotImplementedException();
+            int minValue;
+            int maxValue;
+
+            while(true)
+            {
+                Console.WriteLine("What is the lowest number possible on the knob? ");
+                var input = Console.ReadLine();
+                if(int.TryParse(input, out minValue))
+                {
+                    break;
+                }
+                Console.WriteLine("Please enter an integer.");
+            }
+
+            while (true)
+            {
+                Console.WriteLine("What is the highest number possible on the knob? ");
+                var input = Console.ReadLine();
+                if (int.TryParse(input, out maxValue) && maxValue > minValue)
+                {
+                    break;
+                }
+                Console.WriteLine("Please enter an integer greater than the min value given.");
+            }
+            return new NumberedKnobSetting(label, minValue, maxValue);
         }
 
         private static RotarySetting CreateRotarySetting(string label)

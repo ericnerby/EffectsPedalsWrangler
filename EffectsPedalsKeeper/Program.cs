@@ -76,7 +76,7 @@ namespace EffectsPedalsKeeper
             {
                 foreach (Pedal pedal in Pedals)
                 {
-                    Console.WriteLine($"{pedal} ({pedal.EffectType})");
+                    Console.WriteLine($"{pedal}");
                 }
             }
             else
