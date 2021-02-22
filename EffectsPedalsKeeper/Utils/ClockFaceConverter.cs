@@ -8,11 +8,6 @@ namespace EffectsPedalsKeeper.Utils
 
         public int MaxIntRange { get; }
 
-        /// <summary>
-        ///  Create a ClockFaceConverter to convert between clockface
-        ///  and integer values ranging from 1 to the given range.
-        /// </summary>
-        /// <param name="maxIntRange"></param>
         public ClockFaceConverter(PrecisionValue precisionValue)
         {
             _conversionValue = (int)precisionValue;

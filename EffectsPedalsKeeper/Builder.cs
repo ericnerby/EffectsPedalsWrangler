@@ -139,26 +139,32 @@ namespace EffectsPedalsKeeper
                 return CreatePresetSetting(label);
             }
 
-            return null;
+            throw new NotImplementedException($"Missing Implementation for {type}.");
         }
 
         private static KnobSetting CreateKnobSetting(string label)
         {
             string minClock;
-            int minVal;
+            int minValue;
             string maxClock;
 
-            Regex clockFormat = new Regex(@"\d+:\d{2}");
+            Regex clockFormat = new Regex(@"(\d+):(\d{2})");
 
             while (true)
             {
                 Console.WriteLine("What is the lowest clockface value possible on the knob ('7:00')? ");
                 var input = Console.ReadLine();
-                if(clockFormat.IsMatch(input))
+                var match = clockFormat.Match(input);
+                if (match.Success)
                 {
-                    minClock = input;
-                    minVal = ClockConverter.StringTimeToInt(input);
-                    break;
+                    int hours;
+                    if(int.TryParse(match.Groups[1].Value, out hours)
+                        && hours > 0 && hours <= 12)
+                    {
+                        minClock = input;
+                        minValue = ClockConverter.StringTimeToInt(input);
+                        break;
+                    }
                 }
                 Console.WriteLine("Please enter a clockface position in the format 'h:mm'.");
             }
@@ -167,11 +173,17 @@ namespace EffectsPedalsKeeper
             {
                 Console.WriteLine("What is the highest clockface value possible on the knob ('5:00')? ");
                 var input = Console.ReadLine();
-                if (clockFormat.IsMatch(input)
-                    && ClockConverter.StringTimeToInt(input) > minVal)
+                var match = clockFormat.Match(input);
+                if (match.Success)
                 {
-                    maxClock = input;
-                    break;
+                    int hours;
+                    if (int.TryParse(match.Groups[1].Value, out hours)
+                        && hours > 0 && hours <= 12
+                        && ClockConverter.StringTimeToInt(match.Groups[0].Value) > minValue)
+                    {
+                        maxClock = input;
+                        break;
+                    }
                 }
                 Console.WriteLine("Please enter a clockface position in the format 'h:mm'.\n"
                                   + "Value must be greater than min provided.");
