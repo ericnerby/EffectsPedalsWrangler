@@ -1,11 +1,15 @@
 ﻿using EffectsPedalsKeeper.Settings;
+using EffectsPedalsKeeper.Utils;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace EffectsPedalsKeeper
 {
     public class Builder
     {
+        public static ClockFaceConverter ClockConverter = new ClockFaceConverter(PrecisionValue.Five);
+
         public static Pedal BuildPedal()
         {
             Pedal newPedal;
@@ -140,7 +144,39 @@ namespace EffectsPedalsKeeper
 
         private static KnobSetting CreateKnobSetting(string label)
         {
-            throw new NotImplementedException();
+            string minClock;
+            int minVal;
+            string maxClock;
+
+            Regex clockFormat = new Regex(@"\d+:\d{2}");
+
+            while (true)
+            {
+                Console.WriteLine("What is the lowest clockface value possible on the knob ('7:00')? ");
+                var input = Console.ReadLine();
+                if(clockFormat.IsMatch(input))
+                {
+                    minClock = input;
+                    minVal = ClockConverter.StringTimeToInt(input);
+                    break;
+                }
+                Console.WriteLine("Please enter a clockface position in the format 'h:mm'.");
+            }
+
+            while (true)
+            {
+                Console.WriteLine("What is the highest clockface value possible on the knob ('5:00')? ");
+                var input = Console.ReadLine();
+                if (clockFormat.IsMatch(input)
+                    && ClockConverter.StringTimeToInt(input) > minVal)
+                {
+                    maxClock = input;
+                    break;
+                }
+                Console.WriteLine("Please enter a clockface position in the format 'h:mm'.\n"
+                                  + "Value must be greater than min provided.");
+            }
+            return new KnobSetting(label, minClock, maxClock);
         }
 
         private static NumberedKnobSetting CreateNumberedKnobSetting(string label)
@@ -174,12 +210,49 @@ namespace EffectsPedalsKeeper
 
         private static RotarySetting CreateRotarySetting(string label)
         {
-            throw new NotImplementedException();
+            List<string> newOptions = new List<string>();
+            while(true)
+            {
+                Console.WriteLine("Please provide the next option\n('-d' when done adding options): ");
+                var input = Console.ReadLine();
+                if (input.ToLower() == "-d")
+                {
+                    if(newOptions.Count < 1)
+                    {
+                        Console.WriteLine("Please provide at least one option.");
+                        continue;
+                    }
+                    break;
+                }
+                if(!string.IsNullOrEmpty(input))
+                {
+                    newOptions.Add(input);
+                }
+            }
+
+            return new RotarySetting(label, newOptions.ToArray());
         }
 
         private static PresetSetting CreatePresetSetting(string label)
         {
-            throw new NotImplementedException();
+            List<string> presets = new List<string>();
+            while(true)
+            {
+                Console.WriteLine("Please provide the next preset name\n('-d' when done adding presets): ");
+                var input = Console.ReadLine();
+                if (input.ToLower() == "-d")
+                {
+                    if (presets.Count < 1)
+                    {
+                        return new PresetSetting(label);
+                    }
+                    return new PresetSetting(label, presets);
+                }
+                if (!string.IsNullOrEmpty(input))
+                {
+                    presets.Add(input);
+                }
+            }
         }
     }
 
