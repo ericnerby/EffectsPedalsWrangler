@@ -1,4 +1,6 @@
-﻿namespace EffectsPedalsKeeper.Settings
+﻿using System;
+
+namespace EffectsPedalsKeeper.Settings
 {
     public class NumberedKnobSetting : Setting, ICopyable
     {
@@ -23,6 +25,11 @@
         public override object Copy()
         {
             return _InternalCopy<NumberedKnobSetting>();
+        }
+
+        public override void InteractiveChangeSetting(Func<string, bool> checkQuit)
+        {
+            throw new NotImplementedException();
         }
     }
 }

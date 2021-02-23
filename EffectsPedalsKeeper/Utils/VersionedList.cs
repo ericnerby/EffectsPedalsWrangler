@@ -106,7 +106,7 @@ namespace EffectsPedalsKeeper.Utils
 
         public void Add(T item)
         {
-            _checkedOutList.Add(item);
+            _checkedOutList.Add(_InternalCopy(item));
             foreach(var version in _versions)
             {
                 version.Items.Add(_InternalCopy(item));
@@ -176,5 +176,4 @@ namespace EffectsPedalsKeeper.Utils
         public string Name { get; set; }
         public List<T> Items { get; set; }
     }
-
 }

@@ -18,5 +18,10 @@ namespace EffectsPedalsKeeper.Settings
         {
             return _InternalCopy<RotarySetting>();
         }
+
+        public override void InteractiveChangeSetting(Func<string, bool> checkQuit)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

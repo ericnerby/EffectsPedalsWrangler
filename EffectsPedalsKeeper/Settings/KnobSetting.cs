@@ -1,4 +1,5 @@
 ﻿using EffectsPedalsKeeper.Utils;
+using System;
 
 namespace EffectsPedalsKeeper.Settings
 {
@@ -15,6 +16,11 @@ namespace EffectsPedalsKeeper.Settings
         public override object Copy()
         {
             return _InternalCopy<KnobSetting>();
+        }
+
+        public override void InteractiveChangeSetting(Func<string, bool> checkQuit)
+        {
+            throw new NotImplementedException();
         }
     }
 }

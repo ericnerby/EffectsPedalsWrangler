@@ -54,5 +54,10 @@ namespace EffectsPedalsKeeper.Settings
         {
             return _InternalCopy<PresetSetting>();
         }
+
+        public override void InteractiveChangeSetting(Func<string, bool> checkQuit)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
