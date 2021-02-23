@@ -96,8 +96,18 @@ namespace EffectsPedalsKeeper.Utils
         // IList implementation
         public T this[int index]
         {
-            get => _checkedOutList[index];
-            set => throw new NotImplementedException();
+            get
+            {
+                return _checkedOutList[index];
+            }
+            set
+            {
+                _checkedOutList[index] = value;
+                foreach(var version in _versions)
+                {
+                    version.Items[index] = value;
+                }
+            }
         }
 
         public int Count => _checkedOutList.Count;
