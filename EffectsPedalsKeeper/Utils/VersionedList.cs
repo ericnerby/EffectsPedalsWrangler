@@ -102,10 +102,10 @@ namespace EffectsPedalsKeeper.Utils
             }
             set
             {
-                _checkedOutList[index] = value;
+                _checkedOutList[index] = _InternalCopy(value);
                 foreach(var version in _versions)
                 {
-                    version.Items[index] = value;
+                    version.Items[index] = _InternalCopy(value);
                 }
             }
         }
