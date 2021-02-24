@@ -116,7 +116,7 @@ namespace EffectsPedalsKeeper
 
         static void CreateNewBoard()
         {
-            Console.WriteLine("New Board");
+            Builder.BuildBoard(Pedals);
         }
 
         static bool CheckForQuitOrHelp(string input)

@@ -42,6 +42,7 @@ namespace EffectsPedalsKeeper
 
         public static void AddPedals(PedalBoard board, List<Pedal> pedalsAvailable)
         {
+            var pedalsToAdd = new List<Pedal>();
             if(pedalsAvailable.Count < 1)
             {
                 Console.WriteLine("There are currently no pedals to add.\n"
@@ -63,7 +64,18 @@ namespace EffectsPedalsKeeper
                 {
                     break;
                 }
+                int pedalIndex;
+                if(int.TryParse(input, out pedalIndex)
+                    && pedalIndex >= 0 && pedalIndex < pedalsAvailable.Count)
+                {
+                    pedalsToAdd.Add(pedalsAvailable[pedalIndex]);
+                    continue;
+                }
+                Console.WriteLine("Please select a number in the list of pedals");
             }
+
+            board.AddRange(pedalsToAdd);
+            Console.WriteLine($"{pedalsToAdd.Count} pedals added to {board}");
         }
 
         private static EffectType GetEffectType()
