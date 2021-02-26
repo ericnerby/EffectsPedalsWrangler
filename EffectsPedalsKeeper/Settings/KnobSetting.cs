@@ -19,7 +19,7 @@ namespace EffectsPedalsKeeper.Settings
             return _InternalCopy<KnobSetting>();
         }
 
-        public override void InteractiveChangeSetting(Func<string, bool> checkQuit)
+        public override void InteractiveChangeSetting(Action<string> checkQuit)
         {
             var timeValidation = new Regex(@"\d+:\d{2}");
 

@@ -41,7 +41,7 @@ namespace EffectsPedalsKeeper.Tests.Mocks
             throw new NotImplementedException();
         }
 
-        public void InteractiveChangeSetting(Func<string, bool> checkQuit)
+        public void InteractiveChangeSetting(Action<string> checkQuit)
         {
             throw new NotImplementedException();
         }

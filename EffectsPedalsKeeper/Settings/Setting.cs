@@ -82,6 +82,6 @@ namespace EffectsPedalsKeeper.Settings
             return _InternalCopy<Setting>();
         }
 
-        abstract public void InteractiveChangeSetting(Func<string, bool> checkQuit);
+        abstract public void InteractiveChangeSetting(Action<string> checkQuit);
     }
 }

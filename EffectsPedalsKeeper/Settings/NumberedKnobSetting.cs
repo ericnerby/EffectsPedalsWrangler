@@ -27,7 +27,7 @@ namespace EffectsPedalsKeeper.Settings
             return _InternalCopy<NumberedKnobSetting>();
         }
 
-        public override void InteractiveChangeSetting(Func<string, bool> checkQuit)
+        public override void InteractiveChangeSetting(Action<string> checkQuit)
         {
             while (true)
             {
