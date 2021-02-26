@@ -2,7 +2,7 @@
 
 namespace EffectsPedalsKeeper.Settings
 {
-    public interface ISetting
+    public interface ISetting : IInteractiveEditable
     {
         public string Label { get; }
 

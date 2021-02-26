@@ -40,5 +40,10 @@ namespace EffectsPedalsKeeper.Tests.Mocks
         {
             return _mockSettingDetails.ToArray();
         }
+
+        public void InteractiveChangeSetting(Func<string, bool> checkQuit)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

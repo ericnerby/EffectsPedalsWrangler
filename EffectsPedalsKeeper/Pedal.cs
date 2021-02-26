@@ -76,5 +76,10 @@ namespace EffectsPedalsKeeper
 
             return newPedal;
         }
+
+        public void InteractiveChangeSetting(System.Func<string, bool> checkQuit)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

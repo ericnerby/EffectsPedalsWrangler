@@ -2,7 +2,7 @@
 
 namespace EffectsPedalsKeeper
 {
-    interface IInteractiveEditable
+    public interface IInteractiveEditable
     {
         void InteractiveChangeSetting(Func<string, bool> checkQuit);
     }

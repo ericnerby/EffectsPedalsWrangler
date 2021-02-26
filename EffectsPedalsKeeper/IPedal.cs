@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EffectsPedalsKeeper
 {
-    public interface IPedal
+    public interface IPedal : IInteractiveEditable
     {
         public bool Engaged { get; set; }
 

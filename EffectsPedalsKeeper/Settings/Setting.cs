@@ -2,7 +2,7 @@
 
 namespace EffectsPedalsKeeper.Settings
 {
-    public abstract class Setting : ISetting, ICopyable, IInteractiveEditable
+    public abstract class Setting : ISetting, ICopyable
     {
         public string Label { get; }
 
