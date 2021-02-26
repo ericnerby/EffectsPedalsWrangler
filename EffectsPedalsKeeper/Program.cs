@@ -44,10 +44,7 @@ namespace EffectsPedalsKeeper
                     Console.WriteLine($"{i + 1}. {_menuItems[i]}");
                 }
                 var input = Console.ReadLine();
-                if(CheckForQuitOrHelp(input))
-                {
-                    break;
-                }
+                CheckForQuitOrHelp(input);
                 int option;
                 if(int.TryParse(input, out option))
                 {
@@ -119,19 +116,19 @@ namespace EffectsPedalsKeeper
             Builder.BuildBoard(Pedals);
         }
 
-        static bool CheckForQuitOrHelp(string input)
+        static void CheckForQuitOrHelp(string input)
         {
-            input = input.ToUpper();
+            input = input.ToLower();
 
-            if(input == "-Q")
+            if(input == "-q")
             {
-                return true;
+                // TODO: Serialize or prompt to serialize before closing
+                Environment.Exit(0);
             }
-            if(input == "-H")
+            if(input == "-h")
             {
                 DisplayHelp();
             }
-            return false;
         }
 
         public static void DisplayHelp()

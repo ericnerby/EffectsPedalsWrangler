@@ -1,5 +1,6 @@
 ﻿using EffectsPedalsKeeper.Utils;
 using System;
+using System.Text.RegularExpressions;
 
 namespace EffectsPedalsKeeper.Settings
 {
@@ -20,7 +21,41 @@ namespace EffectsPedalsKeeper.Settings
 
         public override void InteractiveChangeSetting(Func<string, bool> checkQuit)
         {
-            throw new NotImplementedException();
+            var timeValidation = new Regex(@"\d+:\d{2}");
+
+            while (true)
+            {
+                Console.WriteLine("Please enter a new ClockFace position in the format 'h:mm'\n"
+                                  + "Or enter '-b' to go back to previous screen:  ");
+                var input = Console.ReadLine();
+
+                checkQuit(input);
+
+                if (input.ToLower() == "-b") { return; }
+
+                var match = timeValidation.Match(input);
+                if (match.Success)
+                {
+                    int hours;
+                    if (int.TryParse(match.Groups[1].Value, out hours)
+                        && hours > 0 && hours <= 12)
+                    {
+                        var newValue = _clockFaceConverter.StringTimeToInt(input);
+                        if(newValue >= MinValue && newValue <= MaxValue)
+                        {
+                            CurrentValue = newValue;
+                            break;
+                        }
+                    }
+                    Console.WriteLine("ClockFace position must be between"
+                                      + $" {_clockFaceConverter.IntToTimeString(MinValue)}" 
+                                      + $" and {_clockFaceConverter.IntToTimeString(MaxValue)}");
+                }
+                else
+                {
+                    Console.WriteLine("ClockFace position must be in format 'h:mm'.");
+                }
+            }
         }
     }
 }
