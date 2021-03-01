@@ -129,7 +129,28 @@ namespace EffectsPedalsKeeper.Settings
 
         public void InteractiveAddPreset(Action<string> checkQuit)
         {
-            Console.WriteLine("Add Preset here");
+            while(true)
+            {
+                Console.WriteLine("Please enter a name for the preset you'd like to add to this pedal.\n"
+                                  + "To go back to the previous screen, enter '-b'");
+                var input = Console.ReadLine();
+
+                checkQuit(input);
+                if(input.ToLower() == "-b") { return; }
+
+                if(string.IsNullOrEmpty(input))
+                {
+                    Console.WriteLine("Please enter a name for the new preset.");
+                    continue;
+                }
+
+                bool added = AddPreset(input);
+                if(!added)
+                {
+                    Console.WriteLine($"There's already a preset with the name '{input}'.");
+                    continue;
+                }
+            }
         }
     }
 }
