@@ -113,7 +113,8 @@ namespace EffectsPedalsKeeper
 
         static void CreateNewBoard()
         {
-            Builder.BuildBoard(Pedals);
+            var newBoard = Builder.BuildBoard(Pedals);
+            PedalBoards.Add(newBoard);
         }
 
         static void CheckForQuitOrHelp(string input)
