@@ -56,7 +56,6 @@ namespace EffectsPedalsKeeper
                     InteractiveEditPedals();
                     continue;
                 }
-                
             }
         }
 
