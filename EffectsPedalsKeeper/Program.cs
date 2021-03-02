@@ -77,9 +77,11 @@ namespace EffectsPedalsKeeper
 
             while (true)
             {
+                int indexLabel = 1;
                 foreach (Pedal pedal in Pedals)
                 {
-                    Console.WriteLine($"{pedal}");
+                    Console.WriteLine($"{indexLabel}. {pedal}");
+                    indexLabel += 1;
                 }
                 Console.WriteLine("To view details, enter a number.");
                 Console.WriteLine("'-b' to go back to previous screen: ");
@@ -95,8 +97,7 @@ namespace EffectsPedalsKeeper
                     pedalIndex -= 1;
                     if (pedalIndex >= 0 && pedalIndex < Pedals.Count)
                     {
-                        // Do Something with Pedals[pedalIndex]
-                        Console.WriteLine(Pedals[pedalIndex]);
+                        Pedals[pedalIndex].InteractiveViewEdit(CheckForQuitOrHelp);
                     }
                 }
             }

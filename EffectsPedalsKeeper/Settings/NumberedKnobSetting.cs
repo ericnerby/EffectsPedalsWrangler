@@ -27,8 +27,12 @@ namespace EffectsPedalsKeeper.Settings
             return _InternalCopy<NumberedKnobSetting>();
         }
 
-        public override void InteractiveChangeSetting(Action<string> checkQuit)
+        public override void InteractiveViewEdit(Action<string> checkQuit)
         {
+            Console.WriteLine(this);
+            Console.WriteLine($"Minimum Value: {_minKnobValue}");
+            Console.WriteLine($"Maximum Value: {(MaxValue / 10) + _minKnobValue}");
+
             while (true)
             {
                 Console.WriteLine("Please enter a new knob position as a decimal or whole number\n"

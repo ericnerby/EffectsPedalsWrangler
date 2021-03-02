@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using EffectsPedalsKeeper.Settings;
 
 namespace EffectsPedalsKeeper
@@ -77,9 +78,54 @@ namespace EffectsPedalsKeeper
             return newPedal;
         }
 
-        public void InteractiveChangeSetting(System.Action<string> checkQuit)
+        public void InteractiveViewEdit(Action<string> checkQuit)
         {
-            throw new System.NotImplementedException();
+            while(true)
+            {
+                Console.WriteLine(this);
+                Console.WriteLine("Settings:");
+
+                var index = 1;
+                foreach (ISetting setting in Settings)
+                {
+                    Console.WriteLine($"{index}. {setting}");
+                    index++;
+                }
+
+                Console.WriteLine("To edit a setting on this pedal, select a number from the above list.");
+                Console.WriteLine("'-d' to delete this pedal | '-b' to go back to previous screen: ");
+
+                var input = Console.ReadLine();
+
+                checkQuit(input);
+                if(input.ToLower() == "-b") { return; }
+
+                if(input.ToLower() == "-d")
+                {
+                    Console.WriteLine("Are you sure you want to delete this pedal? [N/y]");
+                    if(Console.ReadLine().ToLower() == "y")
+                    {
+                        // TODO: Think about how to delete from a list that isn't local to this method
+                        Console.WriteLine($"{this} has been deleted.");
+                        break;
+                    }
+                    Console.WriteLine($"{this} has not been deleted.");
+                    continue;
+                }
+
+                int settingIndex;
+                if(int.TryParse(input, out settingIndex))
+                {
+                    settingIndex -= 1;
+                    if(settingIndex >= 0 && settingIndex < Settings.Count)
+                    {
+                        Settings[settingIndex].InteractiveViewEdit(checkQuit);
+                        continue;
+                    }
+                }
+
+                Console.WriteLine("Input not recognized.");
+            }
         }
     }
 }

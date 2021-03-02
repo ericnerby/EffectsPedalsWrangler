@@ -166,6 +166,11 @@ namespace EffectsPedalsKeeper
                     break;
                 }
             }
+
+            if(settingsToAdd.Count > 0)
+            {
+                pedal.AddSettings(settingsToAdd);
+            }
         }
 
         private static ISetting CreateSetting(SettingType type)

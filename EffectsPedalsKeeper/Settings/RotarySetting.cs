@@ -19,8 +19,10 @@ namespace EffectsPedalsKeeper.Settings
             return _InternalCopy<RotarySetting>();
         }
 
-        public override void InteractiveChangeSetting(Action<string> checkQuit)
+        public override void InteractiveViewEdit(Action<string> checkQuit)
         {
+            Console.WriteLine(this);
+
             while(true)
             {
                 Console.WriteLine("Options:");

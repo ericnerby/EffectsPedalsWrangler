@@ -19,9 +19,13 @@ namespace EffectsPedalsKeeper.Settings
             return _InternalCopy<KnobSetting>();
         }
 
-        public override void InteractiveChangeSetting(Action<string> checkQuit)
+        public override void InteractiveViewEdit(Action<string> checkQuit)
         {
             var timeValidation = new Regex(@"\d+:\d{2}");
+
+            Console.WriteLine(this);
+            Console.WriteLine($"Minimum Value: {_clockFaceConverter.IntToTimeString(MinValue)}");
+            Console.WriteLine($"Maximum Value: {_clockFaceConverter.IntToTimeString(MaxValue)}");
 
             while (true)
             {
