@@ -4,13 +4,14 @@ namespace EffectsPedalsKeeper.Settings
 {
     public class NumberedKnobSetting : Setting, ICopyable
     {
-        private int _minKnobValue;
+        public int MinValueDisplay { get; }
+        public int MaxValueDisplay => DisplayToValue(MaxValue);
 
         public override string CurrentValueDisplay
         {
             get
             {
-                double value = ((double)CurrentValue / 10) + _minKnobValue;
+                double value = ValueToDisplay(CurrentValue);
                 return value.ToString("0.0");
             }
         }
@@ -19,7 +20,7 @@ namespace EffectsPedalsKeeper.Settings
             : base(label, 0,
                    (maxKnobValue - minKnobValue) * 10)
         {
-            _minKnobValue = minKnobValue;
+            MinValueDisplay = minKnobValue;
         }
 
         public override object Copy()
@@ -27,11 +28,14 @@ namespace EffectsPedalsKeeper.Settings
             return _InternalCopy<NumberedKnobSetting>();
         }
 
+        private double ValueToDisplay(int value) => ((double)value / 10) + MinValueDisplay;
+        private int DisplayToValue(double displayValue) => (int)((displayValue - MinValueDisplay) * 10);
+
         public override void InteractiveViewEdit(Action<string> checkQuit)
         {
             Console.WriteLine(this);
-            Console.WriteLine($"Minimum Value: {_minKnobValue}");
-            Console.WriteLine($"Maximum Value: {(MaxValue / 10) + _minKnobValue}");
+            Console.WriteLine($"Minimum Value: {MinValueDisplay}");
+            Console.WriteLine($"Maximum Value: {(MaxValue / 10) + MinValueDisplay}");
 
             while (true)
             {
@@ -46,14 +50,14 @@ namespace EffectsPedalsKeeper.Settings
                 double newValue;
                 if(double.TryParse(input, out newValue))
                 {
-                    var newIntValue = (int)(newValue - _minKnobValue) * 10;
+                    int newIntValue = DisplayToValue(newValue);
 
                     if (newIntValue >= MinValue && newIntValue <= MaxValue)
                     {
                         CurrentValue = newIntValue;
                         break;
                     }
-                    Console.WriteLine($"New knob position must be between {_minKnobValue} and {(MaxValue / 10) + _minKnobValue}.");
+                    Console.WriteLine($"New knob position must be between {MinValueDisplay} and {MaxValueDisplay}.");
                 }
                 else
                 {
