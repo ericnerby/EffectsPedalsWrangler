@@ -69,16 +69,36 @@ namespace EffectsPedalsKeeper
 
         static void ViewExistingPedals()
         {
-            if(Pedals.Count > 0)
+            if(Pedals.Count == 0)
+            {
+                Console.WriteLine("No pedals have been added yet.");
+                return;
+            }
+
+            while (true)
             {
                 foreach (Pedal pedal in Pedals)
                 {
                     Console.WriteLine($"{pedal}");
                 }
-            }
-            else
-            {
-                Console.WriteLine("No pedals have been added yet.");
+                Console.WriteLine("To view details, enter a number.");
+                Console.WriteLine("'-b' to go back to previous screen: ");
+                var input = Console.ReadLine();
+
+                CheckForQuitOrHelp(input);
+
+                if (input.ToLower() == "-b") { return; }
+
+                int pedalIndex;
+                if (int.TryParse(input, out pedalIndex))
+                {
+                    pedalIndex -= 1;
+                    if (pedalIndex >= 0 && pedalIndex < Pedals.Count)
+                    {
+                        // Do Something with Pedals[pedalIndex]
+                        Console.WriteLine(Pedals[pedalIndex]);
+                    }
+                }
             }
         }
 
