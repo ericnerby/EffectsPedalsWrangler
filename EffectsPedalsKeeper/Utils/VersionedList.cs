@@ -95,10 +95,10 @@ namespace EffectsPedalsKeeper.Utils
 
         public void MoveItem(int currentIndex, int newIndex)
         {
-            if(currentIndex < 0 || newIndex < 0
-                || currentIndex > Count || newIndex > Count)
+            if (currentIndex < 0 || newIndex < 0
+                || currentIndex >= Count || newIndex >= Count)
             {
-                throw new IndexOutOfRangeException();
+                throw new ArgumentOutOfRangeException();
             }
 
             var itemToMove = _checkedOutList[currentIndex];

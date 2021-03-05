@@ -249,7 +249,7 @@ namespace EffectsPedalsKeeper.Utils.Tests
         }
 
         [Fact()]
-        public void MoveItemTest()
+        public void MoveItemDestinationLessTest()
         {
             _versionedList.AddRange(_testObjects.ToArray());
 
@@ -266,6 +266,38 @@ namespace EffectsPedalsKeeper.Utils.Tests
 
             Assert.Equal(expectedLength, targetLength);
             Assert.Equal(expected, target);
+        }
+
+        [Fact()]
+        public void MoveItemDestinationGreaterTest()
+        {
+            _versionedList.AddRange(_testObjects.ToArray());
+
+            var startingIndex = 1;
+            var targetIndex = 2;
+            var expectedLength = _testObjects.Count;
+
+            _versionedList.MoveItem(startingIndex, targetIndex);
+
+            var expected = _testObjects[startingIndex];
+            var target = _versionedList[targetIndex];
+
+            var targetLength = _versionedList.Count;
+
+            Assert.Equal(expectedLength, targetLength);
+            Assert.Equal(expected, target);
+        }
+
+        [Fact()]
+        public void MoveItemOutOfRangeTest()
+        {
+            _versionedList.AddRange(_testObjects.ToArray());
+
+            var startingIndex = 1;
+            var outofRangeDestination = _versionedList.Count;
+
+            Assert.Throws<ArgumentOutOfRangeException>(
+                () => _versionedList.MoveItem(startingIndex, outofRangeDestination));
         }
     }
 
