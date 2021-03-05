@@ -93,6 +93,26 @@ namespace EffectsPedalsKeeper.Utils
             return output;
         }
 
+        public void MoveItem(int currentIndex, int newIndex)
+        {
+            if(currentIndex < 0 || newIndex < 0
+                || currentIndex > Count || newIndex > Count)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            var itemToMove = _checkedOutList[currentIndex];
+            _checkedOutList.RemoveAt(currentIndex);
+            _checkedOutList.Insert(newIndex, itemToMove);
+
+            foreach (var version in _versions)
+            {
+                var versionedItemToMove = version.Items[currentIndex];
+                version.Items.RemoveAt(currentIndex);
+                version.Items.Insert(newIndex, versionedItemToMove);
+            }
+        }
+
         // IList implementation
         public T this[int index]
         {
