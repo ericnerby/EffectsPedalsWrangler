@@ -105,16 +105,41 @@ namespace EffectsPedalsKeeper
 
         static void ViewExistingBoards()
         {
-            if (PedalBoards.Count > 0)
-            {
-                foreach (PedalBoard board in PedalBoards)
-                {
-                    Console.WriteLine(board);
-                }
-            }
-            else
+            if (PedalBoards.Count == 0)
             {
                 Console.WriteLine("No Pedal Boards have been created yet.");
+                return;
+            }
+            foreach (PedalBoard board in PedalBoards)
+            {
+                Console.WriteLine(board);
+            }
+
+            while (true)
+            {
+                int indexLabel = 1;
+                foreach (PedalBoard board in PedalBoards)
+                {
+                    Console.WriteLine($"{indexLabel}. {board}");
+                    indexLabel += 1;
+                }
+                Console.WriteLine("To view details, enter a number.");
+                Console.WriteLine("'-b' to go back to previous screen: ");
+                var input = Console.ReadLine();
+
+                CheckForQuitOrHelp(input);
+
+                if (input.ToLower() == "-b") { return; }
+
+                int boardIndex;
+                if (int.TryParse(input, out boardIndex))
+                {
+                    boardIndex -= 1;
+                    if (boardIndex >= 0 && boardIndex < Pedals.Count)
+                    {
+                        PedalBoards[boardIndex].InteractiveViewEdit(CheckForQuitOrHelp);
+                    }
+                }
             }
         }
 
