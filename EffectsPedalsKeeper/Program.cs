@@ -30,6 +30,10 @@ namespace EffectsPedalsKeeper
 
         static void Main(string[] args)
         {
+            var demoBuilder = new DemoBuilder();
+            Pedals.AddRange(demoBuilder.DemoPedals);
+            PedalBoards.Add(demoBuilder.BuildDemoBoard());
+
             Console.WriteLine(_welcomeText);
             InputLoop();
         }
@@ -97,7 +101,7 @@ namespace EffectsPedalsKeeper
                     pedalIndex -= 1;
                     if (pedalIndex >= 0 && pedalIndex < Pedals.Count)
                     {
-                        Pedals[pedalIndex].InteractiveViewEdit(CheckForQuitOrHelp);
+                        Pedals[pedalIndex].InteractiveViewEdit(CheckForQuitOrHelp, null);
                     }
                 }
             }
@@ -105,16 +109,42 @@ namespace EffectsPedalsKeeper
 
         static void ViewExistingBoards()
         {
-            if (PedalBoards.Count > 0)
-            {
-                foreach (PedalBoard board in PedalBoards)
-                {
-                    Console.WriteLine(board);
-                }
-            }
-            else
+            if (PedalBoards.Count == 0)
             {
                 Console.WriteLine("No Pedal Boards have been created yet.");
+                return;
+            }
+            foreach (PedalBoard board in PedalBoards)
+            {
+                Console.WriteLine(board);
+            }
+
+            while (true)
+            {
+                int indexLabel = 1;
+                foreach (PedalBoard board in PedalBoards)
+                {
+                    Console.WriteLine($"{indexLabel}. {board}");
+                    indexLabel += 1;
+                }
+                Console.WriteLine("To view details, enter a number.");
+                Console.WriteLine("'-b' to go back to previous screen: ");
+                var input = Console.ReadLine();
+
+                CheckForQuitOrHelp(input);
+
+                if (input.ToLower() == "-b") { return; }
+
+                int boardIndex;
+                if (int.TryParse(input, out boardIndex))
+                {
+                    boardIndex -= 1;
+                    if (boardIndex >= 0 && boardIndex < Pedals.Count)
+                    {
+                        var arguments = new Dictionary<string, object>() { { "availablePedals", Pedals} };
+                        PedalBoards[boardIndex].InteractiveViewEdit(CheckForQuitOrHelp, arguments);
+                    }
+                }
             }
         }
 
@@ -134,7 +164,7 @@ namespace EffectsPedalsKeeper
 
         static void CreateNewBoard()
         {
-            var newBoard = Builder.BuildBoard(Pedals);
+            var newBoard = Builder.BuildBoard(Pedals, CheckForQuitOrHelp);
             PedalBoards.Add(newBoard);
         }
 

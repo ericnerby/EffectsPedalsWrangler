@@ -56,7 +56,7 @@ namespace EffectsPedalsKeeper.Settings
             return _InternalCopy<PresetSetting>();
         }
 
-        public override void InteractiveViewEdit(Action<string> checkQuit)
+        public override void InteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)
         {
             Console.WriteLine(this);
             

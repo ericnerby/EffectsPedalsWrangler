@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EffectsPedalsKeeper.Utils;
+using System;
 using System.Collections.Generic;
 using Xunit;
 
@@ -144,7 +145,7 @@ namespace EffectsPedalsKeeper.Utils.Tests
 
             _versionedList.CopyTo(target, 0);
 
-            Assert.All(target, item => Assert.NotNull(item)); 
+            Assert.All(target, item => Assert.NotNull(item));
         }
 
         [Fact()]
@@ -245,6 +246,58 @@ namespace EffectsPedalsKeeper.Utils.Tests
             var target = _versionedList.Count;
 
             Assert.Equal(expected, target);
+        }
+
+        [Fact()]
+        public void MoveItemDestinationLessTest()
+        {
+            _versionedList.AddRange(_testObjects.ToArray());
+
+            var startingIndex = 2;
+            var targetIndex = 1;
+            var expectedLength = _testObjects.Count;
+
+            _versionedList.MoveItem(startingIndex, targetIndex);
+
+            var expected = _testObjects[startingIndex];
+            var target = _versionedList[targetIndex];
+
+            var targetLength = _versionedList.Count;
+
+            Assert.Equal(expectedLength, targetLength);
+            Assert.Equal(expected, target);
+        }
+
+        [Fact()]
+        public void MoveItemDestinationGreaterTest()
+        {
+            _versionedList.AddRange(_testObjects.ToArray());
+
+            var startingIndex = 1;
+            var targetIndex = 2;
+            var expectedLength = _testObjects.Count;
+
+            _versionedList.MoveItem(startingIndex, targetIndex);
+
+            var expected = _testObjects[startingIndex];
+            var target = _versionedList[targetIndex];
+
+            var targetLength = _versionedList.Count;
+
+            Assert.Equal(expectedLength, targetLength);
+            Assert.Equal(expected, target);
+        }
+
+        [Fact()]
+        public void MoveItemOutOfRangeTest()
+        {
+            _versionedList.AddRange(_testObjects.ToArray());
+
+            var startingIndex = 1;
+            var outofRangeDestination = _versionedList.Count;
+
+            Assert.Throws<ArgumentOutOfRangeException>(
+                () => _versionedList.MoveItem(startingIndex, outofRangeDestination));
         }
     }
 

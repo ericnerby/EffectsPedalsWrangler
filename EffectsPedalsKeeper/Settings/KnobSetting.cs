@@ -1,5 +1,6 @@
 ﻿using EffectsPedalsKeeper.Utils;
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace EffectsPedalsKeeper.Settings
@@ -19,7 +20,7 @@ namespace EffectsPedalsKeeper.Settings
             return _InternalCopy<KnobSetting>();
         }
 
-        public override void InteractiveViewEdit(Action<string> checkQuit)
+        public override void InteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)
         {
             var timeValidation = new Regex(@"(\d+):(\d{2})");
 

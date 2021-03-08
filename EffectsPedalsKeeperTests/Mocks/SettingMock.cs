@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EffectsPedalsKeeper.Tests.Mocks
 {
@@ -41,7 +42,7 @@ namespace EffectsPedalsKeeper.Tests.Mocks
             throw new NotImplementedException();
         }
 
-        public void InteractiveViewEdit(Action<string> checkQuit)
+        public void InteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)
         {
             throw new NotImplementedException();
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EffectsPedalsKeeper.Settings
 {
@@ -19,7 +20,7 @@ namespace EffectsPedalsKeeper.Settings
             return _InternalCopy<RotarySetting>();
         }
 
-        public override void InteractiveViewEdit(Action<string> checkQuit)
+        public override void InteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)
         {
             Console.WriteLine(this);
 
