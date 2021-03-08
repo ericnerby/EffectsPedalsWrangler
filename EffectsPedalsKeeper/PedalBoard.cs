@@ -110,11 +110,12 @@ namespace EffectsPedalsKeeper
                     }
                     else if (option == "m")
                     {
-                        Console.WriteLine("Which pedal should it be before? (0 for first) ");
+                        Console.WriteLine("Which slot should the pedal be in? (starting with 1): ");
                         int destinationIndex;
                         if(int.TryParse(Console.ReadLine(), out destinationIndex)
-                            && destinationIndex >= 0 && destinationIndex < Count)
+                            && destinationIndex >= 1 && destinationIndex <= Count)
                         {
+                            destinationIndex -= 1;
                             MoveItem(index, destinationIndex);
                             Console.WriteLine("Pedal moved.");
                             continue;
