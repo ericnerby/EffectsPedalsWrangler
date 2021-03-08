@@ -41,7 +41,7 @@ namespace EffectsPedalsKeeper.Tests.Mocks
             return _mockSettingDetails.ToArray();
         }
 
-        public void InteractiveViewEdit(Action<string> checkQuit)
+        public void InteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)
         {
             throw new NotImplementedException();
         }

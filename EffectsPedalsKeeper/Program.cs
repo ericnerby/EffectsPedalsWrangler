@@ -30,6 +30,10 @@ namespace EffectsPedalsKeeper
 
         static void Main(string[] args)
         {
+            var demoBuilder = new DemoBuilder();
+            Pedals.AddRange(demoBuilder.DemoPedals);
+            PedalBoards.Add(demoBuilder.BuildDemoBoard());
+
             Console.WriteLine(_welcomeText);
             InputLoop();
         }
@@ -97,7 +101,7 @@ namespace EffectsPedalsKeeper
                     pedalIndex -= 1;
                     if (pedalIndex >= 0 && pedalIndex < Pedals.Count)
                     {
-                        Pedals[pedalIndex].InteractiveViewEdit(CheckForQuitOrHelp);
+                        Pedals[pedalIndex].InteractiveViewEdit(CheckForQuitOrHelp, null);
                     }
                 }
             }
@@ -137,7 +141,8 @@ namespace EffectsPedalsKeeper
                     boardIndex -= 1;
                     if (boardIndex >= 0 && boardIndex < Pedals.Count)
                     {
-                        PedalBoards[boardIndex].InteractiveViewEdit(CheckForQuitOrHelp);
+                        var arguments = new Dictionary<string, object>() { { "availablePedals", Pedals} };
+                        PedalBoards[boardIndex].InteractiveViewEdit(CheckForQuitOrHelp, arguments);
                     }
                 }
             }
@@ -159,7 +164,7 @@ namespace EffectsPedalsKeeper
 
         static void CreateNewBoard()
         {
-            var newBoard = Builder.BuildBoard(Pedals);
+            var newBoard = Builder.BuildBoard(Pedals, CheckForQuitOrHelp);
             PedalBoards.Add(newBoard);
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EffectsPedalsKeeper.Settings
 {
@@ -82,6 +83,6 @@ namespace EffectsPedalsKeeper.Settings
             return _InternalCopy<Setting>();
         }
 
-        abstract public void InteractiveViewEdit(Action<string> checkQuit);
+        abstract public void InteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs);
     }
 }

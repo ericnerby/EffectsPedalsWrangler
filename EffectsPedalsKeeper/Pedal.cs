@@ -78,7 +78,7 @@ namespace EffectsPedalsKeeper
             return newPedal;
         }
 
-        public void InteractiveViewEdit(Action<string> checkQuit)
+        public void InteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)
         {
             while(true)
             {
@@ -119,7 +119,7 @@ namespace EffectsPedalsKeeper
                     settingIndex -= 1;
                     if(settingIndex >= 0 && settingIndex < Settings.Count)
                     {
-                        Settings[settingIndex].InteractiveViewEdit(checkQuit);
+                        Settings[settingIndex].InteractiveViewEdit(checkQuit, null);
                         continue;
                     }
                 }

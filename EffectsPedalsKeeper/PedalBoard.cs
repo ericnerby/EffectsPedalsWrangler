@@ -10,17 +10,24 @@ namespace EffectsPedalsKeeper
         public string Name { get; set; }
         private static Pedal _CopyMethod(Pedal item) => (Pedal)item.Copy();
 
-        public void InteractiveViewEdit(Action<string> checkQuit)
+
+        public void InteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)
         {
+            if(!additionalArgs.ContainsKey("availablePedals"))
+            {
+                throw new ArgumentNullException($"The {nameof(additionalArgs)} argument in {nameof(PedalBoard.InteractiveViewEdit)} must define the key-value pair 'availablePedals'.");
+            }
+            var availablePedals = (List<Pedal>)additionalArgs["availablePedals"];
+
             Console.WriteLine(Name);
             if(Count > 0)
             {
-                Console.Write("Signal Chain:\nGuitar-> ");
+                Console.Write("Signal Chain:\nGuitar -> ");
                 foreach(Pedal pedal in this)
                 {
-                    Console.Write($"{pedal} ");
+                    Console.Write($"{pedal} -> ");
                 }
-                Console.Write("->Amp\n");
+                Console.Write("Amp\n");
             }
             else
             {
@@ -54,13 +61,13 @@ namespace EffectsPedalsKeeper
                 }
                 if (input.ToLower() == "-p")
                 {
-                    InteractiveEditPedals(checkQuit);
+                    InteractiveEditPedals(checkQuit, availablePedals);
                     continue;
                 }
             }
         }
 
-        private void InteractiveEditPedals(Action<string> checkQuit)
+        private void InteractiveEditPedals(Action<string> checkQuit, List<Pedal> availablePedals)
         {
             var selectorFormat = new Regex(@"([a-zA-Z])(\d+)");
 
@@ -76,7 +83,7 @@ namespace EffectsPedalsKeeper
                     var pedalIndex = 1;
                     foreach (Pedal pedal in this)
                     {
-                        Console.Write($"{pedalIndex}. {pedal} ");
+                        Console.WriteLine($"{pedalIndex}. {pedal}");
                         pedalIndex++;
                     }
                     Console.WriteLine("->Amp\n");
@@ -90,6 +97,12 @@ namespace EffectsPedalsKeeper
                 checkQuit(input);
 
                 if (input.ToLower() == "-b") { return; }
+
+                if (input.ToLower() == "-a")
+                {
+                    InteractiveAddPedals(checkQuit, availablePedals);
+                    continue;
+                }
 
                 var match = selectorFormat.Match(input);
                 if (match.Success)
@@ -125,6 +138,50 @@ namespace EffectsPedalsKeeper
                     }
                 }
             }
+        }
+
+        public void InteractiveAddPedals(Action<string> checkQuit, List<Pedal> availablePedals)
+        {
+            var pedalsToAdd = new List<Pedal>();
+            if (availablePedals.Count == 0)
+            {
+                Console.WriteLine("There are currently no pedals to add.\n"
+                                  + "Please add pedals from the main menu and then "
+                                  + "come back and add them to the Board.");
+                return;
+            }
+            while (true)
+            {
+                Console.WriteLine("Existing Pedals:");
+                for (var i = 0; i < availablePedals.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {availablePedals[i]}");
+                }
+                Console.WriteLine("Please type a number from the list in the order you want to add to the board.\n"
+                                  + "Type '-s' to stop adding pedals.");
+                var input = Console.ReadLine();
+
+                checkQuit(input);
+
+                if (input.ToLower() == "-s")
+                {
+                    break;
+                }
+                int pedalIndex;
+                if (int.TryParse(input, out pedalIndex))
+                {
+                    pedalIndex -= 1;
+                    if (pedalIndex >= 0 && pedalIndex < availablePedals.Count)
+                    {
+                        pedalsToAdd.Add(availablePedals[pedalIndex]);
+                        continue;
+                    }
+                }
+                Console.WriteLine("Please select a number in the list of pedals");
+            }
+
+            AddRange(pedalsToAdd);
+            Console.WriteLine($"{pedalsToAdd.Count} pedals added to {this}");
         }
 
         public void InteractiveNewPreset(Action<string> checkQuit)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EffectsPedalsKeeper.Settings
 {
@@ -31,7 +32,7 @@ namespace EffectsPedalsKeeper.Settings
         private double ValueToDisplay(int value) => ((double)value / 10) + MinValueDisplay;
         private int DisplayToValue(double displayValue) => (int)((displayValue - MinValueDisplay) * 10);
 
-        public override void InteractiveViewEdit(Action<string> checkQuit)
+        public override void InteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)
         {
             Console.WriteLine(this);
             Console.WriteLine($"Minimum Value: {MinValueDisplay}");

@@ -10,7 +10,7 @@ namespace EffectsPedalsKeeper
     {
         public static ClockFaceConverter ClockConverter = new ClockFaceConverter(PrecisionValue.Five);
 
-        public static PedalBoard BuildBoard(List<Pedal> pedalsAvailable)
+        public static PedalBoard BuildBoard(List<Pedal> pedalsAvailable, Action<string> checkHelpQuit)
         {
             PedalBoard newBoard;
             Console.Write("What is the name of the Pedal Board?  ");
@@ -18,7 +18,7 @@ namespace EffectsPedalsKeeper
 
             newBoard = new PedalBoard(name);
 
-            AddPedals(newBoard, pedalsAvailable);
+            newBoard.InteractiveAddPedals(checkHelpQuit, pedalsAvailable);
 
             return newBoard;
         }
@@ -38,47 +38,6 @@ namespace EffectsPedalsKeeper
             AddPedalSettings(newPedal);
 
             return newPedal;
-        }
-
-        public static void AddPedals(PedalBoard board, List<Pedal> pedalsAvailable)
-        {
-            var pedalsToAdd = new List<Pedal>();
-            if(pedalsAvailable.Count == 0)
-            {
-                Console.WriteLine("There are currently no pedals to add.\n"
-                                  + "Please add pedals from the main menu and then "
-                                  + "come back and add them to the Board.");
-                return;
-            }
-            while(true)
-            {
-                Console.WriteLine("Existing Pedals:");
-                for(var i = 0; i < pedalsAvailable.Count; i++)
-                {
-                    Console.WriteLine($"{i + 1}. {pedalsAvailable[i]}");
-                }
-                Console.WriteLine("Please type a number from the list in the order you want to add to the board.\n"
-                                  + "Type '-s' to stop adding pedals.");
-                var input = Console.ReadLine();
-                if(input.ToLower() == "-s")
-                {
-                    break;
-                }
-                int pedalIndex;
-                if(int.TryParse(input, out pedalIndex))
-                {
-                    pedalIndex -= 1;
-                    if(pedalIndex >= 0 && pedalIndex < pedalsAvailable.Count)
-                    {
-                        pedalsToAdd.Add(pedalsAvailable[pedalIndex]);
-                        continue;
-                    }
-                }
-                Console.WriteLine("Please select a number in the list of pedals");
-            }
-
-            board.AddRange(pedalsToAdd);
-            Console.WriteLine($"{pedalsToAdd.Count} pedals added to {board}");
         }
 
         private static EffectType GetEffectType()
