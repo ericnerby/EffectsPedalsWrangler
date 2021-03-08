@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -10,6 +11,7 @@ namespace EffectsPedalsKeeper.Utils
     /// but their properties can be set differently.
     /// </summary>
     /// <typeparam name="T">Type T must be a reference type</typeparam>
+    [Serializable()]
     public class VersionedList<T> : IList<T> where T : class
     {
         private List<T> _checkedOutList;
@@ -21,6 +23,7 @@ namespace EffectsPedalsKeeper.Utils
         /// </summary>
         public int CheckedOutVersionIndex { get; private set; }
 
+        [JsonIgnore]
         public string CheckedOutVersionName
         {
             get
@@ -130,6 +133,7 @@ namespace EffectsPedalsKeeper.Utils
             }
         }
 
+        [JsonIgnore]
         public int Count => _checkedOutList.Count;
 
         public bool IsReadOnly => false;
@@ -196,6 +200,7 @@ namespace EffectsPedalsKeeper.Utils
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
+    [Serializable()]
     public class Version<T>
     {
         public Version(string name)

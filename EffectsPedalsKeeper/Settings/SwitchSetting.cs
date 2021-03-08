@@ -1,5 +1,8 @@
-﻿namespace EffectsPedalsKeeper.Settings
+﻿using System;
+
+namespace EffectsPedalsKeeper.Settings
 {
+    [Serializable()]
     public class SwitchSetting : RotarySetting
     {
         public SwitchSetting(string label)

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
 
 namespace EffectsPedalsKeeper
 {
@@ -174,7 +176,15 @@ namespace EffectsPedalsKeeper
 
             if(input == "-q")
             {
-                // TODO: Serialize or prompt to serialize before closing
+                var options = new JsonSerializerOptions
+                {
+                    WriteIndented = true
+                };
+                string pedalJsonString = JsonSerializer.Serialize(Pedals, options);
+                File.WriteAllTextAsync("pedals.json", pedalJsonString);
+
+                string boardJsonString = JsonSerializer.Serialize(PedalBoards, options);
+                File.WriteAllTextAsync("boards.json", boardJsonString);
                 Environment.Exit(0);
             }
             if(input == "-h")

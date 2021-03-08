@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace EffectsPedalsKeeper.Settings
 {
+    [Serializable()]
     public class KnobSetting : Setting, ICopyable
     {
         private static ClockFaceConverter _clockFaceConverter = new ClockFaceConverter(PrecisionValue.Five);

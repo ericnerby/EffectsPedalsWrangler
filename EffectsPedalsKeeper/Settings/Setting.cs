@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace EffectsPedalsKeeper.Settings
 {
+    [Serializable()]
     public abstract class Setting : ISetting, ICopyable
     {
         public string Label { get; }

@@ -4,6 +4,7 @@ using EffectsPedalsKeeper.Settings;
 
 namespace EffectsPedalsKeeper
 {
+    [Serializable()]
     public class Pedal : IPedal, ICopyable
     {
         public bool Engaged { get; set; }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace EffectsPedalsKeeper.Settings
 {
+    [Serializable()]
     public class NumberedKnobSetting : Setting, ICopyable
     {
         public int MinValueDisplay { get; }

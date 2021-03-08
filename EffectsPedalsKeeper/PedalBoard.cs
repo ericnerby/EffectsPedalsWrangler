@@ -7,9 +7,11 @@ using System.Text.RegularExpressions;
 
 namespace EffectsPedalsKeeper
 {
+    [Serializable()]
     public class PedalBoard : VersionedList<Pedal>, IInteractiveEditable
     {
         public string Name { get; set; }
+
         private static Pedal _CopyMethod(Pedal item) => (Pedal)item.Copy();
 
 
