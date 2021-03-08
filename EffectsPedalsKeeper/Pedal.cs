@@ -83,6 +83,7 @@ namespace EffectsPedalsKeeper
             while(true)
             {
                 Console.WriteLine(this);
+                Console.WriteLine(Engaged ? "Engaged" : "Not Engaged");
                 Console.WriteLine("Settings:");
 
                 var index = 1;
@@ -93,23 +94,17 @@ namespace EffectsPedalsKeeper
                 }
 
                 Console.WriteLine("To edit a setting on this pedal, select a number from the above list.");
-                Console.WriteLine("'-d' to delete this pedal | '-b' to go back to previous screen: ");
+                Console.WriteLine("'-e' to toggle engaged status | '-b' to go back to previous screen: ");
 
                 var input = Console.ReadLine();
 
                 checkQuit(input);
                 if(input.ToLower() == "-b") { return; }
 
-                if(input.ToLower() == "-d")
+                if(input.ToLower() == "-e")
                 {
-                    Console.WriteLine("Are you sure you want to delete this pedal? [N/y]");
-                    if(Console.ReadLine().ToLower() == "y")
-                    {
-                        // TODO: Think about how to delete from a list that isn't local to this method
-                        Console.WriteLine($"{this} has been deleted.");
-                        break;
-                    }
-                    Console.WriteLine($"{this} has not been deleted.");
+                    if(Engaged) { Engaged = false; }
+                    else { Engaged = true; }
                     continue;
                 }
 

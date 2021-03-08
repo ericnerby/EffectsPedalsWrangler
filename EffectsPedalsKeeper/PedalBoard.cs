@@ -1,6 +1,8 @@
-﻿using EffectsPedalsKeeper.Utils;
+﻿using EffectsPedalsKeeper.Settings;
+using EffectsPedalsKeeper.Utils;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace EffectsPedalsKeeper
@@ -62,6 +64,15 @@ namespace EffectsPedalsKeeper
                 if (input.ToLower() == "-p")
                 {
                     InteractiveEditPedals(checkQuit, availablePedals);
+                    continue;
+                }
+
+                int presetIndex;
+                if(int.TryParse(input, out presetIndex)
+                    && presetIndex >= 1 && presetIndex < ListVersions().Count)
+                {
+                    presetIndex -= 1;
+                    InteractiveViewEditPreset(checkQuit, presetIndex);
                     continue;
                 }
             }
@@ -186,7 +197,89 @@ namespace EffectsPedalsKeeper
 
         public void InteractiveNewPreset(Action<string> checkQuit)
         {
-            throw new NotImplementedException();
+            while(true)
+            {
+                Console.WriteLine("What should the new preset be called? ('-b' to go back) ");
+                var input = Console.ReadLine();
+
+                checkQuit(input);
+                if(input.ToLower() == "-b") { return; }
+
+                if(string.IsNullOrEmpty(input))
+                {
+                    Console.WriteLine("You must enter a name for the preset.");
+                    continue;
+                }
+
+                if (SaveAsVersion(input))
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine($"There's already a preset with the name '{input}'.\nPlease select a different name.");
+                    continue;
+                }
+            }
+
+            InteractiveViewEditPreset(checkQuit, CheckedOutVersionIndex);
+        }
+
+        private void InteractiveViewEditPreset(Action<string> checkQuit, int presetIndex)
+        {
+            if(presetIndex < 0 || presetIndex >= ListVersions().Count)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            CheckOutVersion(presetIndex);
+
+            while(true)
+            {
+                Console.WriteLine(CheckedOutVersionName);
+                Console.WriteLine(string.Concat(Enumerable.Repeat("-", 10)));
+                Console.WriteLine("Guitar ->");
+                int index = 1;
+                foreach (Pedal pedal in this)
+                {
+                    Console.WriteLine(string.Concat(Enumerable.Repeat("-", 10)));
+                    Console.WriteLine($"{index}. {pedal}");
+                    Console.WriteLine($"Pedal {(pedal.Engaged ? "engaged" : "not engaged")}");
+                    Console.WriteLine(string.Concat(Enumerable.Repeat(".", 10)));
+                    foreach (Setting setting in pedal.Settings)
+                    {
+                        Console.WriteLine(setting);
+                    }
+                    Console.WriteLine(string.Concat(Enumerable.Repeat(".", 10)));
+                    index++;
+                }
+                Console.WriteLine("-> Amp");
+                Console.WriteLine(string.Concat(Enumerable.Repeat("-", 10)));
+
+                Console.WriteLine("Enter pedal number to adjust settings.");
+                Console.WriteLine($"'-b' to go back without saving | '-s' to save changes to {CheckedOutVersionName}: ");
+
+                var input = Console.ReadLine();
+
+                checkQuit(input);
+                if(input.ToLower() == "-b") { return; }
+
+                if(input.ToLower() == "-s")
+                {
+                    SaveVersion();
+                    return;
+                }
+
+                int pedalIndex;
+                if(int.TryParse(input, out pedalIndex)
+                    && pedalIndex >= 1 && pedalIndex <= Count)
+                {
+                    pedalIndex -= 1;
+                    this[pedalIndex].InteractiveViewEdit(checkQuit, null);
+                    continue;
+                }
+                Console.WriteLine("Input not recognized.");
+            }
         }
 
         public PedalBoard(string name) : base(_CopyMethod)
