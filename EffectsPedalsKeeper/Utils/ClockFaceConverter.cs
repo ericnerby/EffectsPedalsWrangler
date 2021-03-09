@@ -8,6 +8,7 @@ namespace EffectsPedalsKeeper.Utils
         private int _offset = 0;
 
         public int MaxIntRange { get; protected set; }
+        public string StartingPoint => IntToTimeString(0);
 
         public ClockFaceConverter(PrecisionValue precisionValue)
         {

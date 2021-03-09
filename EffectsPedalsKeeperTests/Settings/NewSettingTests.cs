@@ -8,17 +8,21 @@ namespace EffectsPedalsKeeper.Settings.Tests
 {
     public class NewSettingTests
     {
-        private string _clockFaceLabel = "Drive";
-        private string _clockFaceLowerLimit = "6:30";
-        private string _clockFaceUpperLimit = "5:30";
-        private NewSetting _clockFaceSetting;
+        private string _namedSettingLabel = "Delay Type";
+        private List<string> _namedSettingOptions = new List<string> {
+            "Modulated",
+            "Slapback",
+            "Dotted Eighth",
+            "Tape"
+        };
+        private NewSetting _namedSetting;
 
         public NewSettingTests()
         {
-            _clockFaceSetting = new NewSetting(_clockFaceLabel, SettingType.ClockFace,
-                _clockFaceLowerLimit, _clockFaceUpperLimit);
-
+            _namedSetting = new NewSetting(_namedSettingLabel,
+                SettingType.Named, _namedSettingOptions);
         }
+
         [Fact()]
         public void ClockFaceConstructorTest()
         {
@@ -26,13 +30,22 @@ namespace EffectsPedalsKeeper.Settings.Tests
             var lowerLimit = "6:30";
             var upperLimit = "5:30";
             var type = SettingType.ClockFace;
-            var testSetting = new NewSetting(label, type, lowerLimit, upperLimit);
+            NewSetting testSetting = NewSetting.CreateClockFaceSetting(label, lowerLimit, upperLimit);
 
             var expected = lowerLimit;
             var target = testSetting.Options[0];
 
             Assert.Equal(expected, target);
             Assert.Equal(type, testSetting.SettingType);
+        }
+
+        [Fact()]
+        public void CurrentValueDisplayTest()
+        {
+            var target = _namedSetting.CurrentValueDisplay;
+            var expected = _namedSettingOptions[0];
+
+            Assert.Equal(expected, target);
         }
 
         [Fact()]
