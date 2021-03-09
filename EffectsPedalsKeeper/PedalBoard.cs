@@ -70,7 +70,7 @@ namespace EffectsPedalsKeeper
 
                 int presetIndex;
                 if(int.TryParse(input, out presetIndex)
-                    && presetIndex >= 1 && presetIndex < ListVersions().Count)
+                    && presetIndex >= 1 && presetIndex <= ListVersions().Count)
                 {
                     presetIndex -= 1;
                     InteractiveViewEditPreset(checkQuit, presetIndex);

@@ -71,14 +71,14 @@ namespace EffectsPedalsKeeper
                 "Preset list for pedals with preset options."
             };
 
-            var settingsToAdd = new List<ISetting>();
+            var settingsToAdd = new List<Setting>();
 
             while(true)
             {
                 if(settingsToAdd.Count > 0)
                 {
                     Console.WriteLine("\nSettings you've already added:");
-                    foreach(ISetting setting in settingsToAdd)
+                    foreach(Setting setting in settingsToAdd)
                     {
                         Console.WriteLine(setting);
                     }
@@ -132,7 +132,7 @@ namespace EffectsPedalsKeeper
             }
         }
 
-        private static ISetting CreateSetting(SettingType type)
+        private static Setting CreateSetting(SettingType type)
         {
             Console.WriteLine("What is the label for the setting?");
             var label = Console.ReadLine();

@@ -6,7 +6,7 @@ namespace EffectsPedalsKeeper.Settings
 {
     public abstract class Setting : ISetting, ICopyable
     {
-        public string Label { get; }
+        public string Label { get; protected set; }
 
         public int MinValue { get; protected set; }
         public virtual int MaxValue { get; protected set; }

@@ -11,11 +11,11 @@ namespace EffectsPedalsKeeper
         public string Name { get; }
         public EffectType EffectType { get; }
 
-        public List<ISetting> Settings { get; }
+        public List<Setting> Settings { get; }
 
-        public bool AddSettings(IList<ISetting> settings);
+        public bool AddSettings(IList<Setting> settings);
 
-        public bool AddSettings(params ISetting[] settings);
+        public bool AddSettings(params Setting[] settings);
 
         public string[] PrintSettingDetails();
     }

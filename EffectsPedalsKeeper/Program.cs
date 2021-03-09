@@ -11,6 +11,12 @@ namespace EffectsPedalsKeeper
         static string _welcomeText =
             $"Welcome to the Effects Pedals Wrangler.\n{_globalOptionsText}.";
 
+        public static JsonSerializerSettings JsonOptions = new JsonSerializerSettings
+        {
+            Formatting = Formatting.Indented,
+            TypeNameHandling = TypeNameHandling.Auto
+        };
+
         static string[] _menuItems = 
         {
             "View existing pedals",
@@ -32,9 +38,24 @@ namespace EffectsPedalsKeeper
 
         static void Main(string[] args)
         {
-            var demoBuilder = new DemoBuilder();
-            Pedals.AddRange(demoBuilder.DemoPedals);
-            PedalBoards.Add(demoBuilder.BuildDemoBoard());
+            //Deserializer fails because Setting is an abstract class
+
+            //if (File.Exists("pedals.json"))
+            //{
+            //    string fileContents = File.ReadAllText("pedals.json");
+            //    List<Pedal> pedalsToAdd = JsonConvert.DeserializeObject<List<Pedal>>(fileContents);
+            //    Pedals.AddRange(pedalsToAdd);
+            //}
+            //if (File.Exists("boards.json"))
+            //{
+            //    string fileContents = File.ReadAllText("boards.json");
+            //    List<PedalBoard> boardsToAdd = JsonConvert.DeserializeObject<List<PedalBoard>>(fileContents);
+            //    PedalBoards.AddRange(boardsToAdd);
+            //}
+
+            //var demoBuilder = new DemoBuilder();
+            //Pedals.AddRange(demoBuilder.DemoPedals);
+            //PedalBoards.Add(demoBuilder.BuildDemoBoard());
 
             Console.WriteLine(_welcomeText);
             InputLoop();
@@ -176,15 +197,10 @@ namespace EffectsPedalsKeeper
 
             if(input == "-q")
             {
-                var options = new JsonSerializerSettings
-                {
-                    Formatting = Formatting.Indented,
-                    TypeNameHandling = TypeNameHandling.All
-                };
-                string pedalJsonString = JsonConvert.SerializeObject(Pedals, options);
+                string pedalJsonString = JsonConvert.SerializeObject(Pedals, JsonOptions);
                 File.WriteAllTextAsync("pedals.json", pedalJsonString);
 
-                string boardJsonString = JsonConvert.SerializeObject(PedalBoards, options);
+                string boardJsonString = JsonConvert.SerializeObject(PedalBoards, JsonOptions);
                 File.WriteAllTextAsync("boards.json", boardJsonString);
                 Environment.Exit(0);
             }

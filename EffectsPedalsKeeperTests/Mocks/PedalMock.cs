@@ -4,25 +4,14 @@ using System.Collections.Generic;
 
 namespace EffectsPedalsKeeper.Tests.Mocks
 {
-    class PedalMock : IPedal
+    class PedalMock : Pedal
     {
         private List<string> _mockSettingDetails;
-        public bool Engaged { get; set; }
-
-        public string Maker { get; }
-
-        public string Name { get; }
-
-        public List<ISetting> Settings => throw new NotImplementedException();
-
-        public EffectType EffectType { get; }
 
         public PedalMock(string name, string maker,
             EffectType effectType, IList<string> mockSettingDetails)
+            : base(maker, name, effectType)
         {
-            Name = name;
-            Maker = maker;
-            EffectType = effectType;
             _mockSettingDetails = (List<string>)mockSettingDetails;
         }
 
@@ -32,16 +21,6 @@ namespace EffectsPedalsKeeper.Tests.Mocks
         }
 
         public bool AddSettings(params ISetting[] settings)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string[] PrintSettingDetails()
-        {
-            return _mockSettingDetails.ToArray();
-        }
-
-        public void InteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)
         {
             throw new NotImplementedException();
         }
