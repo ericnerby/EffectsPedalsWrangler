@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace EffectsPedalsKeeper.Settings
 {
-    public class NewSetting : ICopyable
+    public class NewSetting : INewSetting, ICopyable
     {
         protected static Regex _clockFormat = new Regex(@"(\d+):(\d{2})");
         protected static ClockFaceConverter _clockFaceConverter = new ClockFaceConverter(PrecisionValue.Five);
@@ -41,6 +41,11 @@ namespace EffectsPedalsKeeper.Settings
             Label = label;
             SettingType = settingType;
             Options = new List<string>(options);
+        }
+
+        public override string ToString()
+        {
+            return $"{Label}: {CurrentValueDisplay}";
         }
 
         public object Copy()
