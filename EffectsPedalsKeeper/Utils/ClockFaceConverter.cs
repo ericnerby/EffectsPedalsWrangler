@@ -5,15 +5,14 @@ namespace EffectsPedalsKeeper.Utils
     public class ClockFaceConverter
     {
         private int _conversionValue;
-        private int _offset;
+        private int _offset = 0;
 
-        public int MaxIntRange { get; }
+        public int MaxIntRange { get; protected set; }
 
         public ClockFaceConverter(PrecisionValue precisionValue)
         {
             _conversionValue = (int)precisionValue;
             MaxIntRange = 720 / _conversionValue;
-            _offset = 0;
         }
 
         public ClockFaceConverter(PrecisionValue precisionValue, string minValue)
@@ -43,10 +42,13 @@ namespace EffectsPedalsKeeper.Utils
 
         private int[] _ConvertToClockDigits(int value)
         {
-            if (value <= 0 || value > MaxIntRange)
+            if (value < 0 || value > MaxIntRange)
             {
-                throw new ArgumentOutOfRangeException($"{nameof(value)} must be between 1 and {nameof(MaxIntRange)}: {MaxIntRange}.");
+                throw new ArgumentOutOfRangeException($"{nameof(value)} must be between 0 and {nameof(MaxIntRange)}: {MaxIntRange}.");
             }
+
+            value += _offset;
+
             var result = new int[2];
             int minutes = value * _conversionValue;
             int hours = minutes / 60;
@@ -76,6 +78,7 @@ namespace EffectsPedalsKeeper.Utils
 
             // Since 6:00 would be 0, subtract 6hr * 60min
             result -= 360;
+            result -= _offset;
 
             result = (int)(result / _conversionValue);
             if (result < 0)

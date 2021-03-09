@@ -24,6 +24,20 @@ namespace EffectsPedalsKeeper.Utils.Tests
         }
 
         [Fact()]
+        public void ConstructorWithMinValMaxRangeTest()
+        {
+            var minValue = "6:30";
+            var clockFaceConverterWithMin = new ClockFaceConverter(PrecisionValue.Five, minValue);
+
+            int maxValue = clockFaceConverterWithMin.MaxIntRange;
+
+            var target = clockFaceConverterWithMin.IntToTimeString(maxValue);
+            var expected = minValue;
+
+            Assert.Equal(expected, target);
+        }
+
+        [Fact()]
         public void StringTimeToIntTest6OClock()
         {
             var target = _clockFaceConverter.StringTimeToInt("6:00");
