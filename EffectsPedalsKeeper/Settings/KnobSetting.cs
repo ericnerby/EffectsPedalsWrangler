@@ -1,15 +1,16 @@
 ﻿using EffectsPedalsKeeper.Utils;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace EffectsPedalsKeeper.Settings
 {
-    [Serializable()]
     public class KnobSetting : Setting, ICopyable
     {
         private static ClockFaceConverter _clockFaceConverter = new ClockFaceConverter(PrecisionValue.Five);
 
+        [JsonIgnore]
         public override string CurrentValueDisplay => _clockFaceConverter.IntToTimeString(CurrentValue);
 
         public KnobSetting(string label, string minClockPosition, string maxClockPosition)

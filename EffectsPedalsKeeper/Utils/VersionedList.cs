@@ -11,11 +11,13 @@ namespace EffectsPedalsKeeper.Utils
     /// but their properties can be set differently.
     /// </summary>
     /// <typeparam name="T">Type T must be a reference type</typeparam>
-    [Serializable()]
     public class VersionedList<T> : IList<T> where T : class
     {
+        [JsonProperty]
         private List<T> _checkedOutList;
+        [JsonProperty]
         private List<Version<T>> _versions;
+        [JsonProperty]
         private Func<T, T> _InternalCopy;
 
         /// <summary>
@@ -200,7 +202,6 @@ namespace EffectsPedalsKeeper.Utils
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    [Serializable()]
     public class Version<T>
     {
         public Version(string name)

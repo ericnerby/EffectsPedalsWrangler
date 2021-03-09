@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace EffectsPedalsKeeper.Settings
 {
-    [Serializable()]
     public class RotarySetting : Setting, ICopyable
     {
         public string[] Options { get; private set; }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace EffectsPedalsKeeper
 {
@@ -176,14 +176,15 @@ namespace EffectsPedalsKeeper
 
             if(input == "-q")
             {
-                var options = new JsonSerializerOptions
+                var options = new JsonSerializerSettings
                 {
-                    WriteIndented = true
+                    Formatting = Formatting.Indented,
+                    TypeNameHandling = TypeNameHandling.All
                 };
-                string pedalJsonString = JsonSerializer.Serialize(Pedals, options);
+                string pedalJsonString = JsonConvert.SerializeObject(Pedals, options);
                 File.WriteAllTextAsync("pedals.json", pedalJsonString);
 
-                string boardJsonString = JsonSerializer.Serialize(PedalBoards, options);
+                string boardJsonString = JsonConvert.SerializeObject(PedalBoards, options);
                 File.WriteAllTextAsync("boards.json", boardJsonString);
                 Environment.Exit(0);
             }

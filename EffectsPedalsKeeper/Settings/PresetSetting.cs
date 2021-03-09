@@ -4,7 +4,6 @@ using System.Text.RegularExpressions;
 
 namespace EffectsPedalsKeeper.Settings
 {
-    [Serializable()]
     public class PresetSetting : Setting, ICopyable
     {
         public override int MaxValue => Options.Count - 1;
