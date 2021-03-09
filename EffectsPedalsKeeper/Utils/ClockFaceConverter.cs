@@ -5,6 +5,7 @@ namespace EffectsPedalsKeeper.Utils
     public class ClockFaceConverter
     {
         private int _conversionValue;
+        private int _offset;
 
         public int MaxIntRange { get; }
 
@@ -12,6 +13,14 @@ namespace EffectsPedalsKeeper.Utils
         {
             _conversionValue = (int)precisionValue;
             MaxIntRange = 720 / _conversionValue;
+            _offset = 0;
+        }
+
+        public ClockFaceConverter(PrecisionValue precisionValue, string minValue)
+        {
+            _conversionValue = (int)precisionValue;
+            MaxIntRange = 720 / _conversionValue;
+            _offset = StringTimeToInt(minValue);
         }
 
         public int StringTimeToInt(string timeString)
