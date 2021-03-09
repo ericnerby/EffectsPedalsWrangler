@@ -1,7 +1,7 @@
 ﻿using EffectsPedalsKeeper.Utils;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace EffectsPedalsKeeper.Settings
@@ -13,7 +13,9 @@ namespace EffectsPedalsKeeper.Settings
 
         public string Label { get; }
         public SettingType SettingType { get; }
+        [JsonIgnore]
         public int MinValue { get; } = 0;
+        [JsonIgnore]
         public int MaxValue => Options.Count - 1;
         public List<string> Options { get; protected set; }
 
@@ -92,6 +94,11 @@ namespace EffectsPedalsKeeper.Settings
             }
 
             return new NewSetting(label, SettingType.ClockFace, options);
+        }
+
+        public static NewSetting CreateSwitchSetting(string label)
+        {
+            return new NewSetting(label, SettingType.Switch, new string[] { "Off", "On" });
         }
     }
 

@@ -1,8 +1,6 @@
 ﻿using Xunit;
-using EffectsPedalsKeeper.Settings;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EffectsPedalsKeeper.Settings.Tests
 {
@@ -21,6 +19,19 @@ namespace EffectsPedalsKeeper.Settings.Tests
         {
             _namedSetting = new NewSetting(_namedSettingLabel,
                 SettingType.Named, _namedSettingOptions);
+        }
+
+        [Fact()]
+        public void SwitchConstructorTest()
+        {
+            var label = "Mid Boost";
+            var switchSetting = NewSetting.CreateSwitchSetting(label);
+
+            var expected = label;
+            var target = switchSetting.Label;
+
+            Assert.Equal(expected, target);
+            Assert.Equal(2, switchSetting.Options.Count);
         }
 
         [Fact()]
@@ -46,6 +57,37 @@ namespace EffectsPedalsKeeper.Settings.Tests
             var expected = _namedSettingOptions[0];
 
             Assert.Equal(expected, target);
+        }
+
+        [Fact()]
+        public void CurrentValueSetTest()
+        {
+            var testIndex = 1;
+
+            _namedSetting.CurrentValue = testIndex;
+
+            var target = _namedSetting.CurrentValueDisplay;
+            var expected = _namedSettingOptions[testIndex];
+
+            Assert.Equal(expected, target);
+        }
+
+        [Fact()]
+        public void CurrentValueSetOutOfRangeTest()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => _namedSetting.CurrentValue = _namedSetting.Options.Count);
+        }
+
+        [Fact()]
+        public void ToStringTest()
+        {
+            var target = _namedSetting.ToString();
+
+            var expectedLabel = _namedSettingLabel;
+            var expectedValue = _namedSettingOptions[0];
+
+            Assert.Contains(expectedLabel, target);
+            Assert.Contains(expectedValue, target);
         }
 
         [Fact()]
