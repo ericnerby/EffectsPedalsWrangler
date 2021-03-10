@@ -93,7 +93,13 @@ namespace EffectsPedalsKeeper.Settings.Tests
         [Fact()]
         public void CopyTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            var original = _namedSetting;
+            NewSetting copy = (NewSetting)_namedSetting.Copy();
+
+            copy.CurrentValue += 1;
+
+            Assert.NotEqual(copy.CurrentValue, original.CurrentValue);
+            Assert.Equal(original.Options.Count, copy.Options.Count);
         }
     }
 }

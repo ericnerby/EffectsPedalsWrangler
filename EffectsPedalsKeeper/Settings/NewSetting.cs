@@ -50,7 +50,7 @@ namespace EffectsPedalsKeeper.Settings
 
         public object Copy()
         {
-            throw new NotImplementedException();
+            return (NewSetting)MemberwiseClone();
         }
 
         public void InteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)
