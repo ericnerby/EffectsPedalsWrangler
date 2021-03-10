@@ -15,12 +15,12 @@ namespace EffectsPedalsKeeper.Tests.Mocks
             _mockSettingDetails = (List<string>)mockSettingDetails;
         }
 
-        public bool AddSettings(IList<ISetting> settings)
+        public new bool AddSettings(IList<ISetting> settings)
         {
             throw new NotImplementedException();
         }
 
-        public bool AddSettings(params ISetting[] settings)
+        public new bool AddSettings(params ISetting[] settings)
         {
             throw new NotImplementedException();
         }

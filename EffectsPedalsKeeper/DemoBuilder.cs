@@ -14,20 +14,20 @@ namespace EffectsPedalsKeeper
         public DemoBuilder()
         {
             DemoPedals[0].AddSettings(
-                NewSetting.CreateClockFaceSetting("Drive", "6:30", "5:30"),
-                NewSetting.CreateClockFaceSetting("Tone", "6:30", "5:30"),
-                NewSetting.CreateClockFaceSetting("Level", "6:30", "5:30")
+                Setting.CreateClockFaceSetting("Drive", "6:30", "5:30"),
+                Setting.CreateClockFaceSetting("Tone", "6:30", "5:30"),
+                Setting.CreateClockFaceSetting("Level", "6:30", "5:30")
             );
 
             DemoPedals[1].AddSettings(
-                NewSetting.CreateClockFaceSetting("Blend", "6:30", "5:30"),
-                NewSetting.CreateClockFaceSetting("Gain", "6:30", "5:30"),
-                NewSetting.CreateClockFaceSetting("Rate", "6:30", "5:30"),
-                NewSetting.CreateClockFaceSetting("Depth", "6:30", "5:30"),
-                NewSetting.CreateClockFaceSetting("Drive", "6:30", "5:30"),
-                NewSetting.CreateClockFaceSetting("Feedback", "6:30", "5:30"),
-                NewSetting.CreateClockFaceSetting("Delay", "6:30", "5:30"),
-                new NewSetting(
+                Setting.CreateClockFaceSetting("Blend", "6:30", "5:30"),
+                Setting.CreateClockFaceSetting("Gain", "6:30", "5:30"),
+                Setting.CreateClockFaceSetting("Rate", "6:30", "5:30"),
+                Setting.CreateClockFaceSetting("Depth", "6:30", "5:30"),
+                Setting.CreateClockFaceSetting("Drive", "6:30", "5:30"),
+                Setting.CreateClockFaceSetting("Feedback", "6:30", "5:30"),
+                Setting.CreateClockFaceSetting("Delay", "6:30", "5:30"),
+                new Setting(
                     "Tap Divide", SettingType.Named,
                     new string[]
                     {
@@ -38,7 +38,7 @@ namespace EffectsPedalsKeeper
                         "Sixteenth"
                     }
                 ),
-                new NewSetting(
+                new Setting(
                     "Exp. Mode", SettingType.Named,
                     new string[]
                     {

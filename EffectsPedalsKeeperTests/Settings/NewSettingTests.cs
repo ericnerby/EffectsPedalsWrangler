@@ -13,11 +13,11 @@ namespace EffectsPedalsKeeper.Settings.Tests
             "Dotted Eighth",
             "Tape"
         };
-        private NewSetting _namedSetting;
+        private Setting _namedSetting;
 
         public NewSettingTests()
         {
-            _namedSetting = new NewSetting(_namedSettingLabel,
+            _namedSetting = new Setting(_namedSettingLabel,
                 SettingType.Named, _namedSettingOptions);
         }
 
@@ -25,7 +25,7 @@ namespace EffectsPedalsKeeper.Settings.Tests
         public void SwitchConstructorTest()
         {
             var label = "Mid Boost";
-            var switchSetting = NewSetting.CreateSwitchSetting(label);
+            var switchSetting = Setting.CreateSwitchSetting(label);
 
             var expected = label;
             var target = switchSetting.Label;
@@ -41,7 +41,7 @@ namespace EffectsPedalsKeeper.Settings.Tests
             var lowerLimit = "6:30";
             var upperLimit = "5:30";
             var type = SettingType.ClockFace;
-            NewSetting testSetting = NewSetting.CreateClockFaceSetting(label, lowerLimit, upperLimit);
+            Setting testSetting = Setting.CreateClockFaceSetting(label, lowerLimit, upperLimit);
 
             var expected = lowerLimit;
             var target = testSetting.Options[0];
@@ -57,7 +57,7 @@ namespace EffectsPedalsKeeper.Settings.Tests
             var lowerLimit = 1;
             var upperLimit = 10;
             var type = SettingType.Numbered;
-            NewSetting numberedSetting = NewSetting.CreateNumberedSetting(label, lowerLimit, upperLimit);
+            Setting numberedSetting = Setting.CreateNumberedSetting(label, lowerLimit, upperLimit);
 
             Assert.Equal(type, numberedSetting.SettingType);
 
@@ -135,7 +135,7 @@ namespace EffectsPedalsKeeper.Settings.Tests
         public void CopyTest()
         {
             var original = _namedSetting;
-            NewSetting copy = (NewSetting)_namedSetting.Copy();
+            Setting copy = (Setting)_namedSetting.Copy();
 
             copy.CurrentValue += 1;
 

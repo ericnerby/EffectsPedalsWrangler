@@ -14,17 +14,17 @@ namespace EffectsPedalsKeeper
         public string Name { get; }
         public EffectType EffectType { get; }
 
-        public List<INewSetting> Settings { get; private set; }
+        public List<ISetting> Settings { get; private set; }
 
         public Pedal(string maker, string name, EffectType effectType)
         {
             Maker = maker;
             Name = name;
             EffectType = effectType;
-            Settings = new List<INewSetting>();
+            Settings = new List<ISetting>();
         }
 
-        public bool AddSettings(IList<INewSetting> settings)
+        public bool AddSettings(IList<ISetting> settings)
         {
             var startingCount = Settings.Count;
             Settings.AddRange(settings);
@@ -35,7 +35,7 @@ namespace EffectsPedalsKeeper
             return false;
         }
 
-        public bool AddSettings(params INewSetting[] settings)
+        public bool AddSettings(params ISetting[] settings)
         {
             var startingCount = Settings.Count;
             Settings.AddRange(settings);
@@ -66,13 +66,13 @@ namespace EffectsPedalsKeeper
             var newPedal = new Pedal(Maker, Name, EffectType);
             newPedal.Engaged = Engaged;
 
-            var newSettings = new INewSetting[Settings.Count];
+            var newSettings = new ISetting[Settings.Count];
             for(var i = 0; i < Settings.Count; i++)
             {
                 if (Settings[i] is ICopyable)
                 {
                     var oldSetting = (ICopyable)Settings[i];
-                    newSettings[i] = (INewSetting)oldSetting.Copy();
+                    newSettings[i] = (ISetting)oldSetting.Copy();
                 }
             }
             newPedal.AddSettings(newSettings);
@@ -89,7 +89,7 @@ namespace EffectsPedalsKeeper
                 Console.WriteLine("Settings:");
 
                 var index = 1;
-                foreach (INewSetting setting in Settings)
+                foreach (ISetting setting in Settings)
                 {
                     Console.WriteLine($"{index}. {setting}");
                     index++;

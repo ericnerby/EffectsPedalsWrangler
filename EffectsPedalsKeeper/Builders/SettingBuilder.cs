@@ -1,6 +1,7 @@
 ﻿using EffectsPedalsKeeper.Settings;
 using EffectsPedalsKeeper.Utils;
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace EffectsPedalsKeeper.Builders
@@ -8,22 +9,22 @@ namespace EffectsPedalsKeeper.Builders
     public static class SettingBuilder
     {
 
-        public static NewSetting CreateSetting(SettingType type, Action<string> checkHelpQuit)
+        public static Setting CreateSetting(SettingType type, Action<string> checkHelpQuit)
         {
             Console.WriteLine("What is the label for the setting?");
             var label = Console.ReadLine();
 
             checkHelpQuit(label);
 
-            if (type == SettingType.Switch) { return NewSetting.CreateSwitchSetting(label); }
-            else if (type == SettingType.Named) { return CreateNamedSetting(label); }
+            if (type == SettingType.Switch) { return Setting.CreateSwitchSetting(label); }
+            else if (type == SettingType.Named) { return CreateNamedSetting(label, checkHelpQuit); }
             else if (type == SettingType.ClockFace) { return InteractiveCreateClockFaceSetting(label, checkHelpQuit); }
             else if (type == SettingType.Numbered) { return InteractiveCreateNumberedSetting(label, checkHelpQuit); }
 
             throw new NotImplementedException($"Missing Implementation for {type}.");
         }
 
-        public static NewSetting InteractiveCreateClockFaceSetting(string label, Action<string> checkHelpQuit)
+        public static Setting InteractiveCreateClockFaceSetting(string label, Action<string> checkHelpQuit)
         {
             var validator = new Regex(@"(\d+):(\d{2})");
             string formatForDisplay = "'h:mm'";
@@ -66,10 +67,10 @@ namespace EffectsPedalsKeeper.Builders
             }
             var maxValue = response.Result;
 
-            return NewSetting.CreateClockFaceSetting(label, minValue, maxValue);
+            return Setting.CreateClockFaceSetting(label, minValue, maxValue);
         }
 
-        private static NewSetting InteractiveCreateNumberedSetting(string label, Action<string> checkHelpQuit)
+        private static Setting InteractiveCreateNumberedSetting(string label, Action<string> checkHelpQuit)
         {
             Regex validator = new Regex(@"(\d+).(\d)");
             string formatForDisplay = "'d.d', eg '1.0'";
@@ -112,12 +113,47 @@ namespace EffectsPedalsKeeper.Builders
             }
             var maxValue = response.Result;
 
-            return NewSetting.CreateNumberedSetting(label, double.Parse(minValue), double.Parse(maxValue));
+            return Setting.CreateNumberedSetting(label, double.Parse(minValue), double.Parse(maxValue));
         }
 
-        public static NewSetting CreateNamedSetting(string label)
+        public static Setting CreateNamedSetting(string label, Action<string> checkHelpQuit)
         {
-            throw new NotImplementedException();
+            var options = new List<string>();
+
+            while(true)
+            {
+                Console.WriteLine("Enter a name for the next option.");
+                Console.WriteLine("'-d' when done: ");
+
+                var input = Console.ReadLine();
+
+                checkHelpQuit(input);
+
+                if (input.ToLower() == "-d")
+                {
+                    if (options.Count < 2)
+                    {
+                        Console.WriteLine("You must enter at least two options.");
+                        continue;
+                    }
+                    break;
+                }
+
+                if (string.IsNullOrEmpty(input))
+                {
+                    Console.WriteLine("Name must not be blank.");
+                    continue;
+                }
+
+                if (options.Contains(input))
+                {
+                    Console.WriteLine($"There's already an option with the name {input}.");
+                }
+
+                options.Add(input);
+            }
+
+            return new Setting(label, SettingType.Named, options);
         }
     }
 }

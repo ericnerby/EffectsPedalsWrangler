@@ -83,14 +83,14 @@ namespace EffectsPedalsKeeper.Builders
                 "On/Off switch"
             };
 
-            var settingsToAdd = new List<INewSetting>();
+            var settingsToAdd = new List<ISetting>();
 
             while(true)
             {
                 if(settingsToAdd.Count > 0)
                 {
                     Console.WriteLine("\nSettings you've already added:");
-                    foreach(NewSetting setting in settingsToAdd)
+                    foreach(Setting setting in settingsToAdd)
                     {
                         Console.WriteLine(setting);
                     }

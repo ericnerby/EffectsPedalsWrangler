@@ -1,5 +1,4 @@
-﻿using EffectsPedalsKeeper.Utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Xunit;
 

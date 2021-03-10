@@ -1,23 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EffectsPedalsKeeper.Settings
 {
-    public interface ISetting : IInteractiveEditable
+    public interface ISetting: ICopyable, IInteractiveEditable
     {
-        public string Label { get; }
+        string Label { get; }
+        SettingType SettingType { get; }
+        int MinValue { get; }
+        int MaxValue => Options.Count - 1;
+        List<string> Options { get; }
 
-        public int MinValue { get; }
-        public int MaxValue { get; }
+        string CurrentValueDisplay { get; }
+        int CurrentValue { get; set; }
+    }
 
-        /// <summary>
-        ///  CurrentValue converted to the appropriate string for the particular Setting type.
-        /// </summary>
-        public abstract string CurrentValueDisplay { get; }
-
-        public int CurrentValue { get; }
-
-        public int StepUp();
-
-        public int StepDown();
+    public enum SettingType
+    {
+        ClockFace,
+        Numbered,
+        Named,
+        Switch
     }
 }

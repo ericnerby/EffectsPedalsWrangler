@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace EffectsPedalsKeeper.Tests.Mocks
 {
-    public class NewSettingMock : INewSetting
+    public class NewSettingMock : ISetting
     {
         private string _valueDisplayText;
 
