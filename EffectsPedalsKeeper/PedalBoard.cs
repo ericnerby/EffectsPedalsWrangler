@@ -13,6 +13,10 @@ namespace EffectsPedalsKeeper
 
         private static Pedal _CopyMethod(Pedal item) => (Pedal)item.Copy();
 
+        public PedalBoard(string name) : base(_CopyMethod)
+        {
+            Name = name;
+        }
 
         public void InteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)
         {
@@ -281,11 +285,6 @@ namespace EffectsPedalsKeeper
                 }
                 Console.WriteLine("Input not recognized.");
             }
-        }
-
-        public PedalBoard(string name) : base(_CopyMethod)
-        {
-            Name = name;
         }
 
         public override string ToString() => Name;

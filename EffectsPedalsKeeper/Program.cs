@@ -35,14 +35,13 @@ namespace EffectsPedalsKeeper
 
         public static List<Pedal> Pedals = new List<Pedal>();
         public static List<PedalBoard> PedalBoards = new List<PedalBoard>();
+        public static string pedalsFileName = "pedals.json";
+        public static string boardsFileName = "boards.json";
 
         static void Main(string[] args)
         {
-            Deserialize();
-
-            //var demoBuilder = new DemoBuilder();
-            //Pedals.AddRange(demoBuilder.DemoPedals);
-            //PedalBoards.Add(demoBuilder.BuildDemoBoard());
+            DeserializeList(pedalsFileName, Pedals);
+            //DeserializeList(boardsFileName, PedalBoards);
 
             Console.WriteLine(_welcomeText);
             InputLoop();
@@ -158,40 +157,26 @@ namespace EffectsPedalsKeeper
             }
         }
 
-        static void Serialize()
+        static void SerializeList<T>(string fileName, List<T> source)
         {
-            using (StreamWriter file = File.CreateText(@"pedals.json"))
+            using (StreamWriter file = File.CreateText(@fileName))
             {
                 JsonSerializer serializer = JsonSerializer.Create(JsonOptions);
-                serializer.Serialize(file, Pedals);
+                serializer.Serialize(file, source);
             }
-            //using (StreamWriter file = File.CreateText(@"boards.json"))
-            //{
-            //    JsonSerializer serializer = JsonSerializer.Create(JsonOptions);
-            //    serializer.Serialize(file, PedalBoards);
-            //}
         }
 
-        static void Deserialize()
+        static void DeserializeList<T>(string fileName, List<T> destination)
         {
-            if (File.Exists("pedals.json"))
+            if (File.Exists(fileName))
             {
-                using (StreamReader file = File.OpenText(@"pedals.json"))
+                using (StreamReader file = File.OpenText(@fileName))
                 {
                     JsonSerializer serializer = JsonSerializer.Create(JsonOptions);
-                    var pedalsToAdd = (List<Pedal>)serializer.Deserialize(file, typeof(List<Pedal>));
-                    Pedals.AddRange(pedalsToAdd);
+                    var itemsToAdd = (List<T>)serializer.Deserialize(file, typeof(List<T>));
+                    destination.AddRange(itemsToAdd);
                 }
             }
-            //if (File.Exists("boards.json"))
-            //{
-            //    using (StreamReader file = File.OpenText(@"boards.json"))
-            //    {
-            //        JsonSerializer serializer = JsonSerializer.Create(JsonOptions);
-            //        var boardsToAdd = (List<PedalBoard>)serializer.Deserialize(file, typeof(List<PedalBoard>));
-            //        PedalBoards.AddRange(boardsToAdd);
-            //    }
-            //}
         }
 
         static void AddNewPedals()
@@ -220,7 +205,8 @@ namespace EffectsPedalsKeeper
 
             if(input == "-q")
             {
-                Serialize();
+                SerializeList(pedalsFileName, Pedals);
+                SerializeList(boardsFileName, PedalBoards);
                 Environment.Exit(0);
             }
             if(input == "-h")
