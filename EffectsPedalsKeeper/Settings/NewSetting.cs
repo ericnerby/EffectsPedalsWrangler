@@ -101,6 +101,23 @@ namespace EffectsPedalsKeeper.Settings
             return new NewSetting(label, SettingType.ClockFace, options);
         }
 
+        public static NewSetting CreateNumberedSetting(string label, double minVal, double maxVal)
+        {
+            var options = new List<string>();
+
+            do
+            {
+                options.Add(minVal.ToString());
+                minVal += 0.1;
+            }
+            while (minVal < maxVal);
+
+            return new NewSetting(label, SettingType.Numbered, options);
+        }
+
+        private static double ValueToDisplay(int value, int minVal) => ((double)value / 10) + minVal;
+
+
         public static NewSetting CreateSwitchSetting(string label)
         {
             return new NewSetting(label, SettingType.Switch, new string[] { "Off", "On" });

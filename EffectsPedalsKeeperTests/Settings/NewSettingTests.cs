@@ -51,6 +51,27 @@ namespace EffectsPedalsKeeper.Settings.Tests
         }
 
         [Fact()]
+        public void NumberedConstructorTest()
+        {
+            var label = "Tone";
+            var lowerLimit = 1;
+            var upperLimit = 10;
+            var type = SettingType.Numbered;
+            NewSetting numberedSetting = NewSetting.CreateNumberedSetting(label, lowerLimit, upperLimit);
+
+            Assert.Equal(type, numberedSetting.SettingType);
+
+            string minDisplay = "1.0";
+
+            Assert.Contains(minDisplay, numberedSetting.CurrentValueDisplay);
+
+            string maxDisplay = "10.0";
+            numberedSetting.CurrentValue = numberedSetting.MaxValue;
+
+            Assert.Contains(maxDisplay, numberedSetting.CurrentValueDisplay);
+        }
+
+        [Fact()]
         public void CurrentValueDisplayTest()
         {
             var target = _namedSetting.CurrentValueDisplay;
