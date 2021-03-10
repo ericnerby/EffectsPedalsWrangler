@@ -107,7 +107,7 @@ namespace EffectsPedalsKeeper.Settings
 
             do
             {
-                options.Add(minVal.ToString());
+                options.Add(minVal.ToString("0.0"));
                 minVal += 0.1;
             }
             while (minVal < maxVal);
