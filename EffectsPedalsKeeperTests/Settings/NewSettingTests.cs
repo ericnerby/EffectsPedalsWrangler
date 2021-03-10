@@ -112,6 +112,19 @@ namespace EffectsPedalsKeeper.Settings.Tests
         }
 
         [Fact()]
+        public void ToStringWithValueArgumentTest()
+        {
+            var testValue = 2;
+
+            _namedSetting.CurrentValue = testValue - 1;
+
+            var target = _namedSetting.ToString(testValue);
+            var expected = _namedSettingOptions[testValue];
+
+            Assert.Contains(expected, target);
+        }
+
+        [Fact()]
         public void CopyTest()
         {
             var original = _namedSetting;

@@ -43,9 +43,11 @@ namespace EffectsPedalsKeeper.Settings
             Options = new List<string>(options);
         }
 
-        public override string ToString()
+        public override string ToString() => $"{Label}: {CurrentValueDisplay}";
+
+        public string ToString(int valueToDisplay)
         {
-            return $"{Label}: {CurrentValueDisplay}";
+            return $"{Label}: {Options[valueToDisplay]}";
         }
 
         public object Copy()
