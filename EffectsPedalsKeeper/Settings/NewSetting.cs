@@ -47,6 +47,10 @@ namespace EffectsPedalsKeeper.Settings
 
         public string ToString(int valueToDisplay)
         {
+            if (valueToDisplay < MinValue || valueToDisplay > MaxValue)
+            {
+                throw new IndexOutOfRangeException();
+            }
             return $"{Label}: {Options[valueToDisplay]}";
         }
 

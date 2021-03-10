@@ -125,6 +125,13 @@ namespace EffectsPedalsKeeper.Settings.Tests
         }
 
         [Fact()]
+        public void ToStringWithValueOutOfRangeTest()
+        {
+            var outOfRangeValue = _namedSetting.Options.Count;
+            Assert.Throws<IndexOutOfRangeException>(() => _namedSetting.ToString(outOfRangeValue));
+        }
+
+        [Fact()]
         public void CopyTest()
         {
             var original = _namedSetting;
