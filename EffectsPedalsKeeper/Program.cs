@@ -179,7 +179,7 @@ namespace EffectsPedalsKeeper
             }
         }
 
-        static void AddNewPedals()
+        public static void AddNewPedals()
         {
             while (true)
             {
@@ -193,13 +193,13 @@ namespace EffectsPedalsKeeper
             }
         }
 
-        static void CreateNewBoard()
+        public static void CreateNewBoard()
         {
             var newBoard = Builder.BuildBoard(Pedals, CheckForQuitOrHelp);
             PedalBoards.Add(newBoard);
         }
 
-        static void CheckForQuitOrHelp(string input)
+        public static void CheckForQuitOrHelp(string input)
         {
             input = input.ToLower();
 

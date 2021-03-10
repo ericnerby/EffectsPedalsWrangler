@@ -14,7 +14,7 @@ Right now, it's a work in progress, but stay tuned for more info in the future!
 ## Project Requirements
 
 * Implements a **master loop** interface to interact with the user.
-* **Multiple classes inherit from parent classes**. For example, the `ISetting` interface, the `Setting` class, and its subclasses.
+* **Multiple classes inherit from parent classes**. For example, the `ISetting` interface and the `Setting` class, as well as the PedalBoard class which inherits from the VersionedList class.
 * Implements a **regular expression** when confirming proper clockface format for pedal settings that don't have numbers.
 * **Many unit tests written throughout** all `Settings`, `Utils`, and `Pedal` classes.
 * Implements a **conversion tool** to go back and forth between clockface strings and integer values for settings (`Utils.ClockFaceConverter`).
