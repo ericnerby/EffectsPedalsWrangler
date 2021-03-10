@@ -115,9 +115,6 @@ namespace EffectsPedalsKeeper.Settings
             return new NewSetting(label, SettingType.Numbered, options);
         }
 
-        private static double ValueToDisplay(int value, int minVal) => ((double)value / 10) + minVal;
-
-
         public static NewSetting CreateSwitchSetting(string label)
         {
             return new NewSetting(label, SettingType.Switch, new string[] { "Off", "On" });
