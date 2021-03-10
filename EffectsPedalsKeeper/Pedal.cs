@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using EffectsPedalsKeeper.Settings;
+using EffectsPedalsKeeper.Utils;
+using Newtonsoft.Json;
 
 namespace EffectsPedalsKeeper
 {
@@ -12,17 +14,17 @@ namespace EffectsPedalsKeeper
         public string Name { get; }
         public EffectType EffectType { get; }
 
-        public List<Setting> Settings { get; private set; }
+        public List<INewSetting> Settings { get; private set; }
 
         public Pedal(string maker, string name, EffectType effectType)
         {
             Maker = maker;
             Name = name;
             EffectType = effectType;
-            Settings = new List<Setting>();
+            Settings = new List<INewSetting>();
         }
 
-        public bool AddSettings(IList<Setting> settings)
+        public bool AddSettings(IList<INewSetting> settings)
         {
             var startingCount = Settings.Count;
             Settings.AddRange(settings);
@@ -33,7 +35,7 @@ namespace EffectsPedalsKeeper
             return false;
         }
 
-        public bool AddSettings(params Setting[] settings)
+        public bool AddSettings(params INewSetting[] settings)
         {
             var startingCount = Settings.Count;
             Settings.AddRange(settings);
@@ -64,13 +66,13 @@ namespace EffectsPedalsKeeper
             var newPedal = new Pedal(Maker, Name, EffectType);
             newPedal.Engaged = Engaged;
 
-            var newSettings = new Setting[Settings.Count];
+            var newSettings = new INewSetting[Settings.Count];
             for(var i = 0; i < Settings.Count; i++)
             {
                 if (Settings[i] is ICopyable)
                 {
                     var oldSetting = (ICopyable)Settings[i];
-                    newSettings[i] = (Setting)oldSetting.Copy();
+                    newSettings[i] = (INewSetting)oldSetting.Copy();
                 }
             }
             newPedal.AddSettings(newSettings);
@@ -87,7 +89,7 @@ namespace EffectsPedalsKeeper
                 Console.WriteLine("Settings:");
 
                 var index = 1;
-                foreach (ISetting setting in Settings)
+                foreach (INewSetting setting in Settings)
                 {
                     Console.WriteLine($"{index}. {setting}");
                     index++;

@@ -14,21 +14,21 @@ namespace EffectsPedalsKeeper
         public DemoBuilder()
         {
             DemoPedals[0].AddSettings(
-                new KnobSetting("Drive", "6:30", "5:30"),
-                new KnobSetting("Tone", "6:30", "5:30"),
-                new KnobSetting("Level", "6:30", "5:30")
+                NewSetting.CreateClockFaceSetting("Drive", "6:30", "5:30"),
+                NewSetting.CreateClockFaceSetting("Tone", "6:30", "5:30"),
+                NewSetting.CreateClockFaceSetting("Level", "6:30", "5:30")
             );
 
             DemoPedals[1].AddSettings(
-                new KnobSetting("Blend", "6:30", "5:30"),
-                new KnobSetting("Gain", "6:30", "5:30"),
-                new KnobSetting("Rate", "6:30", "5:30"),
-                new KnobSetting("Depth", "6:30", "5:30"),
-                new KnobSetting("Drive", "6:30", "5:30"),
-                new KnobSetting("Feedback", "6:30", "5:30"),
-                new KnobSetting("Delay", "6:30", "5:30"),
-                new RotarySetting(
-                    "Tap Divide",
+                NewSetting.CreateClockFaceSetting("Blend", "6:30", "5:30"),
+                NewSetting.CreateClockFaceSetting("Gain", "6:30", "5:30"),
+                NewSetting.CreateClockFaceSetting("Rate", "6:30", "5:30"),
+                NewSetting.CreateClockFaceSetting("Depth", "6:30", "5:30"),
+                NewSetting.CreateClockFaceSetting("Drive", "6:30", "5:30"),
+                NewSetting.CreateClockFaceSetting("Feedback", "6:30", "5:30"),
+                NewSetting.CreateClockFaceSetting("Delay", "6:30", "5:30"),
+                new NewSetting(
+                    "Tap Divide", SettingType.Named,
                     new string[]
                     {
                         "Dotted Eighth",
@@ -38,8 +38,8 @@ namespace EffectsPedalsKeeper
                         "Sixteenth"
                     }
                 ),
-                new RotarySetting(
-                    "Exp. Mode",
+                new NewSetting(
+                    "Exp. Mode", SettingType.Named,
                     new string[]
                     {
                         "Rate",

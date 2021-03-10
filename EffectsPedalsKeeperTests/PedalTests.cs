@@ -14,16 +14,15 @@ namespace EffectsPedalsKeeper.Tests
             new string[] {"Tone", "3:00"},
             new string[] {"Level", "9:00"}
         };
-        private SettingMock[] _mockSettings;
+        private NewSettingMock[] _mockSettings;
 
         public PedalTests()
         {
             _pedal = new Pedal(_maker, _name, EffectType.Drive);
-            _mockSettings = new SettingMock[_settingStrings.Length];
+            _mockSettings = new NewSettingMock[_settingStrings.Length];
             for(var i = 0; i < _settingStrings.Length; i++)
             {
-                _mockSettings[i] = new SettingMock(_settingStrings[i][0],
-                    12, 132, _settingStrings[i][1]);
+                _mockSettings[i] = new NewSettingMock(_settingStrings[i][0], _settingStrings[i][1]);
             }
         }
 
@@ -70,8 +69,8 @@ namespace EffectsPedalsKeeper.Tests
         {
             var target = _pedal;
             target.AddSettings(
-                new SettingMock("Level", 0, 100, "5.5"),
-                new SettingMock("Gain", 0, 100, "9.0")
+                new NewSettingMock("Level", "5.5"),
+                new NewSettingMock("Gain", "9.0")
             );
 
             int expected = 2;
@@ -85,7 +84,7 @@ namespace EffectsPedalsKeeper.Tests
             _pedal.AddSettings(_mockSettings);
             Pedal copy = (Pedal)_pedal.Copy();
 
-            copy.Settings[2] = new SettingMock("Level", 12, 132, "12:00");
+            copy.Settings[2] = new NewSettingMock("Level", "12:00");
 
             var notExpected = _pedal.Settings[2];
             var target = copy.Settings[2];

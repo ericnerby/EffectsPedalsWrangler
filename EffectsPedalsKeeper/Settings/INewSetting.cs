@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EffectsPedalsKeeper.Settings
 {
-    interface INewSetting
+    public interface INewSetting: ICopyable, IInteractiveEditable
     {
         string Label { get; }
         SettingType SettingType { get; }
@@ -13,5 +13,13 @@ namespace EffectsPedalsKeeper.Settings
 
         string CurrentValueDisplay { get; }
         int CurrentValue { get; set; }
+    }
+
+    public enum SettingType
+    {
+        ClockFace,
+        Numbered,
+        Named,
+        Switch
     }
 }

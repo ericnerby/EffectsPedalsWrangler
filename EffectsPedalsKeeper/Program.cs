@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using EffectsPedalsKeeper.Settings;
+using EffectsPedalsKeeper.Utils;
 using Newtonsoft.Json;
 
 namespace EffectsPedalsKeeper
@@ -13,7 +15,6 @@ namespace EffectsPedalsKeeper
 
         public static JsonSerializerSettings JsonOptions = new JsonSerializerSettings
         {
-            Formatting = Formatting.Indented,
             TypeNameHandling = TypeNameHandling.Auto
         };
 
@@ -38,20 +39,7 @@ namespace EffectsPedalsKeeper
 
         static void Main(string[] args)
         {
-            //Deserializer fails because Setting is an abstract class
-
-            //if (File.Exists("pedals.json"))
-            //{
-            //    string fileContents = File.ReadAllText("pedals.json");
-            //    List<Pedal> pedalsToAdd = JsonConvert.DeserializeObject<List<Pedal>>(fileContents);
-            //    Pedals.AddRange(pedalsToAdd);
-            //}
-            //if (File.Exists("boards.json"))
-            //{
-            //    string fileContents = File.ReadAllText("boards.json");
-            //    List<PedalBoard> boardsToAdd = JsonConvert.DeserializeObject<List<PedalBoard>>(fileContents);
-            //    PedalBoards.AddRange(boardsToAdd);
-            //}
+            Deserialize();
 
             //var demoBuilder = new DemoBuilder();
             //Pedals.AddRange(demoBuilder.DemoPedals);
@@ -171,6 +159,42 @@ namespace EffectsPedalsKeeper
             }
         }
 
+        static void Serialize()
+        {
+            using (StreamWriter file = File.CreateText(@"pedals.json"))
+            {
+                JsonSerializer serializer = JsonSerializer.Create(JsonOptions);
+                serializer.Serialize(file, Pedals);
+            }
+            //using (StreamWriter file = File.CreateText(@"boards.json"))
+            //{
+            //    JsonSerializer serializer = JsonSerializer.Create(JsonOptions);
+            //    serializer.Serialize(file, PedalBoards);
+            //}
+        }
+
+        static void Deserialize()
+        {
+            if (File.Exists("pedals.json"))
+            {
+                using (StreamReader file = File.OpenText(@"pedals.json"))
+                {
+                    JsonSerializer serializer = JsonSerializer.Create(JsonOptions);
+                    var pedalsToAdd = (List<Pedal>)serializer.Deserialize(file, typeof(List<Pedal>));
+                    Pedals.AddRange(pedalsToAdd);
+                }
+            }
+            //if (File.Exists("boards.json"))
+            //{
+            //    using (StreamReader file = File.OpenText(@"boards.json"))
+            //    {
+            //        JsonSerializer serializer = JsonSerializer.Create(JsonOptions);
+            //        var boardsToAdd = (List<PedalBoard>)serializer.Deserialize(file, typeof(List<PedalBoard>));
+            //        PedalBoards.AddRange(boardsToAdd);
+            //    }
+            //}
+        }
+
         static void AddNewPedals()
         {
             while (true)
@@ -197,11 +221,7 @@ namespace EffectsPedalsKeeper
 
             if(input == "-q")
             {
-                string pedalJsonString = JsonConvert.SerializeObject(Pedals, JsonOptions);
-                File.WriteAllTextAsync("pedals.json", pedalJsonString);
-
-                string boardJsonString = JsonConvert.SerializeObject(PedalBoards, JsonOptions);
-                File.WriteAllTextAsync("boards.json", boardJsonString);
+                Serialize();
                 Environment.Exit(0);
             }
             if(input == "-h")

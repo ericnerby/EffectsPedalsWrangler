@@ -1,6 +1,6 @@
 ﻿namespace EffectsPedalsKeeper
 {
-    interface ICopyable
+    public interface ICopyable
     {
         public object Copy();
     }

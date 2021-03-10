@@ -126,12 +126,4 @@ namespace EffectsPedalsKeeper.Settings
             return new NewSetting(label, SettingType.Switch, new string[] { "Off", "On" });
         }
     }
-
-    public enum SettingType
-    {
-        ClockFace,
-        Numbered,
-        Named,
-        Switch
-    }
 }
