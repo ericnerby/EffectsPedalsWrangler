@@ -247,7 +247,7 @@ namespace EffectsPedalsKeeper
                     Console.WriteLine($"{index}. {pedal}");
                     Console.WriteLine($"Pedal {(pedal.Engaged ? "engaged" : "not engaged")}");
                     Console.WriteLine(string.Concat(Enumerable.Repeat(".", 10)));
-                    foreach (Setting setting in pedal.Settings)
+                    foreach (NewSetting setting in pedal.Settings)
                     {
                         Console.WriteLine(setting);
                     }

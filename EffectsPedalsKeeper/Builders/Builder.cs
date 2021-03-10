@@ -4,11 +4,19 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace EffectsPedalsKeeper
+namespace EffectsPedalsKeeper.Builders
 {
     public class Builder
     {
         public static ClockFaceConverter ClockConverter = new ClockFaceConverter(PrecisionValue.Five);
+        public static MenuAction[] MenuActions = new MenuAction[]
+        {
+            new MenuAction("-b", "'-b' to go back", MenuStatus.Back),
+            new MenuAction("-h", "", MenuStatus.Help),
+            new MenuAction("-q", "", MenuStatus.QuitProgram)
+        };
+
+        public static bool ClockFaceIsGreaterThan(string lowValue, string highValue) => ClockConverter.StringTimeToInt(lowValue) < ClockConverter.StringTimeToInt(highValue);
 
         public static PedalBoard BuildBoard(List<Pedal> pedalsAvailable, Action<string> checkHelpQuit)
         {
@@ -23,24 +31,26 @@ namespace EffectsPedalsKeeper
             return newBoard;
         }
 
-        public static Pedal BuildPedal()
+        public static Pedal BuildPedal(Action<string> checkHelpQuit)
         {
             Pedal newPedal;
             Console.Write("What is the name of the pedal?  ");
             var name = Console.ReadLine();
+            checkHelpQuit(name);
 
             Console.Write("What is the maker of the pedal?  ");
             var maker = Console.ReadLine();
+            checkHelpQuit(maker);
 
-            EffectType effectType = GetEffectType();
+            EffectType effectType = GetEffectType(checkHelpQuit);
 
             newPedal = new Pedal(maker, name, effectType);
-            AddPedalSettings(newPedal);
+            AddPedalSettings(newPedal, checkHelpQuit);
 
             return newPedal;
         }
 
-        private static EffectType GetEffectType()
+        private static EffectType GetEffectType(Action<string> checkHelpQuit)
         {
 
             Console.WriteLine("What type of Effect is it?\nChoose a number:");
@@ -51,16 +61,19 @@ namespace EffectsPedalsKeeper
                 index++;
             }
             var input = Console.ReadLine();
+
+            checkHelpQuit(input);
+
             int typeIndex;
             if(int.TryParse(input, out typeIndex))
             {
                 return (EffectType)(typeIndex - 1);
             }
             Console.Write("Please select a number from the list.");
-            return GetEffectType();
+            return GetEffectType(checkHelpQuit);
         }
 
-        private static void AddPedalSettings(Pedal pedal)
+        private static void AddPedalSettings(Pedal pedal, Action<string> checkHelpQuit)
         {
             var settingsOptionsText = new string[]
             {
@@ -92,6 +105,9 @@ namespace EffectsPedalsKeeper
                 Console.Write("Choose a number for the setting type.\n"
                     + "Type 'c' to cancel adding setting:  ");
                 var input = Console.ReadLine();
+
+                checkHelpQuit(input);
+
                 if(input.ToLower() == "c")
                 {
                     break;
@@ -103,7 +119,7 @@ namespace EffectsPedalsKeeper
                     typeIndex -= 1;
                     if (Enum.IsDefined(typeof(SettingType), typeIndex))
                     {
-                        settingsToAdd.Add(CreateSetting((SettingType)typeIndex));
+                        settingsToAdd.Add(SettingBuilder.CreateSetting((SettingType)typeIndex, checkHelpQuit));
                     }
                     else
                     {
@@ -129,14 +145,6 @@ namespace EffectsPedalsKeeper
             {
                 pedal.AddSettings(settingsToAdd);
             }
-        }
-
-        private static NewSetting CreateSetting(SettingType type)
-        {
-            Console.WriteLine("What is the label for the setting?");
-            var label = Console.ReadLine();
-
-            throw new NotImplementedException($"Missing Implementation for {type}.");
         }
     }
 }

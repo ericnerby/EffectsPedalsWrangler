@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using EffectsPedalsKeeper.Settings;
-using EffectsPedalsKeeper.Utils;
+using EffectsPedalsKeeper.Builders;
 using Newtonsoft.Json;
 
 namespace EffectsPedalsKeeper
@@ -199,7 +198,7 @@ namespace EffectsPedalsKeeper
         {
             while (true)
             {
-                Pedals.Add(Builder.BuildPedal());
+                Pedals.Add(Builder.BuildPedal(CheckForQuitOrHelp));
                 Console.Write("Would you like to add another pedal? [N/y]  ");
                 var input = Console.ReadLine();
                 if (input.ToLower() != "y")

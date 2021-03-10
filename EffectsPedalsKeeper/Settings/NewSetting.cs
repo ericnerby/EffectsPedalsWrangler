@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace EffectsPedalsKeeper.Settings
 {
-    public class NewSetting : INewSetting, ICopyable
+    public class NewSetting : INewSetting
     {
         protected static Regex _clockFormat = new Regex(@"(\d+):(\d{2})");
         protected static ClockFaceConverter _clockFaceConverter = new ClockFaceConverter(PrecisionValue.Five);
@@ -59,9 +59,99 @@ namespace EffectsPedalsKeeper.Settings
             return (NewSetting)MemberwiseClone();
         }
 
+        // IInteractiveEditable Implementations
         public void InteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)
         {
-            throw new NotImplementedException();
+            if(SettingType == SettingType.Named || SettingType == SettingType.Switch)
+            { NamedInteractiveViewEdit(checkQuit, additionalArgs); }
+            else if(SettingType == SettingType.ClockFace || SettingType == SettingType.Numbered)
+            { RangedInteractiveViewEdit(checkQuit, additionalArgs); }
+
+        }
+
+        private void RangedInteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)
+        {
+            Regex validator;
+            string formatForDisplay;
+            if (SettingType == SettingType.ClockFace)
+            {
+                validator = _clockFormat;
+                formatForDisplay = "'h:mm'";
+            }
+            else
+            {
+                validator = new Regex(@"\d+.\d");
+                formatForDisplay = "'d.d', eg '1.0'";
+            }
+
+            Console.WriteLine(this);
+            Console.WriteLine($"Minimum Value: {Options[MinValue]}");
+            Console.WriteLine($"Maximum Value: {Options[MaxValue]}");
+
+            while (true)
+            {
+                Console.WriteLine($"Please enter a new position in the format {formatForDisplay}\n"
+                                  + "Or enter '-b' to go back to previous screen:  ");
+                var input = Console.ReadLine();
+
+                checkQuit(input);
+
+                if (input.ToLower() == "-b") { return; }
+
+                var match = validator.Match(input);
+                if (match.Success)
+                {
+                    var newValue = Options.IndexOf(match.Value);
+                    if (newValue == -1)
+                    {
+                        Console.WriteLine("Position must be between"
+                                          + $" {Options[MinValue]} and {Options[MaxValue]}");
+                        continue;
+                    }
+                    CurrentValue = newValue;
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine($"Position must be in format {formatForDisplay}.");
+                }
+            }
+        }
+
+        private void NamedInteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)
+        {
+            Console.WriteLine(this);
+
+            while (true)
+            {
+                Console.WriteLine("Options:");
+                for (var i = 0; i < Options.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {Options[i]}");
+                }
+                Console.WriteLine("Please select an option by number from the above list\n"
+                                  + "Or enter '-b' to go back to previous page:  ");
+
+                var input = Console.ReadLine();
+
+                if (input.ToLower() == "-b") { return; }
+
+                int newValue;
+                if (int.TryParse(input, out newValue))
+                {
+                    newValue -= 1;
+                    if (newValue >= MinValue && newValue <= MaxValue)
+                    {
+                        CurrentValue = newValue;
+                        break;
+                    }
+                    Console.WriteLine("Please choose a number from the displayed list.");
+                }
+                else
+                {
+                    Console.WriteLine("Please enter your selection as a number.");
+                }
+            }
         }
 
         // Static Constructors
