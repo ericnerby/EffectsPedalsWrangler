@@ -19,15 +19,13 @@ namespace EffectsPedalsKeeper.Settings
         public int MaxValue => Options.Count - 1;
         public List<string> Options { get; protected set; }
 
-        public string CurrentValueDisplay => Options[CurrentValue];
-
         protected int _currentValue;
         public int CurrentValue
         {
             get { return _currentValue; }
             set
             {
-                if(value < MinValue || value > MaxValue)
+                if (value < MinValue || value > MaxValue)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
@@ -35,6 +33,8 @@ namespace EffectsPedalsKeeper.Settings
                 _currentValue = value;
             }
         }
+
+        public string CurrentValueDisplay => Options[CurrentValue];
 
         public Setting(string label, SettingType settingType, IList<string> options)
         {

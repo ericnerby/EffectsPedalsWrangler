@@ -1,19 +1,19 @@
 ﻿using EffectsPedalsKeeper.Interfaces;
+using EffectsPedalsKeeper.Utils;
 using System;
 using System.Collections.Generic;
 
 namespace EffectsPedalsKeeper.Settings
 {
-    public interface ISetting: ICopyable, IInteractiveEditable
+    public interface ISetting : ICopyable, IInteractiveEditable, IBoundedValue
     {
         string Label { get; }
         SettingType SettingType { get; }
-        int MinValue { get; }
-        int MaxValue => Options.Count - 1;
         List<string> Options { get; }
 
         string CurrentValueDisplay { get; }
-        int CurrentValue { get; set; }
+
+        string ToString(int valueToDisplay);
     }
 
     public enum SettingType
