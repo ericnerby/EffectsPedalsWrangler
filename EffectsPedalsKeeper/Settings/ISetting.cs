@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EffectsPedalsKeeper.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace EffectsPedalsKeeper.Settings

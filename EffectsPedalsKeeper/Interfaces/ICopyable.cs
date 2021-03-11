@@ -1,4 +1,4 @@
-﻿namespace EffectsPedalsKeeper
+﻿namespace EffectsPedalsKeeper.Interfaces
 {
     public interface ICopyable
     {

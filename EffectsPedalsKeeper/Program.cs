@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using EffectsPedalsKeeper.Builders;
+using EffectsPedalsKeeper.Pedals;
 using Newtonsoft.Json;
 
 namespace EffectsPedalsKeeper

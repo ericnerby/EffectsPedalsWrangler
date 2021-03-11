@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using EffectsPedalsKeeper.Interfaces;
 using EffectsPedalsKeeper.Settings;
 
-namespace EffectsPedalsKeeper
+namespace EffectsPedalsKeeper.Pedals
 {
-    public class Pedal : IPedal, ICopyable
+    public class Pedal : IPedal
     {
         public bool Engaged { get; set; }
 
