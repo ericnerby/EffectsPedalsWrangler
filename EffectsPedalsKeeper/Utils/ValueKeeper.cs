@@ -8,9 +8,10 @@ namespace EffectsPedalsKeeper.Utils
     {
         public T Item;
 
+        private int _storedValue;
         public int StoredValue
         {
-            get { return StoredValue; }
+            get { return _storedValue; }
             set
             {
                 if (value < Item.MinValue || value > Item.MaxValue)
@@ -18,7 +19,7 @@ namespace EffectsPedalsKeeper.Utils
                     throw new ArgumentOutOfRangeException();
                 }
 
-                StoredValue = value;
+                _storedValue = value;
             }
         }
 
