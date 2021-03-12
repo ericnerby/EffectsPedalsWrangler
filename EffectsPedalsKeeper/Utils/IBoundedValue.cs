@@ -8,6 +8,19 @@ namespace EffectsPedalsKeeper.Utils
     {
         public int MinValue { get; }
         public int MaxValue { get; }
-        public int CurrentValue { get; set; }
+
+        public int CurrentValue
+        {
+            get { return CurrentValue; }
+            set
+            {
+                if (value < MinValue || value > MaxValue)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
+                CurrentValue = value;
+            }
+        }
     }
 }
