@@ -66,7 +66,6 @@ namespace EffectsPedalsKeeper.Settings
             { NamedInteractiveViewEdit(checkQuit, additionalArgs); }
             else if(SettingType == SettingType.ClockFace || SettingType == SettingType.Numbered)
             { RangedInteractiveViewEdit(checkQuit, additionalArgs); }
-
         }
 
         private void RangedInteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)

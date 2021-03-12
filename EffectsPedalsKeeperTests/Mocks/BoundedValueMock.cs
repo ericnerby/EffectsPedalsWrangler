@@ -8,7 +8,7 @@ namespace EffectsPedalsKeeperTests.Mocks
         public int MinValue { get; }
         public int MaxValue { get; }
 
-        protected int _currentValue;
+        private int _currentValue;
         public int CurrentValue
         {
             get { return _currentValue; }
