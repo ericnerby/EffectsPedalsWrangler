@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace EffectsPedalsKeeper.Settings.Tests
 {
-    public class NewSettingTests
+    public class SettingTests
     {
         private string _namedSettingLabel = "Delay Type";
         private List<string> _namedSettingOptions = new List<string> {
@@ -15,7 +15,7 @@ namespace EffectsPedalsKeeper.Settings.Tests
         };
         private Setting _namedSetting;
 
-        public NewSettingTests()
+        public SettingTests()
         {
             _namedSetting = new Setting(_namedSettingLabel,
                 SettingType.Named, _namedSettingOptions);
