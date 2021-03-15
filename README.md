@@ -18,3 +18,4 @@ Right now, it's a work in progress, but stay tuned for more info in the future!
 * Implements a **regular expression** when confirming proper clockface format for pedal settings that don't have numbers.
 * **Many unit tests written throughout** all `Settings`, `Utils`, and `Pedal` classes.
 * Implements a **conversion tool** to go back and forth between clockface strings and integer values for settings (`Utils.ClockFaceConverter`).
+* Implements **Linq queries** in `PedalBoards.PedalBoard` and its unit tests.

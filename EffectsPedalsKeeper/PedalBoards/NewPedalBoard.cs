@@ -1,5 +1,6 @@
 ﻿using EffectsPedalsKeeper.Interfaces;
 using EffectsPedalsKeeper.Pedals;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,32 +11,28 @@ namespace EffectsPedalsKeeper.PedalBoards
     public class NewPedalBoard : IList<IPedal>, IInteractiveEditable
     {
         public List<PedalBoardPreset> Presets;
+        [JsonProperty]
+        protected List<IPedal> Pedals;
 
         //IList Implementation
-        public IPedal this[int index] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IPedal this[int index] { get => Pedals[index]; set => throw new NotImplementedException(); }
 
-        public int Count => throw new NotImplementedException();
+        public int Count => Pedals.Count;
 
-        public bool IsReadOnly => throw new NotImplementedException();
+        public bool IsReadOnly => false;
 
         public void Add(IPedal item)
         {
             throw new NotImplementedException();
         }
 
-        public void Clear()
-        {
-            throw new NotImplementedException();
-        }
+        public void Clear() => Pedals.Clear();
 
-        public bool Contains(IPedal item)
-        {
-            throw new NotImplementedException();
-        }
+        public bool Contains(IPedal item) => Pedals.Contains(item);
 
         public void CopyTo(IPedal[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            Pedals.CopyTo(array, arrayIndex);
         }
 
         public IEnumerator<IPedal> GetEnumerator()
