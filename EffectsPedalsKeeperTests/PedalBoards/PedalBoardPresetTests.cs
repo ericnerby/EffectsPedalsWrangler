@@ -57,7 +57,7 @@ namespace EffectsPedalsKeeper.PedalBoards.Tests
             _testPedalTwo.Settings.ForEach(setting => setting.CurrentValue = _startingValue);
 
             _pedals = new List<IPedal>(2) { _testPedalOne, _testPedalTwo };
-            _preset = new PedalBoardPreset(_pedals);
+            _preset = new PedalBoardPreset("Testing Presets", _pedals);
         }
 
         [Fact()]
@@ -87,7 +87,7 @@ namespace EffectsPedalsKeeper.PedalBoards.Tests
             var testingSetting = testingPedal.Settings[0];
             testingSetting.CurrentValue += 1;
 
-            var preset = new PedalBoardPreset(_pedals);
+            var preset = new PedalBoardPreset("Testing Preset Two", _pedals);
 
             var testingValue = preset.SettingValues.Where(settingValue => settingValue.Item == testingSetting).ToArray();
 

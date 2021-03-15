@@ -10,60 +10,59 @@ namespace EffectsPedalsKeeper.PedalBoards
 {
     public class NewPedalBoard : IList<IPedal>, IInteractiveEditable
     {
-        public List<PedalBoardPreset> Presets;
-        [JsonProperty]
-        protected List<IPedal> Pedals;
+        public string Name { get; set; }
+        public List<PedalBoardPreset> Presets { get; private set; }
+
+        public NewPedalBoard(string name, IList<IPedal> pedals)
+        {
+            Name = name;
+            _pedals = new List<IPedal>(pedals);
+        }
 
         //IList Implementation
-        public IPedal this[int index] { get => Pedals[index]; set => throw new NotImplementedException(); }
+        [JsonProperty]
+        private List<IPedal> _pedals;
 
-        public int Count => Pedals.Count;
+        public IPedal this[int index] { get => _pedals[index]; set => throw new NotImplementedException(); }
+
+        public int Count => _pedals.Count;
 
         public bool IsReadOnly => false;
 
         public void Add(IPedal item)
         {
-            throw new NotImplementedException();
+
         }
 
-        public void Clear() => Pedals.Clear();
+        public void Clear() => _pedals.Clear();
 
-        public bool Contains(IPedal item) => Pedals.Contains(item);
+        public bool Contains(IPedal item) => _pedals.Contains(item);
 
         public void CopyTo(IPedal[] array, int arrayIndex)
         {
-            Pedals.CopyTo(array, arrayIndex);
+            _pedals.CopyTo(array, arrayIndex);
         }
 
-        public IEnumerator<IPedal> GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerator<IPedal> GetEnumerator() => _pedals.GetEnumerator();
 
-        public int IndexOf(IPedal item)
-        {
-            throw new NotImplementedException();
-        }
+        public int IndexOf(IPedal item) => _pedals.IndexOf(item);
 
         public void Insert(int index, IPedal item)
         {
-            throw new NotImplementedException();
+            _pedals.Insert(index, item);
         }
 
         public bool Remove(IPedal item)
         {
-            throw new NotImplementedException();
+            return _pedals.Remove(item);
         }
 
         public void RemoveAt(int index)
         {
-            throw new NotImplementedException();
+            _pedals.RemoveAt(index);
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         //Interactive Editing
         public void InteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)

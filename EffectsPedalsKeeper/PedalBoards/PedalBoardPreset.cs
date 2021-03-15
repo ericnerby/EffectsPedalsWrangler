@@ -9,11 +9,13 @@ namespace EffectsPedalsKeeper.PedalBoards
 {
     public class PedalBoardPreset
     {
+        public string Name { get; set; }
         public List<ValueKeeper<ISetting>> SettingValues;
         public Dictionary<IPedal, bool> EngagedList;
 
-        public PedalBoardPreset(IList<IPedal> pedals)
+        public PedalBoardPreset(string name, IList<IPedal> pedals)
         {
+            Name = name;
             EngagedList = new Dictionary<IPedal, bool>();
             SettingValues = new List<ValueKeeper<ISetting>>();
 
