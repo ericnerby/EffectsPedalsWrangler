@@ -85,24 +85,42 @@ namespace EffectsPedalsKeeper.PedalBoards.Tests
             var target = _pedalBoard.Presets[0].SettingValues.Count;
 
             Assert.Equal(expected, target);
+
+            expected = _pedalBoard.Count;
+            target = _pedalBoard.Presets[0].EngagedList.Count;
+
+            Assert.Equal(expected, target);
         }
 
         [Fact()]
         public void ClearTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            _pedalBoard.PresetAdd("My Awesome Preset");
+
+            _pedalBoard.Clear();
+
+            Assert.Empty(_pedalBoard);
+            Assert.Empty(_pedalBoard.Presets);
         }
 
         [Fact()]
         public void ContainsTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            Assert.Contains(_testPedalOne, _pedalBoard);
         }
 
         [Fact()]
         public void CopyToTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            _pedalBoard.Add(_testPedalTwo);
+
+            var newList = new IPedal[_pedalBoard.Count];
+            _pedalBoard.CopyTo(newList, 0);
+
+            var target = newList.Count();
+            var expected = _pedalBoard.Count;
+
+            Assert.Equal(expected, target);
         }
 
         [Fact()]
@@ -114,7 +132,10 @@ namespace EffectsPedalsKeeper.PedalBoards.Tests
         [Fact()]
         public void IndexOfTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            var expected = 0;
+            var target = _pedalBoard.IndexOf(_testPedalOne);
+
+            Assert.Equal(expected, target);
         }
 
         [Fact()]
