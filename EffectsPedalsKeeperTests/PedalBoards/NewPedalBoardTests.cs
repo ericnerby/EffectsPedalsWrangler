@@ -2,6 +2,7 @@
 using EffectsPedalsKeeper.PedalBoards;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using EffectsPedalsKeeper.Tests.Mocks;
 using EffectsPedalsKeeper.Pedals;
@@ -74,7 +75,16 @@ namespace EffectsPedalsKeeper.PedalBoards.Tests
         [Fact()]
         public void AddTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            _pedalBoard.PresetAdd("My Awesome Preset");
+
+            _pedalBoard.Add(_testPedalTwo);
+
+            Assert.Equal(2, _pedalBoard.Count);
+
+            var expected = _pedalBoard.Aggregate(0, (total, pedal) => total + pedal.Settings.Count);
+            var target = _pedalBoard.Presets[0].SettingValues.Count;
+
+            Assert.Equal(expected, target);
         }
 
         [Fact()]
