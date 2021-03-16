@@ -56,6 +56,8 @@ namespace EffectsPedalsKeeper.Tests.Mocks
             }
         }
 
+        public int UniqueID => throw new NotImplementedException();
+
         public override string ToString() => $"{Label}: {CurrentValueDisplay}";
 
         public string ToString(int valueToDisplay)

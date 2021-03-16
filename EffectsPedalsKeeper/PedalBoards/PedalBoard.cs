@@ -12,16 +12,19 @@ using System.Text.RegularExpressions;
 namespace EffectsPedalsKeeper.PedalBoards
 {
     [JsonObject]
-    public class PedalBoard : IList<IPedal>, IInteractiveEditable
+    public class PedalBoard : IList<IPedal>, IInteractiveEditable, IUniqueID
     {
         public string Name { get; set; }
         public List<PedalBoardPreset> Presets { get; private set; }
+        [JsonProperty]
+        public int UniqueID { get; }
 
         public PedalBoard(string name)
         {
             Name = name;
             _pedals = new List<IPedal>();
             Presets = new List<PedalBoardPreset>();
+            UniqueID = IDGenerator.GenerateID();
         }
 
         public PedalBoard(string name, IList<IPedal> pedals)
@@ -30,15 +33,17 @@ namespace EffectsPedalsKeeper.PedalBoards
             if(pedals.Count > 0) { _pedals = new List<IPedal>(pedals); }
             else { _pedals = new List<IPedal>(); }
             Presets = new List<PedalBoardPreset>();
+            UniqueID = IDGenerator.GenerateID();
         }
 
         [JsonConstructor]
-        public PedalBoard(string name, IList<IPedal> pedals, IList<PedalBoardPreset> presets)
+        public PedalBoard(string name, IList<IPedal> pedals, IList<PedalBoardPreset> presets, int uniqueID)
         {
             Name = name;
             if (pedals.Count > 0) { _pedals = new List<IPedal>(pedals); }
             else { _pedals = new List<IPedal>(); }
             Presets = new List<PedalBoardPreset>(presets);
+            UniqueID = IDGenerator.PassThroughID(uniqueID);
         }
 
         public override string ToString() => $"{Name} | Number of Pedals: {Count}";

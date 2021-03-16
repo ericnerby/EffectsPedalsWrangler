@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using EffectsPedalsKeeper.Interfaces;
 using EffectsPedalsKeeper.PedalBoards;
 using EffectsPedalsKeeper.Settings;
+using EffectsPedalsKeeper.Utils;
 
 namespace EffectsPedalsKeeper.Pedals
 {
@@ -17,12 +19,25 @@ namespace EffectsPedalsKeeper.Pedals
 
         public List<ISetting> Settings { get; private set; }
 
+        public int UniqueID { get; }
+
         public Pedal(string maker, string name, EffectType effectType)
         {
             Maker = maker;
             Name = name;
             EffectType = effectType;
             Settings = new List<ISetting>();
+            UniqueID = IDGenerator.GenerateID();
+        }
+
+        [JsonConstructor]
+        public Pedal(string maker, string name, EffectType effectType, int uniqueID)
+        {
+            Maker = maker;
+            Name = name;
+            EffectType = effectType;
+            Settings = new List<ISetting>();
+            UniqueID = IDGenerator.PassThroughID(uniqueID);
         }
 
         public bool AddSettings(IList<ISetting> settings)
@@ -64,17 +79,14 @@ namespace EffectsPedalsKeeper.Pedals
 
         public object Copy()
         {
-            var newPedal = new Pedal(Maker, Name, EffectType);
+            var newPedal = new Pedal(Maker, Name, EffectType, UniqueID);
             newPedal.Engaged = Engaged;
 
             var newSettings = new ISetting[Settings.Count];
             for(var i = 0; i < Settings.Count; i++)
             {
-                if (Settings[i] is ICopyable)
-                {
-                    var oldSetting = (ICopyable)Settings[i];
-                    newSettings[i] = (ISetting)oldSetting.Copy();
-                }
+                var oldSetting = Settings[i];
+                newSettings[i] = (ISetting)oldSetting.Copy();
             }
             newPedal.AddSettings(newSettings);
 

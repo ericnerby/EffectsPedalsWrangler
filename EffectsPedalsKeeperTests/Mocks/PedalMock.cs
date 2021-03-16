@@ -26,6 +26,8 @@ namespace EffectsPedalsKeeper.Tests.Mocks
 
         public List<ISetting> Settings { get; }
 
+        public int UniqueID => throw new NotImplementedException();
+
         public bool AddSettings(IList<ISetting> settings)
         {
             throw new NotImplementedException();

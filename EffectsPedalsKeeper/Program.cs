@@ -42,8 +42,12 @@ namespace EffectsPedalsKeeper
 
         static void Main(string[] args)
         {
-            DeserializeList(pedalsFileName, Pedals);
-            DeserializeList(boardsFileName, PedalBoards);
+            //DeserializeList(pedalsFileName, Pedals);
+            //DeserializeList(boardsFileName, PedalBoards);
+
+            var demoBuilder = new DemoBuilder();
+
+            Pedals.AddRange(demoBuilder.DemoPedals);
 
             Console.WriteLine(_welcomeText);
             InputLoop();

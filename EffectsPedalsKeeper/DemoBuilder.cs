@@ -8,7 +8,7 @@ namespace EffectsPedalsKeeper
 {
     public class DemoBuilder
     {
-        public List<IPedal> DemoPedals = new List<IPedal>() { 
+        public List<Pedal> DemoPedals = new List<Pedal>() { 
             new Pedal("Ibanez", "TubeScreamer", EffectType.Drive),
             new Pedal("EHX", "Memory Boy", EffectType.Delay),
         };
@@ -57,7 +57,7 @@ namespace EffectsPedalsKeeper
         {
             var board = new PedalBoard("Demo Board");
 
-            board.AddRange(DemoPedals);
+            DemoPedals.ForEach(pedal => board.Add(pedal));
 
             return board;
         }
