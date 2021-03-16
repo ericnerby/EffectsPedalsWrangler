@@ -1,4 +1,5 @@
 ﻿using EffectsPedalsKeeper.Interfaces;
+using EffectsPedalsKeeper.PedalBoards;
 using EffectsPedalsKeeper.Settings;
 using System.Collections.Generic;
 

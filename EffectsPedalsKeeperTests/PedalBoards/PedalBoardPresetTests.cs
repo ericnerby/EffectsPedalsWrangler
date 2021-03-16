@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using EffectsPedalsKeeper.PedalBoards;
+using Xunit;
 using System.Collections.Generic;
 using System.Linq;
 using EffectsPedalsKeeper.Tests.Mocks;
@@ -32,6 +33,7 @@ namespace EffectsPedalsKeeper.PedalBoards.Tests
         private int _startingValue = 3;
 
         private List<IPedal> _pedals;
+        private string _presetName = "Testing Presets";
         private PedalBoardPreset _preset;
 
         public PedalBoardPresetTests()
@@ -57,7 +59,7 @@ namespace EffectsPedalsKeeper.PedalBoards.Tests
             _testPedalTwo.Settings.ForEach(setting => setting.CurrentValue = _startingValue);
 
             _pedals = new List<IPedal>(2) { _testPedalOne, _testPedalTwo };
-            _preset = new PedalBoardPreset("Testing Presets", _pedals);
+            _preset = new PedalBoardPreset(_presetName, _pedals);
         }
 
         [Fact()]
@@ -97,6 +99,22 @@ namespace EffectsPedalsKeeper.PedalBoards.Tests
             int target = testingValue[0].StoredValue;
 
             Assert.Equal(expected, target);
+        }
+
+        [Fact()]
+        public void PedalsEngagedTest()
+        {
+            _preset.EngagedList[_testPedalOne] = true;
+            Assert.Equal(1, _preset.PedalsEngaged);
+        }
+
+        [Fact()]
+        public void ToStringTest()
+        {
+            var target = _preset.ToString();
+            var expected = _presetName;
+
+            Assert.Contains(expected, target);
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using EffectsPedalsKeeper.Interfaces;
+using EffectsPedalsKeeper.PedalBoards;
 using EffectsPedalsKeeper.Settings;
 
 namespace EffectsPedalsKeeper.Pedals
@@ -81,16 +83,34 @@ namespace EffectsPedalsKeeper.Pedals
 
         public void InteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)
         {
+            PedalBoardPreset preset = null;
+            if(additionalArgs.ContainsKey("preset"))
+            {
+                preset = (PedalBoardPreset)additionalArgs["preset"];
+            }
             while(true)
             {
                 Console.WriteLine(this);
-                Console.WriteLine(Engaged ? "Engaged" : "Not Engaged");
+                bool engaged;
+                if (preset != null) { engaged = preset.EngagedList[this]; }
+                else { engaged = Engaged; }
+                Console.WriteLine(engaged ? "Engaged" : "Not Engaged");
                 Console.WriteLine("Settings:");
 
                 var index = 1;
                 foreach (ISetting setting in Settings)
                 {
-                    Console.WriteLine($"{index}. {setting}");
+                    string settingString;
+                    if (preset != null)
+                    {
+                        int value = preset.SettingValues.Where(value => value.Item == setting).First().StoredValue;
+                        settingString = setting.ToString(value);
+                    }
+                    else
+                    {
+                        settingString = setting.ToString();
+                    }
+                    Console.WriteLine($"{index}. {settingString}");
                     index++;
                 }
 
@@ -104,9 +124,19 @@ namespace EffectsPedalsKeeper.Pedals
 
                 if(input.ToLower() == "-e")
                 {
-                    if(Engaged) { Engaged = false; }
-                    else { Engaged = true; }
-                    continue;
+                    if (preset != null)
+                    {
+                        if (preset.EngagedList[this]) { preset.EngagedList[this] = false; }
+                        else { preset.EngagedList[this] = true; }
+                        continue;
+                    }
+                    else
+                    {
+                        if (Engaged) { Engaged = false; }
+                        else { Engaged = true; }
+                        continue;
+
+                    }
                 }
 
                 int settingIndex;
@@ -115,7 +145,7 @@ namespace EffectsPedalsKeeper.Pedals
                     settingIndex -= 1;
                     if(settingIndex >= 0 && settingIndex < Settings.Count)
                     {
-                        Settings[settingIndex].InteractiveViewEdit(checkQuit, null);
+                        Settings[settingIndex].InteractiveViewEdit(checkQuit, additionalArgs);
                         continue;
                     }
                 }

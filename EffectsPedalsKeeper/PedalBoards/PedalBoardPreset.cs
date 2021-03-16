@@ -3,6 +3,7 @@ using EffectsPedalsKeeper.Settings;
 using EffectsPedalsKeeper.Utils;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace EffectsPedalsKeeper.PedalBoards
@@ -12,6 +13,7 @@ namespace EffectsPedalsKeeper.PedalBoards
         public string Name { get; set; }
         public List<ValueKeeper<ISetting>> SettingValues;
         public Dictionary<IPedal, bool> EngagedList;
+        public int PedalsEngaged => EngagedList.Where(keyValuePair => keyValuePair.Value).Count();
 
         public PedalBoardPreset(string name, IList<IPedal> pedals)
         {
@@ -30,5 +32,7 @@ namespace EffectsPedalsKeeper.PedalBoards
                 SettingValues.AddRange(valueKeepersToAdd);
             }
         }
+
+        public override string ToString() => $"{Name} | Pedals Engaged: {PedalsEngaged}";
     }
 }

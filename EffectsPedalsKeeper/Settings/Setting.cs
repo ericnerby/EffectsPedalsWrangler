@@ -1,7 +1,9 @@
-﻿using EffectsPedalsKeeper.Utils;
+﻿using EffectsPedalsKeeper.PedalBoards;
+using EffectsPedalsKeeper.Utils;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace EffectsPedalsKeeper.Settings
@@ -70,6 +72,11 @@ namespace EffectsPedalsKeeper.Settings
 
         private void RangedInteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)
         {
+            PedalBoardPreset preset = null;
+            if (additionalArgs.ContainsKey("preset"))
+            {
+                preset = (PedalBoardPreset)additionalArgs["preset"];
+            }
             Regex validator;
             string formatForDisplay;
             if (SettingType == SettingType.ClockFace)
@@ -83,7 +90,15 @@ namespace EffectsPedalsKeeper.Settings
                 formatForDisplay = "'d.d', eg '1.0'";
             }
 
-            Console.WriteLine(this);
+            if (preset != null)
+            {
+                int value = preset.SettingValues.Where(value => value.Item == this).First().StoredValue;
+                Console.WriteLine(ToString(value));
+            }
+            else
+            {
+                Console.WriteLine(this);
+            }
             Console.WriteLine($"Minimum Value: {Options[MinValue]}");
             Console.WriteLine($"Maximum Value: {Options[MaxValue]}");
 
@@ -107,7 +122,14 @@ namespace EffectsPedalsKeeper.Settings
                                           + $" {Options[MinValue]} and {Options[MaxValue]}");
                         continue;
                     }
-                    CurrentValue = newValue;
+                    if (preset != null)
+                    {
+                        preset.SettingValues.Where(value => value.Item == this).First().StoredValue = newValue;
+                    }
+                    else
+                    {
+                        CurrentValue = newValue;
+                    }
                     break;
                 }
                 else
@@ -119,7 +141,21 @@ namespace EffectsPedalsKeeper.Settings
 
         private void NamedInteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)
         {
-            Console.WriteLine(this);
+            PedalBoardPreset preset = null;
+            if (additionalArgs.ContainsKey("preset"))
+            {
+                preset = (PedalBoardPreset)additionalArgs["preset"];
+            }
+
+            if (preset != null)
+            {
+                int value = preset.SettingValues.Where(value => value.Item == this).First().StoredValue;
+                Console.WriteLine(ToString(value));
+            }
+            else
+            {
+                Console.WriteLine(this);
+            }
 
             while (true)
             {
@@ -141,8 +177,14 @@ namespace EffectsPedalsKeeper.Settings
                     newValue -= 1;
                     if (newValue >= MinValue && newValue <= MaxValue)
                     {
-                        CurrentValue = newValue;
-                        break;
+                        if (preset != null)
+                        {
+                            preset.SettingValues.Where(value => value.Item == this).First().StoredValue = newValue;
+                        }
+                        else
+                        {
+                            CurrentValue = newValue;
+                        }
                     }
                     Console.WriteLine("Please choose a number from the displayed list.");
                 }
