@@ -1,15 +1,12 @@
 ﻿using Xunit;
-using EffectsPedalsKeeper.Utils;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using EffectsPedalsKeeperTests.Mocks;
 
 namespace EffectsPedalsKeeper.Utils.Tests
 {
     public class ValueKeeperTests
     {
-        private ValueKeeper<BoundedValueMock> _valueKeeper;
+        private ValueKeeper _valueKeeper;
         private BoundedValueMock _boundedValueMock;
         private int _minValue = 0;
         private int _maxValue = 5;
@@ -19,7 +16,7 @@ namespace EffectsPedalsKeeper.Utils.Tests
         {
             _boundedValueMock = new BoundedValueMock(_minValue, _maxValue);
             _boundedValueMock.CurrentValue = _startingValue;
-            _valueKeeper = new ValueKeeper<BoundedValueMock>(_boundedValueMock);
+            _valueKeeper = new ValueKeeper(_boundedValueMock);
         }
 
         [Fact()]

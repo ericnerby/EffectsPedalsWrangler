@@ -1,7 +1,6 @@
 ﻿using EffectsPedalsKeeper.Interfaces;
 using EffectsPedalsKeeper.Pedals;
 using EffectsPedalsKeeper.Settings;
-using EffectsPedalsKeeper.Utils;
 using Newtonsoft.Json;
 using System;
 using System.Collections;
@@ -12,19 +11,18 @@ using System.Text.RegularExpressions;
 namespace EffectsPedalsKeeper.PedalBoards
 {
     [JsonObject]
-    public class PedalBoard : IList<IPedal>, IInteractiveEditable, IUniqueID
+    public class PedalBoard : IList<IPedal>, IInteractiveEditable
     {
         public string Name { get; set; }
-        public List<PedalBoardPreset> Presets { get; private set; }
         [JsonProperty]
-        public int UniqueID { get; }
+        public List<PedalBoardPreset> Presets { get; private set; }
 
+        [JsonConstructor]
         public PedalBoard(string name)
         {
             Name = name;
             _pedals = new List<IPedal>();
             Presets = new List<PedalBoardPreset>();
-            UniqueID = IDGenerator.GenerateID();
         }
 
         public PedalBoard(string name, IList<IPedal> pedals)
@@ -33,17 +31,6 @@ namespace EffectsPedalsKeeper.PedalBoards
             if(pedals.Count > 0) { _pedals = new List<IPedal>(pedals); }
             else { _pedals = new List<IPedal>(); }
             Presets = new List<PedalBoardPreset>();
-            UniqueID = IDGenerator.GenerateID();
-        }
-
-        [JsonConstructor]
-        public PedalBoard(string name, IList<IPedal> pedals, IList<PedalBoardPreset> presets, int uniqueID)
-        {
-            Name = name;
-            if (pedals.Count > 0) { _pedals = new List<IPedal>(pedals); }
-            else { _pedals = new List<IPedal>(); }
-            Presets = new List<PedalBoardPreset>(presets);
-            UniqueID = IDGenerator.PassThroughID(uniqueID);
         }
 
         public override string ToString() => $"{Name} | Number of Pedals: {Count}";
@@ -95,7 +82,8 @@ namespace EffectsPedalsKeeper.PedalBoards
         }
 
         //IList Implementation
-        private List<IPedal> _pedals;
+        [JsonProperty]
+        protected List<IPedal> _pedals;
 
         public IPedal this[int index]
         {

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace EffectsPedalsKeeper.Settings
 {
-    public interface ISetting : ICopyable, IInteractiveEditable, IBoundedValue, IUniqueID
+    public interface ISetting : ICopyable, IInteractiveEditable, IBoundedValue
     {
         string Label { get; }
         SettingType SettingType { get; }

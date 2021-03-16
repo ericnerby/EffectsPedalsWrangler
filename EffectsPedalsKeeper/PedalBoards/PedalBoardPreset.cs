@@ -1,10 +1,10 @@
 ﻿using EffectsPedalsKeeper.Pedals;
 using EffectsPedalsKeeper.Settings;
 using EffectsPedalsKeeper.Utils;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace EffectsPedalsKeeper.PedalBoards
 {
@@ -24,6 +24,15 @@ namespace EffectsPedalsKeeper.PedalBoards
             AddPedals(pedals);
         }
 
+        [JsonConstructor]
+        public PedalBoardPreset(string name, IList<bool> engagedList, IList<PedalKeeper> pedalKeepers)
+        {
+            Name = name;
+            EngagedList = new List<bool>(engagedList);
+            PedalKeepers = new List<PedalKeeper>(pedalKeepers);
+
+        }
+
         public void AddPedals(IList<IPedal> pedals)
         {
             foreach (IPedal pedal in pedals)
@@ -32,7 +41,7 @@ namespace EffectsPedalsKeeper.PedalBoards
                 EngagedList.Add(pedal.Engaged);
                 foreach (ISetting setting in pedal.Settings)
                 {
-                    pedalKeeper.Add(new ValueKeeper<ISetting>(setting));
+                    pedalKeeper.Add(new ValueKeeper(setting));
                 }
                 PedalKeepers.Add(pedalKeeper);
             }
@@ -61,7 +70,7 @@ namespace EffectsPedalsKeeper.PedalBoards
             EngagedList.Insert(position, pedal.Engaged);
             foreach (ISetting setting in pedal.Settings)
             {
-                pedalKeeper.Add(new ValueKeeper<ISetting>(setting));
+                pedalKeeper.Add(new ValueKeeper(setting));
             }
             PedalKeepers.Insert(position, pedalKeeper);
         }
@@ -75,8 +84,11 @@ namespace EffectsPedalsKeeper.PedalBoards
         public override string ToString() => $"{Name} | Pedals Engaged: {PedalsEngaged}";
     }
 
-    public class PedalKeeper : List<ValueKeeper<ISetting>>
+    public class PedalKeeper : List<ValueKeeper>
     {
         public PedalKeeper(int capacity) : base(capacity) { }
+
+        [JsonConstructor]
+        public PedalKeeper(IList<ValueKeeper> valueKeepers) : base(valueKeepers) { }
     }
 }

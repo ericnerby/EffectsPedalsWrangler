@@ -19,25 +19,12 @@ namespace EffectsPedalsKeeper.Pedals
 
         public List<ISetting> Settings { get; private set; }
 
-        public int UniqueID { get; }
-
         public Pedal(string maker, string name, EffectType effectType)
         {
             Maker = maker;
             Name = name;
             EffectType = effectType;
             Settings = new List<ISetting>();
-            UniqueID = IDGenerator.GenerateID();
-        }
-
-        [JsonConstructor]
-        public Pedal(string maker, string name, EffectType effectType, int uniqueID)
-        {
-            Maker = maker;
-            Name = name;
-            EffectType = effectType;
-            Settings = new List<ISetting>();
-            UniqueID = IDGenerator.PassThroughID(uniqueID);
         }
 
         public bool AddSettings(IList<ISetting> settings)
@@ -79,7 +66,7 @@ namespace EffectsPedalsKeeper.Pedals
 
         public object Copy()
         {
-            var newPedal = new Pedal(Maker, Name, EffectType, UniqueID);
+            var newPedal = new Pedal(Maker, Name, EffectType);
             newPedal.Engaged = Engaged;
 
             var newSettings = new ISetting[Settings.Count];

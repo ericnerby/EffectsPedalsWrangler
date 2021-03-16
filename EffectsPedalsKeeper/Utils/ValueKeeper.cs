@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace EffectsPedalsKeeper.Utils
 {
-    public class ValueKeeper<T> where T : IBoundedValue
+    public class ValueKeeper
     {
         public int MinValue { get; }
         public int MaxValue { get; }
@@ -24,11 +23,19 @@ namespace EffectsPedalsKeeper.Utils
             }
         }
 
-        public ValueKeeper(T item)
+        public ValueKeeper(IBoundedValue item)
         {
             MinValue = item.MinValue;
             MaxValue = item.MaxValue;
             StoredValue = item.CurrentValue;
+        }
+
+        [JsonConstructor]
+        public ValueKeeper(int minValue, int maxValue, int currentValue)
+        {
+            MinValue = minValue;
+            MaxValue = maxValue;
+            StoredValue = currentValue;
         }
     }
 }

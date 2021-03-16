@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace EffectsPedalsKeeper.Pedals
 {
-    public interface IPedal : IInteractiveEditable, ICopyable, IUniqueID
+    public interface IPedal : IInteractiveEditable, ICopyable
     {
         public bool Engaged { get; set; }
 

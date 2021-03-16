@@ -37,8 +37,18 @@ namespace EffectsPedalsKeeper.Utils
         public string IntToTimeString(int value)
         {
             int[] timeDigits = _ConvertToClockDigits(value);
-            return $"{timeDigits[0]}:"
-                + ((timeDigits[1] == 0) ? "00" : timeDigits[1].ToString());
+            var output = $"{timeDigits[0]}:";
+            if (timeDigits[1] == 0) { output += "00";
+            }
+            else if (timeDigits[1] < 10)
+            {
+                output += $"0{timeDigits[1]}";
+            }
+            else
+            {
+                output += timeDigits[1].ToString();
+            }
+            return output;
         }
 
         private int[] _ConvertToClockDigits(int value)

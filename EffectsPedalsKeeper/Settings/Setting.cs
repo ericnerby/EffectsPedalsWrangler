@@ -3,7 +3,6 @@ using EffectsPedalsKeeper.Utils;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace EffectsPedalsKeeper.Settings
@@ -15,7 +14,6 @@ namespace EffectsPedalsKeeper.Settings
 
         public string Label { get; }
         public SettingType SettingType { get; }
-        public int UniqueID { get; }
         [JsonIgnore]
         public int MinValue { get; } = 0;
         [JsonIgnore]
@@ -44,16 +42,6 @@ namespace EffectsPedalsKeeper.Settings
             Label = label;
             SettingType = settingType;
             Options = new List<string>(options);
-            UniqueID = IDGenerator.GenerateID();
-        }
-
-        [JsonConstructor]
-        public Setting(string label, SettingType settingType, IList<string> options, int uniqueID)
-        {
-            Label = label;
-            SettingType = settingType;
-            Options = new List<string>(options);
-            UniqueID = IDGenerator.PassThroughID(uniqueID);
         }
 
         public override string ToString() => $"{Label}: {CurrentValueDisplay}";

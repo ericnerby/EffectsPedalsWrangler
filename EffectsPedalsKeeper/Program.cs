@@ -16,7 +16,7 @@ namespace EffectsPedalsKeeper
 
         public static JsonSerializerSettings JsonOptions = new JsonSerializerSettings
         {
-            TypeNameHandling = TypeNameHandling.All,
+            TypeNameHandling = TypeNameHandling.Auto,
             Formatting = Formatting.Indented
         };
 
@@ -43,11 +43,8 @@ namespace EffectsPedalsKeeper
 
         static void Main(string[] args)
         {
-            //DeserializeList(pedalsFileName, Pedals);
-            //DeserializeList(boardsFileName, PedalBoards);
-
-            var demoBuilder = new DemoBuilder();
-            Pedals.AddRange(demoBuilder.DemoPedals);
+            DeserializeList(pedalsFileName, Pedals);
+            DeserializeList(boardsFileName, PedalBoards);
 
             Console.WriteLine(_welcomeText);
             InputLoop();
