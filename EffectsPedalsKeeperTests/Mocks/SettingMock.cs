@@ -1,43 +1,71 @@
-﻿using System;
+﻿using EffectsPedalsKeeper.Settings;
+using System;
 using System.Collections.Generic;
 
 namespace EffectsPedalsKeeper.Tests.Mocks
 {
-    public class SettingMock : Settings.ISetting
+    public class SettingMock : ISetting
     {
         private string _valueDisplayText;
 
-        public SettingMock(string label, int minValue, int maxValue, string valueDisplayText)
+        public SettingMock(string label, string valueDisplayText)
         {
             Label = label;
-            MinValue = minValue;
-            MaxValue = maxValue;
             _valueDisplayText = valueDisplayText;
         }
 
-        public string CurrentValueDisplay => _valueDisplayText;
+        public SettingMock(string label, IList<string> options)
+        {
+            Label = label;
+            Options = new List<string>(options);
+        }
 
-        public string Label { get; }
+        public string CurrentValueDisplay
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(_valueDisplayText))
+                {
+                    return _valueDisplayText;
+                }
+                return Options[CurrentValue];
+            }
+        }
 
-        public int MinValue { get; }
+        public string Label { get; private set; }
 
-        public int MaxValue { get; }
+        public SettingType SettingType => throw new NotImplementedException();
 
-        public int CurrentValue => throw new NotImplementedException();
+        public int MinValue => 0;
+        public int MaxValue => Options.Count - 1;
+
+        public List<string> Options { get; }
+
+        protected int _currentValue;
+        public int CurrentValue
+        {
+            get { return _currentValue; }
+            set
+            {
+                if (value < MinValue || value > MaxValue)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
+                _currentValue = value;
+            }
+        }
+
+        public int UniqueID => throw new NotImplementedException();
 
         public override string ToString() => $"{Label}: {CurrentValueDisplay}";
 
+        public string ToString(int valueToDisplay)
+        {
+            throw new NotImplementedException();
+        }
+
         public string[] Display()
-        {
-            throw new NotImplementedException();
-        }
-
-        public int StepDown()
-        {
-            throw new NotImplementedException();
-        }
-
-        public int StepUp()
         {
             throw new NotImplementedException();
         }
@@ -45,6 +73,11 @@ namespace EffectsPedalsKeeper.Tests.Mocks
         public void InteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)
         {
             throw new NotImplementedException();
+        }
+
+        public object Copy()
+        {
+            return (SettingMock)MemberwiseClone();
         }
     }
 }

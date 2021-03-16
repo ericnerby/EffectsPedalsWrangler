@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using EffectsPedalsKeeper.Builders;
+using EffectsPedalsKeeper.PedalBoards;
+using EffectsPedalsKeeper.Pedals;
 
 namespace EffectsPedalsKeeper
 {
@@ -27,15 +30,69 @@ namespace EffectsPedalsKeeper
 
         public static List<Pedal> Pedals = new List<Pedal>();
         public static List<PedalBoard> PedalBoards = new List<PedalBoard>();
+        public static string PedalsFileName = "pedals.json";
+        public static string BoardsFileName = "boards.json";
 
         static void Main(string[] args)
         {
-            var demoBuilder = new DemoBuilder();
-            Pedals.AddRange(demoBuilder.DemoPedals);
-            PedalBoards.Add(demoBuilder.BuildDemoBoard());
+            try
+            {
+                if (!ListSerializer.DeserializeList(PedalsFileName, Pedals))
+                {
+                    Console.WriteLine($"There's no {PedalsFileName} file.");
+                    DefaultLoaderPrompt(true);
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Something went wrong importing the Pedal data.");
+                Console.WriteLine($"Error Message: {e.Message}");
+                DefaultLoaderPrompt(true);
+            }
+
+            try
+            {
+                if (!ListSerializer.DeserializeList(BoardsFileName, PedalBoards))
+                {
+                    DefaultLoaderPrompt(false);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Something went wrong importing the PedalBoard data.");
+                Console.WriteLine($"Error Message: {e.Message}");
+                DefaultLoaderPrompt(false);
+            }
 
             Console.WriteLine(_welcomeText);
             InputLoop();
+        }
+
+        static void DefaultLoaderPrompt(bool loadPedals)
+        {
+            var demoBuilder = new DemoBuilder();
+            if (loadPedals)
+            {
+                Console.WriteLine("Would you like to load the default Pedals? [Y/n] ");
+            }
+            else
+            {
+                Console.WriteLine("Would you like to load the default Board? [Y/n] ");
+            }
+            var input = Console.ReadLine();
+
+            if (input.ToLower() != "n")
+            {
+                if (loadPedals)
+                {
+                    Pedals.AddRange(demoBuilder.DemoPedals);
+                }
+                else
+                {
+                    PedalBoards.Add(demoBuilder.BuildDemoBoard());
+                }
+            }
+
         }
 
         static void InputLoop()
@@ -148,11 +205,11 @@ namespace EffectsPedalsKeeper
             }
         }
 
-        static void AddNewPedals()
+        public static void AddNewPedals()
         {
             while (true)
             {
-                Pedals.Add(Builder.BuildPedal());
+                Pedals.Add(Builder.BuildPedal(CheckForQuitOrHelp));
                 Console.Write("Would you like to add another pedal? [N/y]  ");
                 var input = Console.ReadLine();
                 if (input.ToLower() != "y")
@@ -162,19 +219,20 @@ namespace EffectsPedalsKeeper
             }
         }
 
-        static void CreateNewBoard()
+        public static void CreateNewBoard()
         {
             var newBoard = Builder.BuildBoard(Pedals, CheckForQuitOrHelp);
             PedalBoards.Add(newBoard);
         }
 
-        static void CheckForQuitOrHelp(string input)
+        public static void CheckForQuitOrHelp(string input)
         {
             input = input.ToLower();
 
             if(input == "-q")
             {
-                // TODO: Serialize or prompt to serialize before closing
+                ListSerializer.SerializeList(PedalsFileName, Pedals);
+                ListSerializer.SerializeList(BoardsFileName, PedalBoards);
                 Environment.Exit(0);
             }
             if(input == "-h")

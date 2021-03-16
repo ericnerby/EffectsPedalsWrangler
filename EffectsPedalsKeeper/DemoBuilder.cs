@@ -1,4 +1,6 @@
-﻿using EffectsPedalsKeeper.Settings;
+﻿using EffectsPedalsKeeper.PedalBoards;
+using EffectsPedalsKeeper.Pedals;
+using EffectsPedalsKeeper.Settings;
 using System;
 using System.Collections.Generic;
 
@@ -14,21 +16,21 @@ namespace EffectsPedalsKeeper
         public DemoBuilder()
         {
             DemoPedals[0].AddSettings(
-                new KnobSetting("Drive", "6:30", "5:30"),
-                new KnobSetting("Tone", "6:30", "5:30"),
-                new KnobSetting("Level", "6:30", "5:30")
+                Setting.CreateClockFaceSetting("Drive", "6:30", "5:30"),
+                Setting.CreateClockFaceSetting("Tone", "6:30", "5:30"),
+                Setting.CreateClockFaceSetting("Level", "6:30", "5:30")
             );
 
             DemoPedals[1].AddSettings(
-                new KnobSetting("Blend", "6:30", "5:30"),
-                new KnobSetting("Gain", "6:30", "5:30"),
-                new KnobSetting("Rate", "6:30", "5:30"),
-                new KnobSetting("Depth", "6:30", "5:30"),
-                new KnobSetting("Drive", "6:30", "5:30"),
-                new KnobSetting("Feedback", "6:30", "5:30"),
-                new KnobSetting("Delay", "6:30", "5:30"),
-                new RotarySetting(
-                    "Tap Divide",
+                Setting.CreateClockFaceSetting("Blend", "6:30", "5:30"),
+                Setting.CreateClockFaceSetting("Gain", "6:30", "5:30"),
+                Setting.CreateClockFaceSetting("Rate", "6:30", "5:30"),
+                Setting.CreateClockFaceSetting("Depth", "6:30", "5:30"),
+                Setting.CreateClockFaceSetting("Drive", "6:30", "5:30"),
+                Setting.CreateClockFaceSetting("Feedback", "6:30", "5:30"),
+                Setting.CreateClockFaceSetting("Delay", "6:30", "5:30"),
+                new Setting(
+                    "Tap Divide", SettingType.Named,
                     new string[]
                     {
                         "Dotted Eighth",
@@ -38,8 +40,8 @@ namespace EffectsPedalsKeeper
                         "Sixteenth"
                     }
                 ),
-                new RotarySetting(
-                    "Exp. Mode",
+                new Setting(
+                    "Exp. Mode", SettingType.Named,
                     new string[]
                     {
                         "Rate",
@@ -55,7 +57,7 @@ namespace EffectsPedalsKeeper
         {
             var board = new PedalBoard("Demo Board");
 
-            board.AddRange(DemoPedals);
+            DemoPedals.ForEach(pedal => board.Add(pedal));
 
             return board;
         }

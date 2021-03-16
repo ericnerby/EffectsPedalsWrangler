@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EffectsPedalsKeeper
+namespace EffectsPedalsKeeper.Interfaces
 {
     public interface IInteractiveEditable
     {

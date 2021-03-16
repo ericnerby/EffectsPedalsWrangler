@@ -1,10 +1,15 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using EffectsPedalsKeeper.Interfaces;
+using EffectsPedalsKeeper.PedalBoards;
 using EffectsPedalsKeeper.Settings;
+using EffectsPedalsKeeper.Utils;
 
-namespace EffectsPedalsKeeper
+namespace EffectsPedalsKeeper.Pedals
 {
-    public class Pedal : IPedal, ICopyable
+    public class Pedal : IPedal
     {
         public bool Engaged { get; set; }
 
@@ -67,11 +72,8 @@ namespace EffectsPedalsKeeper
             var newSettings = new ISetting[Settings.Count];
             for(var i = 0; i < Settings.Count; i++)
             {
-                if (Settings[i] is ICopyable)
-                {
-                    var oldSetting = (ICopyable)Settings[i];
-                    newSettings[i] = (ISetting)oldSetting.Copy();
-                }
+                var oldSetting = Settings[i];
+                newSettings[i] = (ISetting)oldSetting.Copy();
             }
             newPedal.AddSettings(newSettings);
 
@@ -80,17 +82,41 @@ namespace EffectsPedalsKeeper
 
         public void InteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)
         {
+            PedalBoardPreset preset = null;
+            int pedalIndex = -1;
+            if (additionalArgs.ContainsKey("preset"))
+            {
+                preset = (PedalBoardPreset)additionalArgs["preset"];
+                if (!additionalArgs.ContainsKey("pedalIndex"))
+                {
+                    throw new ArgumentException($"'pedalIndex' must be provided in {nameof(additionalArgs)} along with 'preset'");
+                }
+                pedalIndex = (int)additionalArgs["pedalIndex"];
+            }
             while(true)
             {
                 Console.WriteLine(this);
-                Console.WriteLine(Engaged ? "Engaged" : "Not Engaged");
+                bool engaged;
+                if (preset != null) { engaged = preset.EngagedList[pedalIndex]; }
+                else { engaged = Engaged; }
+                Console.WriteLine(engaged ? "Engaged" : "Not Engaged");
                 Console.WriteLine("Settings:");
 
-                var index = 1;
+                var settingIndex = 0;
                 foreach (ISetting setting in Settings)
                 {
-                    Console.WriteLine($"{index}. {setting}");
-                    index++;
+                    string settingString;
+                    if (preset != null)
+                    {
+                        int value = preset.PedalKeepers[pedalIndex][settingIndex].StoredValue;
+                        settingString = setting.ToString(value);
+                    }
+                    else
+                    {
+                        settingString = setting.ToString();
+                    }
+                    Console.WriteLine($"{settingIndex + 1}. {settingString}");
+                    settingIndex++;
                 }
 
                 Console.WriteLine("To edit a setting on this pedal, select a number from the above list.");
@@ -103,18 +129,29 @@ namespace EffectsPedalsKeeper
 
                 if(input.ToLower() == "-e")
                 {
-                    if(Engaged) { Engaged = false; }
-                    else { Engaged = true; }
-                    continue;
+                    if (preset != null)
+                    {
+                        if (preset.EngagedList[pedalIndex]) { preset.EngagedList[pedalIndex] = false; }
+                        else { preset.EngagedList[pedalIndex] = true; }
+                        continue;
+                    }
+                    else
+                    {
+                        if (Engaged) { Engaged = false; }
+                        else { Engaged = true; }
+                        continue;
+
+                    }
                 }
 
-                int settingIndex;
-                if(int.TryParse(input, out settingIndex))
+                int settingIndexInput;
+                if(int.TryParse(input, out settingIndexInput))
                 {
-                    settingIndex -= 1;
-                    if(settingIndex >= 0 && settingIndex < Settings.Count)
+                    settingIndexInput -= 1;
+                    if(settingIndexInput >= 0 && settingIndexInput < Settings.Count)
                     {
-                        Settings[settingIndex].InteractiveViewEdit(checkQuit, null);
+                        additionalArgs["settingIndex"] = settingIndexInput;
+                        Settings[settingIndexInput].InteractiveViewEdit(checkQuit, additionalArgs);
                         continue;
                     }
                 }

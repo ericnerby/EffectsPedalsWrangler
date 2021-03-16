@@ -1,4 +1,5 @@
-﻿using EffectsPedalsKeeper.Settings;
+﻿using EffectsPedalsKeeper.Pedals;
+using EffectsPedalsKeeper.Settings;
 using System;
 using System.Collections.Generic;
 
@@ -6,25 +7,26 @@ namespace EffectsPedalsKeeper.Tests.Mocks
 {
     class PedalMock : IPedal
     {
-        private List<string> _mockSettingDetails;
+        public PedalMock(string name, string maker,
+            EffectType effectType, IList<ISetting> settings)
+        {
+            Maker = maker;
+            Name = name;
+            EffectType = effectType;
+            Settings = new List<ISetting>(settings);
+        }
+
         public bool Engaged { get; set; }
 
         public string Maker { get; }
 
         public string Name { get; }
 
-        public List<ISetting> Settings => throw new NotImplementedException();
-
         public EffectType EffectType { get; }
 
-        public PedalMock(string name, string maker,
-            EffectType effectType, IList<string> mockSettingDetails)
-        {
-            Name = name;
-            Maker = maker;
-            EffectType = effectType;
-            _mockSettingDetails = (List<string>)mockSettingDetails;
-        }
+        public List<ISetting> Settings { get; }
+
+        public int UniqueID => throw new NotImplementedException();
 
         public bool AddSettings(IList<ISetting> settings)
         {
@@ -36,12 +38,17 @@ namespace EffectsPedalsKeeper.Tests.Mocks
             throw new NotImplementedException();
         }
 
-        public string[] PrintSettingDetails()
+        public object Copy()
         {
-            return _mockSettingDetails.ToArray();
+            throw new NotImplementedException();
         }
 
         public void InteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string[] PrintSettingDetails()
         {
             throw new NotImplementedException();
         }

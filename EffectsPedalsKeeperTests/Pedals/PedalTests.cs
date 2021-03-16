@@ -1,7 +1,7 @@
 ﻿using EffectsPedalsKeeper.Tests.Mocks;
 using Xunit;
 
-namespace EffectsPedalsKeeper.Tests
+namespace EffectsPedalsKeeper.Pedals.Tests
 {
     public class PedalTests
     {
@@ -22,8 +22,7 @@ namespace EffectsPedalsKeeper.Tests
             _mockSettings = new SettingMock[_settingStrings.Length];
             for(var i = 0; i < _settingStrings.Length; i++)
             {
-                _mockSettings[i] = new SettingMock(_settingStrings[i][0],
-                    12, 132, _settingStrings[i][1]);
+                _mockSettings[i] = new SettingMock(_settingStrings[i][0], _settingStrings[i][1]);
             }
         }
 
@@ -70,8 +69,8 @@ namespace EffectsPedalsKeeper.Tests
         {
             var target = _pedal;
             target.AddSettings(
-                new SettingMock("Level", 0, 100, "5.5"),
-                new SettingMock("Gain", 0, 100, "9.0")
+                new SettingMock("Level", "5.5"),
+                new SettingMock("Gain", "9.0")
             );
 
             int expected = 2;
@@ -85,7 +84,7 @@ namespace EffectsPedalsKeeper.Tests
             _pedal.AddSettings(_mockSettings);
             Pedal copy = (Pedal)_pedal.Copy();
 
-            copy.Settings[2] = new SettingMock("Level", 12, 132, "12:00");
+            copy.Settings[2] = new SettingMock("Level", "12:00");
 
             var notExpected = _pedal.Settings[2];
             var target = copy.Settings[2];
