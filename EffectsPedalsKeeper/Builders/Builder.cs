@@ -1,4 +1,5 @@
-﻿using EffectsPedalsKeeper.Pedals;
+﻿using EffectsPedalsKeeper.PedalBoards;
+using EffectsPedalsKeeper.Pedals;
 using EffectsPedalsKeeper.Settings;
 using EffectsPedalsKeeper.Utils;
 using System;

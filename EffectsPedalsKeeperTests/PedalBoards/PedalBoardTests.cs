@@ -9,7 +9,7 @@ using EffectsPedalsKeeper.Pedals;
 
 namespace EffectsPedalsKeeper.PedalBoards.Tests
 {
-    public class NewPedalBoardTests
+    public class PedalBoardTests
     {
         private string[] _settingsOptions = new string[]
             {"6:30", "8:30", "10:30", "12:30", "2:30", "4:30", "5:30"};
@@ -36,9 +36,9 @@ namespace EffectsPedalsKeeper.PedalBoards.Tests
 
         private List<IPedal> _pedals;
         private string _boardName = "My Awesome PedalBoard";
-        private NewPedalBoard _pedalBoard;
+        private PedalBoard _pedalBoard;
 
-        public NewPedalBoardTests()
+        public PedalBoardTests()
         {
             _pedalOneSettings = new SettingMock[]
             {
@@ -61,13 +61,13 @@ namespace EffectsPedalsKeeper.PedalBoards.Tests
             _testPedalTwo.Settings.ForEach(setting => setting.CurrentValue = _startingValue);
 
             _pedals = new List<IPedal>(2) { _testPedalOne, _testPedalTwo };
-            _pedalBoard = new NewPedalBoard(_boardName, new IPedal[] { _testPedalOne });
+            _pedalBoard = new PedalBoard(_boardName, new IPedal[] { _testPedalOne });
         }
 
         [Fact()]
         public void NoPedalsConstructorTest()
         {
-            var emptyPedalBoard = new NewPedalBoard("Boring Board");
+            var emptyPedalBoard = new PedalBoard("Boring Board");
 
             Assert.Empty(emptyPedalBoard);
         }

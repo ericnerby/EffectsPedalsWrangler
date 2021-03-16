@@ -7,30 +7,41 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace EffectsPedalsKeeper.PedalBoards
 {
-    public class NewPedalBoard : IList<IPedal>, IInteractiveEditable
+    [JsonObject]
+    public class PedalBoard : IList<IPedal>, IInteractiveEditable
     {
         public string Name { get; set; }
         public List<PedalBoardPreset> Presets { get; private set; }
 
-        public NewPedalBoard(string name)
+        public PedalBoard(string name)
         {
             Name = name;
             _pedals = new List<IPedal>();
             Presets = new List<PedalBoardPreset>();
         }
 
-        public NewPedalBoard(string name, IList<IPedal> pedals)
+        public PedalBoard(string name, IList<IPedal> pedals)
         {
             Name = name;
             if(pedals.Count > 0) { _pedals = new List<IPedal>(pedals); }
             else { _pedals = new List<IPedal>(); }
             Presets = new List<PedalBoardPreset>();
         }
+
+        [JsonConstructor]
+        public PedalBoard(string name, IList<IPedal> pedals, IList<PedalBoardPreset> presets)
+        {
+            Name = name;
+            if (pedals.Count > 0) { _pedals = new List<IPedal>(pedals); }
+            else { _pedals = new List<IPedal>(); }
+            Presets = new List<PedalBoardPreset>(presets);
+        }
+
+        public override string ToString() => $"{Name} | Number of Pedals: {Count}";
 
         public bool PresetAdd(string name)
         {
@@ -155,7 +166,7 @@ namespace EffectsPedalsKeeper.PedalBoards
             {
                 throw new ArgumentNullException($"The {nameof(additionalArgs)} argument in {nameof(PedalBoard.InteractiveViewEdit)} must define the key-value pair 'availablePedals'.");
             }
-            var availablePedals = (List<IPedal>)additionalArgs["availablePedals"];
+            var availablePedals = (List<Pedal>)additionalArgs["availablePedals"];
 
             Console.WriteLine(Name);
             if (Count > 0)
@@ -215,9 +226,7 @@ namespace EffectsPedalsKeeper.PedalBoards
             }
         }
 
-
-
-        private void InteractiveEditPedals(Action<string> checkQuit, List<IPedal> availablePedals)
+        private void InteractiveEditPedals(Action<string> checkQuit, List<Pedal> availablePedals)
         {
             var selectorFormat = new Regex(@"([a-zA-Z])(\d+)");
 
@@ -304,7 +313,7 @@ namespace EffectsPedalsKeeper.PedalBoards
             _pedals.Insert(newIndex, pedalToMove);
         }
 
-        public void InteractiveAddPedals(Action<string> checkQuit, List<IPedal> availablePedals)
+        public void InteractiveAddPedals(Action<string> checkQuit, List<Pedal> availablePedals)
         {
             var pedalsToAdd = new List<IPedal>();
             if (availablePedals.Count == 0)
@@ -348,7 +357,7 @@ namespace EffectsPedalsKeeper.PedalBoards
             Console.WriteLine($"{pedalsToAdd.Count} pedals added to {this}");
         }
 
-        private void AddRange(List<IPedal> pedalsToAdd)
+        public void AddRange(List<IPedal> pedalsToAdd)
         {
             foreach (IPedal pedal in pedalsToAdd)
             {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using EffectsPedalsKeeper.Builders;
+using EffectsPedalsKeeper.PedalBoards;
 using EffectsPedalsKeeper.Pedals;
 using Newtonsoft.Json;
 
@@ -15,7 +16,7 @@ namespace EffectsPedalsKeeper
 
         public static JsonSerializerSettings JsonOptions = new JsonSerializerSettings
         {
-            TypeNameHandling = TypeNameHandling.Auto
+            TypeNameHandling = TypeNameHandling.All
         };
 
         static string[] _menuItems = 
@@ -42,7 +43,7 @@ namespace EffectsPedalsKeeper
         static void Main(string[] args)
         {
             DeserializeList(pedalsFileName, Pedals);
-            //DeserializeList(boardsFileName, PedalBoards);
+            DeserializeList(boardsFileName, PedalBoards);
 
             Console.WriteLine(_welcomeText);
             InputLoop();

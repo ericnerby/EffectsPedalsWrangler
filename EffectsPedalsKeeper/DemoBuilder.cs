@@ -1,4 +1,5 @@
-﻿using EffectsPedalsKeeper.Pedals;
+﻿using EffectsPedalsKeeper.PedalBoards;
+using EffectsPedalsKeeper.Pedals;
 using EffectsPedalsKeeper.Settings;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ namespace EffectsPedalsKeeper
 {
     public class DemoBuilder
     {
-        public List<Pedal> DemoPedals = new List<Pedal>() { 
+        public List<IPedal> DemoPedals = new List<IPedal>() { 
             new Pedal("Ibanez", "TubeScreamer", EffectType.Drive),
             new Pedal("EHX", "Memory Boy", EffectType.Delay),
         };
