@@ -84,9 +84,13 @@ namespace EffectsPedalsKeeper.Settings
         private void RangedInteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)
         {
             PedalBoardPreset preset = null;
+            int pedalIndex = -1;
+            int settingIndex = -1;
             if (additionalArgs.ContainsKey("preset"))
             {
                 preset = (PedalBoardPreset)additionalArgs["preset"];
+                pedalIndex = (int)additionalArgs["pedalIndex"];
+                settingIndex = (int)additionalArgs["settingIndex"];
             }
             Regex validator;
             string formatForDisplay;
@@ -103,7 +107,7 @@ namespace EffectsPedalsKeeper.Settings
 
             if (preset != null)
             {
-                int value = preset.SettingValues.Where(value => value.Item == this).First().StoredValue;
+                int value = preset.PedalKeepers[pedalIndex][settingIndex].StoredValue;
                 Console.WriteLine(ToString(value));
             }
             else
@@ -135,7 +139,7 @@ namespace EffectsPedalsKeeper.Settings
                     }
                     if (preset != null)
                     {
-                        preset.SettingValues.Where(value => value.Item == this).First().StoredValue = newValue;
+                        preset.PedalKeepers[pedalIndex][settingIndex].StoredValue = newValue;
                     }
                     else
                     {
@@ -153,14 +157,18 @@ namespace EffectsPedalsKeeper.Settings
         private void NamedInteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)
         {
             PedalBoardPreset preset = null;
+            int pedalIndex = -1;
+            int settingIndex = -1;
             if (additionalArgs.ContainsKey("preset"))
             {
                 preset = (PedalBoardPreset)additionalArgs["preset"];
+                pedalIndex = (int)additionalArgs["pedalIndex"];
+                settingIndex = (int)additionalArgs["settingIndex"];
             }
 
             if (preset != null)
             {
-                int value = preset.SettingValues.Where(value => value.Item == this).First().StoredValue;
+                int value = preset.PedalKeepers[pedalIndex][settingIndex].StoredValue;
                 Console.WriteLine(ToString(value));
             }
             else
@@ -190,7 +198,7 @@ namespace EffectsPedalsKeeper.Settings
                     {
                         if (preset != null)
                         {
-                            preset.SettingValues.Where(value => value.Item == this).First().StoredValue = newValue;
+                            preset.PedalKeepers[pedalIndex][settingIndex].StoredValue = newValue;
                         }
                         else
                         {

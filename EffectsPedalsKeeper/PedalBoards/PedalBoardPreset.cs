@@ -11,28 +11,72 @@ namespace EffectsPedalsKeeper.PedalBoards
     public class PedalBoardPreset
     {
         public string Name { get; set; }
-        public List<ValueKeeper<ISetting>> SettingValues;
-        public Dictionary<IPedal, bool> EngagedList;
-        public int PedalsEngaged => EngagedList.Where(keyValuePair => keyValuePair.Value).Count();
+        public List<PedalKeeper> PedalKeepers;
+        public List<bool> EngagedList;
+        public int PedalsEngaged => EngagedList.Where(engaged => engaged).Count();
 
         public PedalBoardPreset(string name, IList<IPedal> pedals)
         {
             Name = name;
-            EngagedList = new Dictionary<IPedal, bool>();
-            SettingValues = new List<ValueKeeper<ISetting>>();
+            EngagedList = new List<bool>();
+            PedalKeepers = new List<PedalKeeper>();
 
-            foreach(IPedal pedal in pedals)
+            AddPedals(pedals);
+        }
+
+        public void AddPedals(IList<IPedal> pedals)
+        {
+            foreach (IPedal pedal in pedals)
             {
-                EngagedList.Add(pedal, pedal.Engaged);
-                var valueKeepersToAdd = new List<ValueKeeper<ISetting>>(pedal.Settings.Count);
+                var pedalKeeper = new PedalKeeper(pedal.Settings.Count);
+                EngagedList.Add(pedal.Engaged);
                 foreach (ISetting setting in pedal.Settings)
                 {
-                    valueKeepersToAdd.Add(new ValueKeeper<ISetting>(setting));
+                    pedalKeeper.Add(new ValueKeeper<ISetting>(setting));
                 }
-                SettingValues.AddRange(valueKeepersToAdd);
+                PedalKeepers.Add(pedalKeeper);
             }
         }
 
+        public void MovePedal(int currentIndex, int newIndex)
+        {
+            if (currentIndex < 0 || newIndex < 0
+                || currentIndex >= PedalKeepers.Count || newIndex >= PedalKeepers.Count)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            var keeperToMove = PedalKeepers[currentIndex];
+            PedalKeepers.RemoveAt(currentIndex);
+            PedalKeepers.Insert(newIndex, keeperToMove);
+
+            var engagedValue = EngagedList[currentIndex];
+            EngagedList.RemoveAt(currentIndex);
+            EngagedList.Insert(newIndex, engagedValue);
+        }
+
+        public void InsertPedal(IPedal pedal, int position)
+        {
+            var pedalKeeper = new PedalKeeper(pedal.Settings.Count);
+            EngagedList.Insert(position, pedal.Engaged);
+            foreach (ISetting setting in pedal.Settings)
+            {
+                pedalKeeper.Add(new ValueKeeper<ISetting>(setting));
+            }
+            PedalKeepers.Insert(position, pedalKeeper);
+        }
+
+        public void RemovePedal(int position)
+        {
+            EngagedList.RemoveAt(position);
+            PedalKeepers.RemoveAt(position);
+        }
+
         public override string ToString() => $"{Name} | Pedals Engaged: {PedalsEngaged}";
+    }
+
+    public class PedalKeeper : List<ValueKeeper<ISetting>>
+    {
+        public PedalKeeper(int capacity) : base(capacity) { }
     }
 }

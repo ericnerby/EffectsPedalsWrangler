@@ -82,7 +82,7 @@ namespace EffectsPedalsKeeper.PedalBoards.Tests
             Assert.Equal(2, _pedalBoard.Count);
 
             var expected = _pedalBoard.Aggregate(0, (total, pedal) => total + pedal.Settings.Count);
-            var target = _pedalBoard.Presets[0].SettingValues.Count;
+            var target = _pedalBoard.Presets[0].PedalKeepers.Aggregate(0, (total, keeper) => total + keeper.Count());
 
             Assert.Equal(expected, target);
 
@@ -153,13 +153,14 @@ namespace EffectsPedalsKeeper.PedalBoards.Tests
             _pedalBoard.Add(_testPedalTwo);
             _pedalBoard.PresetAdd("My Awesome Preset");
 
+            var expected = _pedalBoard.Presets[0].PedalKeepers[0][1].StoredValue + 1;
+            _pedalBoard.Presets[0].PedalKeepers[0][1].StoredValue += 1;
+
             _pedalBoard.Remove(_testPedalOne);
+            var target = _pedalBoard.Presets[0].PedalKeepers[0][1].StoredValue;
 
-            var pedalOneSettings = _testPedalOne.Settings;
-            var target = _pedalBoard.Presets[0].SettingValues.Where(value => pedalOneSettings.Contains(value.Item));
-
-            Assert.Empty(target);
-            Assert.Equal(_testPedalTwo.Settings.Count, _pedalBoard.Presets[0].SettingValues.Count);
+            Assert.NotEqual(expected, target);
+            Assert.Single(_pedalBoard.Presets[0].PedalKeepers);
         }
 
         [Fact()]
@@ -168,12 +169,14 @@ namespace EffectsPedalsKeeper.PedalBoards.Tests
             _pedalBoard.Add(_testPedalTwo);
             _pedalBoard.PresetAdd("My Awesome Preset");
 
+            var expected = _pedalBoard.Presets[0].PedalKeepers[0][1].StoredValue + 1;
+            _pedalBoard.Presets[0].PedalKeepers[0][1].StoredValue += 1;
+
             _pedalBoard.RemoveAt(0);
+            var target = _pedalBoard.Presets[0].PedalKeepers[0][1].StoredValue;
 
-            var pedalOneSettings = _testPedalOne.Settings;
-            var target = _pedalBoard.Presets[0].SettingValues.Where(value => pedalOneSettings.Contains(value.Item));
-
-            Assert.Empty(target);
+            Assert.NotEqual(expected, target);
+            Assert.Single(_pedalBoard.Presets[0].PedalKeepers);
         }
 
         [Fact()]
@@ -182,7 +185,7 @@ namespace EffectsPedalsKeeper.PedalBoards.Tests
             _pedalBoard.PresetAdd("Awesome Preset");
 
             var expected = _testPedalOne.Settings.Count;
-            var target = _pedalBoard.Presets[0].SettingValues.Count;
+            var target = _pedalBoard.Presets[0].PedalKeepers[0].Count;
 
             Assert.Equal(expected, target);
         }

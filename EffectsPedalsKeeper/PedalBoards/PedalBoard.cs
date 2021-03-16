@@ -62,29 +62,35 @@ namespace EffectsPedalsKeeper.PedalBoards
 
         public void PresetRemoveAt(int index) => Presets.RemoveAt(index);
 
-        private void ExpandPresetOptions(IPedal pedal)
+        private void AddPresetOptions(IPedal pedal)
         {
-
             foreach (PedalBoardPreset preset in Presets)
             {
-                var valueKeepers = new List<ValueKeeper<ISetting>>(pedal.Settings.Count);
-                foreach (ISetting setting in pedal.Settings)
-                {
-                    valueKeepers.Add(new ValueKeeper<ISetting>(setting));
-                }
-                preset.SettingValues.AddRange(valueKeepers);
-                preset.EngagedList.Add(pedal, pedal.Engaged);
+                preset.AddPedals(new IPedal[] { pedal });
             }
         }
 
-        private void RemovePresetOptions(IPedal pedal)
+        private void MovePresetOptions(int currentIndex, int newIndex)
         {
             foreach (PedalBoardPreset preset in Presets)
             {
-                foreach (ISetting setting in pedal.Settings)
-                {
-                    preset.SettingValues.RemoveAll(value => value.Item == setting);
-                }
+                preset.MovePedal(currentIndex, newIndex);
+            }
+        }
+
+        private void InsertPresetOptions(IPedal pedal, int position)
+        {
+            foreach (PedalBoardPreset preset in Presets)
+            {
+                preset.InsertPedal(pedal, position);
+            }
+        }
+
+        private void RemovePresetOptions(int position)
+        {
+            foreach (PedalBoardPreset preset in Presets)
+            {
+                preset.RemovePedal(position);
             }
         }
 
@@ -114,7 +120,7 @@ namespace EffectsPedalsKeeper.PedalBoards
 
         public void Add(IPedal item)
         {
-            ExpandPresetOptions(item);
+            AddPresetOptions(item);
             _pedals.Add(item);
         }
 
@@ -138,18 +144,19 @@ namespace EffectsPedalsKeeper.PedalBoards
 
         public void Insert(int index, IPedal item)
         {
-            ExpandPresetOptions(item);
+            AddPresetOptions(item);
             _pedals.Insert(index, item);
         }
 
         public bool Remove(IPedal item)
         {
-            if (_pedals.Remove(item))
+            var index = _pedals.IndexOf(item);
+            if (index == -1)
             {
-                RemovePresetOptions(item);
-                return true;
+                return false;
             }
-            return false;
+            RemoveAt(index);
+            return true;
         }
 
         public void RemoveAt(int index)
@@ -158,9 +165,7 @@ namespace EffectsPedalsKeeper.PedalBoards
             {
                 throw new ArgumentOutOfRangeException();
             }
-
-            var pedal = _pedals[index];
-            RemovePresetOptions(pedal);
+            RemovePresetOptions(index);
             _pedals.RemoveAt(index);
         }
 
@@ -316,6 +321,7 @@ namespace EffectsPedalsKeeper.PedalBoards
             var pedalToMove = this[currentIndex];
             _pedals.RemoveAt(currentIndex);
             _pedals.Insert(newIndex, pedalToMove);
+            MovePresetOptions(currentIndex, newIndex);
         }
 
         public void InteractiveAddPedals(Action<string> checkQuit, List<Pedal> availablePedals)
@@ -407,20 +413,22 @@ namespace EffectsPedalsKeeper.PedalBoards
                 Console.WriteLine(preset.Name);
                 Console.WriteLine(string.Concat(Enumerable.Repeat("-", 10)));
                 Console.WriteLine("Guitar ->");
-                int index = 1;
+                int pedalIndex = 0;
                 foreach (Pedal pedal in this)
                 {
                     Console.WriteLine(string.Concat(Enumerable.Repeat("-", 10)));
-                    Console.WriteLine($"{index}. {pedal}");
-                    Console.WriteLine($"Pedal {(preset.EngagedList[pedal] ? "engaged" : "not engaged")}");
+                    Console.WriteLine($"{pedalIndex + 1}. {pedal}");
+                    Console.WriteLine($"Pedal {(preset.EngagedList[pedalIndex] ? "engaged" : "not engaged")}");
                     Console.WriteLine(string.Concat(Enumerable.Repeat(".", 10)));
+                    int settingIndex = 0;
                     foreach (Setting setting in pedal.Settings)
                     {
-                        int value = preset.SettingValues.Where(value => value.Item == setting).First().StoredValue;
+                        int value = preset.PedalKeepers[pedalIndex][settingIndex].StoredValue;
                         Console.WriteLine(setting.ToString(value));
+                        settingIndex++;
                     }
                     Console.WriteLine(string.Concat(Enumerable.Repeat(".", 10)));
-                    index++;
+                    pedalIndex++;
                 }
                 Console.WriteLine("-> Amp");
                 Console.WriteLine(string.Concat(Enumerable.Repeat("-", 10)));
@@ -433,16 +441,17 @@ namespace EffectsPedalsKeeper.PedalBoards
                 checkQuit(input);
                 if (input.ToLower() == "-b") { return; }
 
-                int pedalIndex;
-                if (int.TryParse(input, out pedalIndex)
-                    && pedalIndex >= 1 && pedalIndex <= Count)
+                int pedalIndexInput;
+                if (int.TryParse(input, out pedalIndexInput)
+                    && pedalIndexInput >= 1 && pedalIndexInput <= Count)
                 {
-                    pedalIndex -= 1;
+                    pedalIndexInput -= 1;
                     var args = new Dictionary<string, object>()
                     {
-                        { "preset", preset} 
+                        { "preset", preset},
+                        { "pedalIndex", pedalIndexInput }
                     };
-                    this[pedalIndex].InteractiveViewEdit(checkQuit, args);
+                    this[pedalIndexInput].InteractiveViewEdit(checkQuit, args);
                     continue;
                 }
                 Console.WriteLine("Input not recognized.");

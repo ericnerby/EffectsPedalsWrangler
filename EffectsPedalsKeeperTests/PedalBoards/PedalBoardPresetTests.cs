@@ -68,7 +68,8 @@ namespace EffectsPedalsKeeper.PedalBoards.Tests
             var expected = _pedals.Aggregate(0,
                 (total, next) => total + next.Settings.Count);
 
-            var target = _preset.SettingValues.Count;
+            var target = _preset.PedalKeepers.Aggregate(0,
+                (total, keeper) => total + keeper.Count());
 
             Assert.Equal(expected, target);
         }
@@ -83,28 +84,9 @@ namespace EffectsPedalsKeeper.PedalBoards.Tests
         }
 
         [Fact()]
-        public void TwoSettingsWithSameLabelButDifferentPedalTest()
-        {
-            var testingPedal = _pedals[0];
-            var testingSetting = testingPedal.Settings[0];
-            testingSetting.CurrentValue += 1;
-
-            var preset = new PedalBoardPreset("Testing Preset Two", _pedals);
-
-            var testingValue = preset.SettingValues.Where(settingValue => settingValue.Item == testingSetting).ToArray();
-
-            Assert.Single(testingValue);
-
-            int expected = testingSetting.CurrentValue;
-            int target = testingValue[0].StoredValue;
-
-            Assert.Equal(expected, target);
-        }
-
-        [Fact()]
         public void PedalsEngagedTest()
         {
-            _preset.EngagedList[_testPedalOne] = true;
+            _preset.EngagedList[0] = true;
             Assert.Equal(1, _preset.PedalsEngaged);
         }
 

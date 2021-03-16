@@ -96,34 +96,40 @@ namespace EffectsPedalsKeeper.Pedals
         public void InteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)
         {
             PedalBoardPreset preset = null;
-            if(additionalArgs.ContainsKey("preset"))
+            int pedalIndex = -1;
+            if (additionalArgs.ContainsKey("preset"))
             {
                 preset = (PedalBoardPreset)additionalArgs["preset"];
+                if (!additionalArgs.ContainsKey("pedalIndex"))
+                {
+                    throw new ArgumentException($"'pedalIndex' must be provided in {nameof(additionalArgs)} along with 'preset'");
+                }
+                pedalIndex = (int)additionalArgs["pedalIndex"];
             }
             while(true)
             {
                 Console.WriteLine(this);
                 bool engaged;
-                if (preset != null) { engaged = preset.EngagedList[this]; }
+                if (preset != null) { engaged = preset.EngagedList[pedalIndex]; }
                 else { engaged = Engaged; }
                 Console.WriteLine(engaged ? "Engaged" : "Not Engaged");
                 Console.WriteLine("Settings:");
 
-                var index = 1;
+                var settingIndex = 0;
                 foreach (ISetting setting in Settings)
                 {
                     string settingString;
                     if (preset != null)
                     {
-                        int value = preset.SettingValues.Where(value => value.Item == setting).First().StoredValue;
+                        int value = preset.PedalKeepers[pedalIndex][settingIndex].StoredValue;
                         settingString = setting.ToString(value);
                     }
                     else
                     {
                         settingString = setting.ToString();
                     }
-                    Console.WriteLine($"{index}. {settingString}");
-                    index++;
+                    Console.WriteLine($"{settingIndex + 1}. {settingString}");
+                    settingIndex++;
                 }
 
                 Console.WriteLine("To edit a setting on this pedal, select a number from the above list.");
@@ -138,8 +144,8 @@ namespace EffectsPedalsKeeper.Pedals
                 {
                     if (preset != null)
                     {
-                        if (preset.EngagedList[this]) { preset.EngagedList[this] = false; }
-                        else { preset.EngagedList[this] = true; }
+                        if (preset.EngagedList[pedalIndex]) { preset.EngagedList[pedalIndex] = false; }
+                        else { preset.EngagedList[pedalIndex] = true; }
                         continue;
                     }
                     else
@@ -151,13 +157,14 @@ namespace EffectsPedalsKeeper.Pedals
                     }
                 }
 
-                int settingIndex;
-                if(int.TryParse(input, out settingIndex))
+                int settingIndexInput;
+                if(int.TryParse(input, out settingIndexInput))
                 {
-                    settingIndex -= 1;
-                    if(settingIndex >= 0 && settingIndex < Settings.Count)
+                    settingIndexInput -= 1;
+                    if(settingIndexInput >= 0 && settingIndexInput < Settings.Count)
                     {
-                        Settings[settingIndex].InteractiveViewEdit(checkQuit, additionalArgs);
+                        additionalArgs["settingIndex"] = settingIndexInput;
+                        Settings[settingIndexInput].InteractiveViewEdit(checkQuit, additionalArgs);
                         continue;
                     }
                 }

@@ -6,7 +6,8 @@ namespace EffectsPedalsKeeper.Utils
 {
     public class ValueKeeper<T> where T : IBoundedValue
     {
-        public T Item;
+        public int MinValue { get; }
+        public int MaxValue { get; }
 
         private int _storedValue;
         public int StoredValue
@@ -14,7 +15,7 @@ namespace EffectsPedalsKeeper.Utils
             get { return _storedValue; }
             set
             {
-                if (value < Item.MinValue || value > Item.MaxValue)
+                if (value < MinValue || value > MaxValue)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
@@ -25,7 +26,8 @@ namespace EffectsPedalsKeeper.Utils
 
         public ValueKeeper(T item)
         {
-            Item = item;
+            MinValue = item.MinValue;
+            MaxValue = item.MaxValue;
             StoredValue = item.CurrentValue;
         }
     }

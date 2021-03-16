@@ -16,7 +16,8 @@ namespace EffectsPedalsKeeper
 
         public static JsonSerializerSettings JsonOptions = new JsonSerializerSettings
         {
-            TypeNameHandling = TypeNameHandling.All
+            TypeNameHandling = TypeNameHandling.All,
+            Formatting = Formatting.Indented
         };
 
         static string[] _menuItems = 
@@ -46,7 +47,6 @@ namespace EffectsPedalsKeeper
             //DeserializeList(boardsFileName, PedalBoards);
 
             var demoBuilder = new DemoBuilder();
-
             Pedals.AddRange(demoBuilder.DemoPedals);
 
             Console.WriteLine(_welcomeText);
