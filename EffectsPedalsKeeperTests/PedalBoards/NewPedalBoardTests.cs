@@ -126,7 +126,7 @@ namespace EffectsPedalsKeeper.PedalBoards.Tests
         [Fact()]
         public void GetEnumeratorTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            Assert.IsAssignableFrom<IEnumerator<IPedal>>(_pedalBoard.GetEnumerator());
         }
 
         [Fact()]
@@ -141,19 +141,39 @@ namespace EffectsPedalsKeeper.PedalBoards.Tests
         [Fact()]
         public void InsertTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            var testIndex = 0;
+            _pedalBoard.Insert(testIndex, _testPedalTwo);
+
+            Assert.Equal(testIndex, _pedalBoard.IndexOf(_testPedalTwo));
         }
 
         [Fact()]
         public void RemoveTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            _pedalBoard.Add(_testPedalTwo);
+            _pedalBoard.PresetAdd("My Awesome Preset");
+
+            _pedalBoard.Remove(_testPedalOne);
+
+            var pedalOneSettings = _testPedalOne.Settings;
+            var target = _pedalBoard.Presets[0].SettingValues.Where(value => pedalOneSettings.Contains(value.Item));
+
+            Assert.Empty(target);
+            Assert.Equal(_testPedalTwo.Settings.Count, _pedalBoard.Presets[0].SettingValues.Count);
         }
 
         [Fact()]
         public void RemoveAtTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            _pedalBoard.Add(_testPedalTwo);
+            _pedalBoard.PresetAdd("My Awesome Preset");
+
+            _pedalBoard.RemoveAt(0);
+
+            var pedalOneSettings = _testPedalOne.Settings;
+            var target = _pedalBoard.Presets[0].SettingValues.Where(value => pedalOneSettings.Contains(value.Item));
+
+            Assert.Empty(target);
         }
 
         [Fact()]
@@ -170,19 +190,23 @@ namespace EffectsPedalsKeeper.PedalBoards.Tests
         [Fact()]
         public void PresetRemoveTest()
         {
-            Assert.True(false, "This test needs an implementation");
+            _pedalBoard.PresetAdd("Awesome Preset");
+
+            var presetToRemove = _pedalBoard.Presets[0];
+
+            _pedalBoard.PresetRemove(presetToRemove);
+
+            Assert.Empty(_pedalBoard.Presets);
         }
 
         [Fact()]
         public void PresetRemoveAtTest()
         {
-            Assert.True(false, "This test needs an implementation");
-        }
+            _pedalBoard.PresetAdd("Awesome Preset");
 
-        [Fact()]
-        public void InteractiveViewEditTest()
-        {
-            Assert.True(false, "This test needs an implementation");
+            _pedalBoard.PresetRemoveAt(0);
+
+            Assert.Empty(_pedalBoard.Presets);
         }
     }
 }
