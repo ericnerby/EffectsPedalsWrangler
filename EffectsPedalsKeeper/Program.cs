@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using EffectsPedalsKeeper.Builders;
 using EffectsPedalsKeeper.PedalBoards;
 using EffectsPedalsKeeper.Pedals;
-using Newtonsoft.Json;
 
 namespace EffectsPedalsKeeper
 {
@@ -13,12 +11,6 @@ namespace EffectsPedalsKeeper
         static string _globalOptionsText = "Type '-q' to quit or '-h' for help";
         static string _welcomeText =
             $"Welcome to the Effects Pedals Wrangler.\n{_globalOptionsText}.";
-
-        public static JsonSerializerSettings JsonOptions = new JsonSerializerSettings
-        {
-            TypeNameHandling = TypeNameHandling.Auto,
-            Formatting = Formatting.Indented
-        };
 
         static string[] _menuItems = 
         {
@@ -38,16 +30,69 @@ namespace EffectsPedalsKeeper
 
         public static List<Pedal> Pedals = new List<Pedal>();
         public static List<PedalBoard> PedalBoards = new List<PedalBoard>();
-        public static string pedalsFileName = "pedals.json";
-        public static string boardsFileName = "boards.json";
+        public static string PedalsFileName = "pedals.json";
+        public static string BoardsFileName = "boards.json";
 
         static void Main(string[] args)
         {
-            DeserializeList(pedalsFileName, Pedals);
-            DeserializeList(boardsFileName, PedalBoards);
+            try
+            {
+                if (!ListSerializer.DeserializeList(PedalsFileName, Pedals))
+                {
+                    Console.WriteLine($"There's no {PedalsFileName} file.");
+                    DefaultLoaderPrompt(true);
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Something went wrong importing the Pedal data.");
+                Console.WriteLine($"Error Message: {e.Message}");
+                DefaultLoaderPrompt(true);
+            }
+
+            try
+            {
+                if (!ListSerializer.DeserializeList(BoardsFileName, PedalBoards))
+                {
+                    DefaultLoaderPrompt(false);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Something went wrong importing the PedalBoard data.");
+                Console.WriteLine($"Error Message: {e.Message}");
+                DefaultLoaderPrompt(false);
+            }
 
             Console.WriteLine(_welcomeText);
             InputLoop();
+        }
+
+        static void DefaultLoaderPrompt(bool loadPedals)
+        {
+            var demoBuilder = new DemoBuilder();
+            if (loadPedals)
+            {
+                Console.WriteLine("Would you like to load the default Pedals? [Y/n] ");
+            }
+            else
+            {
+                Console.WriteLine("Would you like to load the default Board? [Y/n] ");
+            }
+            var input = Console.ReadLine();
+
+            if (input.ToLower() != "n")
+            {
+                if (loadPedals)
+                {
+                    Pedals.AddRange(demoBuilder.DemoPedals);
+                }
+                else
+                {
+                    PedalBoards.Add(demoBuilder.BuildDemoBoard());
+                }
+            }
+
         }
 
         static void InputLoop()
@@ -160,28 +205,6 @@ namespace EffectsPedalsKeeper
             }
         }
 
-        static void SerializeList<T>(string fileName, List<T> source)
-        {
-            using (StreamWriter file = File.CreateText(@fileName))
-            {
-                JsonSerializer serializer = JsonSerializer.Create(JsonOptions);
-                serializer.Serialize(file, source);
-            }
-        }
-
-        static void DeserializeList<T>(string fileName, List<T> destination)
-        {
-            if (File.Exists(fileName))
-            {
-                using (StreamReader file = File.OpenText(@fileName))
-                {
-                    JsonSerializer serializer = JsonSerializer.Create(JsonOptions);
-                    var itemsToAdd = (List<T>)serializer.Deserialize(file, typeof(List<T>));
-                    destination.AddRange(itemsToAdd);
-                }
-            }
-        }
-
         public static void AddNewPedals()
         {
             while (true)
@@ -208,8 +231,8 @@ namespace EffectsPedalsKeeper
 
             if(input == "-q")
             {
-                SerializeList(pedalsFileName, Pedals);
-                SerializeList(boardsFileName, PedalBoards);
+                ListSerializer.SerializeList(PedalsFileName, Pedals);
+                ListSerializer.SerializeList(BoardsFileName, PedalBoards);
                 Environment.Exit(0);
             }
             if(input == "-h")
