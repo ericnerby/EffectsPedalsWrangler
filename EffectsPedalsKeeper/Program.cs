@@ -81,6 +81,8 @@ namespace EffectsPedalsKeeper
             }
             var input = Console.ReadLine();
 
+            CheckForQuitOrHelp(input);
+
             if (input.ToLower() != "n")
             {
                 if (loadPedals)
@@ -99,6 +101,7 @@ namespace EffectsPedalsKeeper
         {
             while(true)
             {
+
                 Console.WriteLine("Choose from the following options:");
                 for(var i = 0; i < _menuItems.Length; i++)
                 {
@@ -118,13 +121,22 @@ namespace EffectsPedalsKeeper
                     {
                         Console.WriteLine(
                             $"Please choose a number from the list\n{_globalOptionsText}.");
+                        Console.WriteLine("(Hit enter to continue) ");
+                        Console.ReadLine();
+                        Console.Clear();
+                        continue;
                     }
                 }
                 else
                 {
                     Console.WriteLine(
                         $"Please enter your option as a number\n{_globalOptionsText}.");
+                    Console.WriteLine("(Hit enter to continue) ");
+                    Console.ReadLine();
+                    Console.Clear();
+                    continue;
                 }
+                Console.Clear();
             }
         }
 
@@ -138,6 +150,7 @@ namespace EffectsPedalsKeeper
 
             while (true)
             {
+                Console.Clear();
                 int indexLabel = 1;
                 foreach (Pedal pedal in Pedals)
                 {
@@ -160,6 +173,16 @@ namespace EffectsPedalsKeeper
                     {
                         Pedals[pedalIndex].InteractiveViewEdit(CheckForQuitOrHelp, null);
                     }
+                    else
+                    {
+                        Console.WriteLine("Please select a valid number from the list. (Hit enter to continue) ");
+                        Console.ReadLine();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Please select a valid number from the list. (Hit enter to continue) ");
+                    Console.ReadLine();
                 }
             }
         }
@@ -171,13 +194,11 @@ namespace EffectsPedalsKeeper
                 Console.WriteLine("No Pedal Boards have been created yet.");
                 return;
             }
-            foreach (PedalBoard board in PedalBoards)
-            {
-                Console.WriteLine(board);
-            }
 
             while (true)
             {
+                Console.Clear();
+                Console.WriteLine("Available Pedal Boards:");
                 int indexLabel = 1;
                 foreach (PedalBoard board in PedalBoards)
                 {
@@ -201,6 +222,16 @@ namespace EffectsPedalsKeeper
                         var arguments = new Dictionary<string, object>() { { "availablePedals", Pedals} };
                         PedalBoards[boardIndex].InteractiveViewEdit(CheckForQuitOrHelp, arguments);
                     }
+                    else
+                    {
+                        Console.WriteLine("Please select a valid number from the list. (Hit enter to continue) ");
+                        Console.ReadLine();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Please select a valid number from the list. (Hit enter to continue) ");
+                    Console.ReadLine();
                 }
             }
         }
@@ -212,6 +243,7 @@ namespace EffectsPedalsKeeper
                 Pedals.Add(Builder.BuildPedal(CheckForQuitOrHelp));
                 Console.Write("Would you like to add another pedal? [N/y]  ");
                 var input = Console.ReadLine();
+                CheckForQuitOrHelp(input);
                 if (input.ToLower() != "y")
                 {
                     break;

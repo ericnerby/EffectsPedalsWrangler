@@ -4,7 +4,6 @@ using EffectsPedalsKeeper.Settings;
 using EffectsPedalsKeeper.Utils;
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 namespace EffectsPedalsKeeper.Builders
 {
@@ -22,6 +21,7 @@ namespace EffectsPedalsKeeper.Builders
 
         public static PedalBoard BuildBoard(List<Pedal> pedalsAvailable, Action<string> checkHelpQuit)
         {
+            Console.Clear();
             PedalBoard newBoard;
             Console.Write("What is the name of the Pedal Board?  ");
             var name = Console.ReadLine();
@@ -35,6 +35,7 @@ namespace EffectsPedalsKeeper.Builders
 
         public static Pedal BuildPedal(Action<string> checkHelpQuit)
         {
+            Console.Clear();
             Pedal newPedal;
             Console.Write("What is the name of the pedal?  ");
             var name = Console.ReadLine();
@@ -54,7 +55,7 @@ namespace EffectsPedalsKeeper.Builders
 
         private static EffectType GetEffectType(Action<string> checkHelpQuit)
         {
-
+            Console.Clear();
             Console.WriteLine("What type of Effect is it?\nChoose a number:");
             var index = 0;
             foreach (EffectType type in Enum.GetValues(typeof(EffectType)))
@@ -71,7 +72,8 @@ namespace EffectsPedalsKeeper.Builders
             {
                 return (EffectType)(typeIndex - 1);
             }
-            Console.Write("Please select a number from the list.");
+            Console.Write("Please select a number from the list. (Hit enter to continue) ");
+            Console.ReadLine();
             return GetEffectType(checkHelpQuit);
         }
 
@@ -89,6 +91,7 @@ namespace EffectsPedalsKeeper.Builders
 
             while(true)
             {
+                Console.Clear();
                 if(settingsToAdd.Count > 0)
                 {
                     Console.WriteLine("\nSettings you've already added:");

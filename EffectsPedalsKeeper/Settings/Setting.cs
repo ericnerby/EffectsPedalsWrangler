@@ -74,7 +74,7 @@ namespace EffectsPedalsKeeper.Settings
             PedalBoardPreset preset = null;
             int pedalIndex = -1;
             int settingIndex = -1;
-            if (additionalArgs.ContainsKey("preset"))
+            if (additionalArgs != null && additionalArgs.ContainsKey("preset"))
             {
                 preset = (PedalBoardPreset)additionalArgs["preset"];
                 pedalIndex = (int)additionalArgs["pedalIndex"];
@@ -93,20 +93,20 @@ namespace EffectsPedalsKeeper.Settings
                 formatForDisplay = "'d.d', eg '1.0'";
             }
 
-            if (preset != null)
-            {
-                int value = preset.PedalKeepers[pedalIndex][settingIndex].StoredValue;
-                Console.WriteLine(ToString(value));
-            }
-            else
-            {
-                Console.WriteLine(this);
-            }
-            Console.WriteLine($"Minimum Value: {Options[MinValue]}");
-            Console.WriteLine($"Maximum Value: {Options[MaxValue]}");
-
             while (true)
             {
+                Console.Clear();
+                if (preset != null)
+                {
+                    int value = preset.PedalKeepers[pedalIndex][settingIndex].StoredValue;
+                    Console.WriteLine(ToString(value));
+                }
+                else
+                {
+                    Console.WriteLine(this);
+                }
+                Console.WriteLine($"Minimum Value: {Options[MinValue]}");
+                Console.WriteLine($"Maximum Value: {Options[MaxValue]}");
                 Console.WriteLine($"Please enter a new position in the format {formatForDisplay}\n"
                                   + "Or enter '-b' to go back to previous screen:  ");
                 var input = Console.ReadLine();
@@ -123,6 +123,8 @@ namespace EffectsPedalsKeeper.Settings
                     {
                         Console.WriteLine("Position must be between"
                                           + $" {Options[MinValue]} and {Options[MaxValue]}");
+                        Console.WriteLine("(Hit enter to continue) ");
+                        Console.ReadLine();
                         continue;
                     }
                     if (preset != null)
@@ -138,6 +140,8 @@ namespace EffectsPedalsKeeper.Settings
                 else
                 {
                     Console.WriteLine($"Position must be in format {formatForDisplay}.");
+                    Console.WriteLine("(Hit enter to continue) ");
+                    Console.ReadLine();
                 }
             }
         }
@@ -147,25 +151,25 @@ namespace EffectsPedalsKeeper.Settings
             PedalBoardPreset preset = null;
             int pedalIndex = -1;
             int settingIndex = -1;
-            if (additionalArgs.ContainsKey("preset"))
+            if (additionalArgs != null && additionalArgs.ContainsKey("preset"))
             {
                 preset = (PedalBoardPreset)additionalArgs["preset"];
                 pedalIndex = (int)additionalArgs["pedalIndex"];
                 settingIndex = (int)additionalArgs["settingIndex"];
             }
 
-            if (preset != null)
-            {
-                int value = preset.PedalKeepers[pedalIndex][settingIndex].StoredValue;
-                Console.WriteLine(ToString(value));
-            }
-            else
-            {
-                Console.WriteLine(this);
-            }
-
             while (true)
             {
+                Console.Clear();
+                if (preset != null)
+                {
+                    int value = preset.PedalKeepers[pedalIndex][settingIndex].StoredValue;
+                    Console.WriteLine(ToString(value));
+                }
+                else
+                {
+                    Console.WriteLine(this);
+                }
                 Console.WriteLine("Options:");
                 for (var i = 0; i < Options.Count; i++)
                 {
@@ -193,11 +197,13 @@ namespace EffectsPedalsKeeper.Settings
                             CurrentValue = newValue;
                         }
                     }
-                    Console.WriteLine("Please choose a number from the displayed list.");
+                    Console.WriteLine("Please choose a number from the displayed list. (Hit enter to continue) ");
+                    Console.ReadLine();
                 }
                 else
                 {
-                    Console.WriteLine("Please enter your selection as a number.");
+                    Console.WriteLine("Please enter your selection as a number. (Hit enter to continue) ");
+                    Console.ReadLine();
                 }
             }
         }

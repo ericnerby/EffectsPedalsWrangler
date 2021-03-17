@@ -166,23 +166,23 @@ namespace EffectsPedalsKeeper.PedalBoards
             }
             var availablePedals = (List<Pedal>)additionalArgs["availablePedals"];
 
-            Console.WriteLine(Name);
-            if (Count > 0)
-            {
-                Console.Write("Signal Chain:\nGuitar -> ");
-                foreach (Pedal pedal in this)
-                {
-                    Console.Write($"{pedal} -> ");
-                }
-                Console.Write("Amp\n");
-            }
-            else
-            {
-                Console.WriteLine("No pedals assigned currently.");
-            }
-
             while (true)
             {
+                Console.Clear();
+                Console.WriteLine(Name);
+                if (Count > 0)
+                {
+                    Console.Write("Signal Chain:\nGuitar -> ");
+                    foreach (Pedal pedal in this)
+                    {
+                        Console.Write($"{pedal} -> ");
+                    }
+                    Console.Write("Amp\n");
+                }
+                else
+                {
+                    Console.WriteLine("No pedals assigned currently.");
+                }
                 if (Presets.Count > 0)
                 {
                     Console.WriteLine("Presets:");
@@ -230,6 +230,7 @@ namespace EffectsPedalsKeeper.PedalBoards
 
             while (true)
             {
+                Console.Clear();
                 if (Count == 0)
                 {
                     Console.WriteLine("No pedals assigned currently.");
@@ -288,10 +289,12 @@ namespace EffectsPedalsKeeper.PedalBoards
                         {
                             destinationIndex -= 1;
                             MovePedal(index, destinationIndex);
-                            Console.WriteLine("Pedal moved.");
+                            Console.WriteLine("Pedal moved. (Hit enter to continue) ");
+                            Console.ReadLine();
                             continue;
                         }
-                        Console.WriteLine("Please select a valid number from the list.");
+                        Console.WriteLine("Please select a valid number from the list. (Hit enter to continue) ");
+                        Console.ReadLine();
                         continue;
                     }
                 }
@@ -324,6 +327,7 @@ namespace EffectsPedalsKeeper.PedalBoards
             }
             while (true)
             {
+                Console.Clear();
                 Console.WriteLine("Existing Pedals:");
                 for (var i = 0; i < availablePedals.Count; i++)
                 {
@@ -354,6 +358,8 @@ namespace EffectsPedalsKeeper.PedalBoards
 
             AddRange(pedalsToAdd);
             Console.WriteLine($"{pedalsToAdd.Count} pedals added to {this}");
+            Console.WriteLine("(Hit enter to continue)");
+            Console.ReadLine();
         }
 
         public void AddRange(List<IPedal> pedalsToAdd)
@@ -368,6 +374,8 @@ namespace EffectsPedalsKeeper.PedalBoards
         {
             while (true)
             {
+                Console.Clear();
+                Console.WriteLine($"Adding new Preset to {this}");
                 Console.WriteLine("What should the new preset be called? ('-b' to go back) ");
                 var input = Console.ReadLine();
 
@@ -387,6 +395,8 @@ namespace EffectsPedalsKeeper.PedalBoards
                 else
                 {
                     Console.WriteLine($"There's already a preset with the name '{input}'.\nPlease select a different name.");
+                    Console.WriteLine("(Hit enter to continue)");
+                    Console.ReadLine();
                     continue;
                 }
             }
@@ -398,6 +408,7 @@ namespace EffectsPedalsKeeper.PedalBoards
         {
             while (true)
             {
+                Console.Clear();
                 Console.WriteLine(preset.Name);
                 Console.WriteLine(string.Concat(Enumerable.Repeat("-", 10)));
                 Console.WriteLine("Guitar ->");
@@ -442,7 +453,8 @@ namespace EffectsPedalsKeeper.PedalBoards
                     this[pedalIndexInput].InteractiveViewEdit(checkQuit, args);
                     continue;
                 }
-                Console.WriteLine("Input not recognized.");
+                Console.WriteLine("Input not recognized. (Hit enter to continue) ");
+                Console.ReadLine();
             }
         }
     }

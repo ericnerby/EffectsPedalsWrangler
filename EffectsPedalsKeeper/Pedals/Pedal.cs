@@ -1,11 +1,7 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using EffectsPedalsKeeper.Interfaces;
 using EffectsPedalsKeeper.PedalBoards;
 using EffectsPedalsKeeper.Settings;
-using EffectsPedalsKeeper.Utils;
 
 namespace EffectsPedalsKeeper.Pedals
 {
@@ -84,7 +80,7 @@ namespace EffectsPedalsKeeper.Pedals
         {
             PedalBoardPreset preset = null;
             int pedalIndex = -1;
-            if (additionalArgs.ContainsKey("preset"))
+            if (additionalArgs != null && additionalArgs.ContainsKey("preset"))
             {
                 preset = (PedalBoardPreset)additionalArgs["preset"];
                 if (!additionalArgs.ContainsKey("pedalIndex"))
@@ -95,6 +91,7 @@ namespace EffectsPedalsKeeper.Pedals
             }
             while(true)
             {
+                Console.Clear();
                 Console.WriteLine(this);
                 bool engaged;
                 if (preset != null) { engaged = preset.EngagedList[pedalIndex]; }
@@ -150,13 +147,18 @@ namespace EffectsPedalsKeeper.Pedals
                     settingIndexInput -= 1;
                     if(settingIndexInput >= 0 && settingIndexInput < Settings.Count)
                     {
+                        if (additionalArgs == null)
+                        {
+                            additionalArgs = new Dictionary<string, object>();
+                        }
                         additionalArgs["settingIndex"] = settingIndexInput;
                         Settings[settingIndexInput].InteractiveViewEdit(checkQuit, additionalArgs);
                         continue;
                     }
                 }
 
-                Console.WriteLine("Input not recognized.");
+                Console.WriteLine("Input not recognized. (Hit enter to continue) ");
+                Console.ReadLine();
             }
         }
     }
