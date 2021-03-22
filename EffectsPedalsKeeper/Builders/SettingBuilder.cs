@@ -2,6 +2,7 @@
 using EffectsPedalsKeeper.Utils;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace EffectsPedalsKeeper.Builders
@@ -9,10 +10,22 @@ namespace EffectsPedalsKeeper.Builders
     public static class SettingBuilder
     {
 
-        public static Setting CreateSetting(SettingType type, Action<string> checkHelpQuit)
+        public static Setting CreateSetting(SettingType type, Action<string> checkHelpQuit, IList<ISetting> existingSettings)
         {
             Console.WriteLine("What is the label for the setting?");
             var label = Console.ReadLine();
+            if (existingSettings.Any(setting => setting.Label == label))
+            {
+                Console.Clear();
+                Console.WriteLine($"There's already a setting with the label {label}. Setting labels must be unique per pedal.");
+                return CreateSetting(type, checkHelpQuit, existingSettings);
+            }
+            if (string.IsNullOrEmpty(label))
+            {
+                Console.Clear();
+                Console.WriteLine($"The setting label can't be blank.");
+                return CreateSetting(type, checkHelpQuit, existingSettings);
+            }
 
             checkHelpQuit(label);
 

@@ -124,7 +124,7 @@ namespace EffectsPedalsKeeper.Builders
                     typeIndex -= 1;
                     if (Enum.IsDefined(typeof(SettingType), typeIndex))
                     {
-                        settingsToAdd.Add(SettingBuilder.CreateSetting((SettingType)typeIndex, checkHelpQuit));
+                        settingsToAdd.Add(SettingBuilder.CreateSetting((SettingType)typeIndex, checkHelpQuit, settingsToAdd));
                     }
                     else
                     {
