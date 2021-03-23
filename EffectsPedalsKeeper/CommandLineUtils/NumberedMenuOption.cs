@@ -7,7 +7,7 @@ namespace EffectsPedalsKeeper.CommandLineUtils
     {
         public IList<T> Items;
         public Action<T> ItemAction;
-        public NumberedMenuOption(ref IList<T> items, string description, Action<T> itemAction)
+        public NumberedMenuOption(IList<T> items, string description, Action<T> itemAction)
             : base(ResponseType.Int, () => { }, "", description)
         {
             Items = items;

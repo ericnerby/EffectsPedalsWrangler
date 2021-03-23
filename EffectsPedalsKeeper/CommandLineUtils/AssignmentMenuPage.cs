@@ -9,7 +9,7 @@ namespace EffectsPedalsKeeper.CommandLineUtils
         public AssignmentMenuOption<T> AssignmentMenuOption { get; set; }
         public bool Repeating { get; set; }
         public AssignmentMenuPage(MenuOption[] menuOptions, string startingText, AssignmentMenuOption<T> assignmentMenuOption, bool repeating)
-            : base(menuOptions, startingText)
+            : base(startingText, menuOptions)
         {
             AssignmentMenuOption = assignmentMenuOption;
             Repeating = repeating;

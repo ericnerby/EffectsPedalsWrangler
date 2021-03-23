@@ -12,7 +12,7 @@ namespace EffectsPedalsKeeper.CommandLineUtils
         public Action CallingStatement { get; set; }
         public List<MenuOption> MenuOptions { get; protected set; }
 
-        public MenuPage(MenuOption[] menuOptions, string startingText)
+        public MenuPage(string startingText, MenuOption[] menuOptions)
         {
             StartingText = startingText;
             GlobalOptions = new MenuOption[]
@@ -22,6 +22,18 @@ namespace EffectsPedalsKeeper.CommandLineUtils
                 new MenuOption(ResponseType.DashOption, CallingStatement, "-b", "'-b' to go back to previous screen'")
             };
             MenuOptions = new List<MenuOption>(menuOptions);
+        }
+
+        public MenuPage(string startingText)
+        {
+            StartingText = startingText;
+            GlobalOptions = new MenuOption[]
+            {
+                new MenuOption(ResponseType.DashOption, () => Program.CheckForQuitOrHelp("-q"), "-q", null),
+                new MenuOption(ResponseType.DashOption, () => Program.CheckForQuitOrHelp("-h"), "-h", null),
+                new MenuOption(ResponseType.DashOption, CallingStatement, "-b", "'-b' to go back to previous screen'")
+            };
+            MenuOptions = new List<MenuOption>();
         }
 
         public virtual void InputLoop(Action callingStatement)
