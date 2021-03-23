@@ -6,52 +6,73 @@ namespace EffectsPedalsKeeper.CommandLineUtils
 {
     public class AssignmentMenuPage<T> : MenuPage
     {
-        public AssignmentMenuOption<T> AssignmentMenuOption { get; set; }
-        public bool Repeating { get; set; }
-        public AssignmentMenuPage(MenuOption[] menuOptions, string startingText, AssignmentMenuOption<T> assignmentMenuOption, bool repeating)
+        public string AssignmentDescription { get; }
+        public Func<T, bool> ValueValidator { get; }
+        public Func<string, T> ValueConverter { get; }
+        public ResponseType ResponseType { get; }
+        public bool Repeating { get; }
+        public AssignmentMenuPage(string startingText, string assignmentDesription, bool repeating,
+            ResponseType responseType, Func<T, bool> valueValidator, Func<string, T> valueConverter,
+            MenuOption[] menuOptions = null)
             : base(startingText, menuOptions)
         {
-            AssignmentMenuOption = assignmentMenuOption;
+            AssignmentDescription = assignmentDesription;
+            ValueValidator = valueValidator;
+            ValueConverter = valueConverter;
+            ResponseType = responseType;
             Repeating = repeating;
         }
 
         public void InputLoop(Action callingStatement, ref T destination)
         {
-            CallingStatement = callingStatement;
-
-            OpeningDisplay<object>(null);
-
-            InputResponse input = NewInputValidator.ParseInput(Console.ReadLine());
-
-            if (ProcessInput<object>(input, callingStatement))
+            while (true)
             {
-                return;
-            }
+                CallingStatement = callingStatement;
 
-            if (input.ResponseType == AssignmentMenuOption.ResponseType)
-            {
-                if (AssignmentMenuOption.AssignValue(ref destination, input.Value))
+                OpeningDisplay();
+
+                InputResponse input = NewInputValidator.ParseInput(Console.ReadLine());
+
+                if (ProcessInput(input, callingStatement))
                 {
-                    if (Repeating)
-                    {
-                        Console.WriteLine("Value updated. Hit enter to continue. ");
-                        Console.ReadLine();
-                        InputLoop(callingStatement);
-                    }
-                    else { return; }
+                    return;
                 }
-            }
 
-            Console.WriteLine("Input not recognized. Hit enter to continue. ");
-            Console.ReadLine();
-            InputLoop(callingStatement);
+                if (input.ResponseType == ResponseType)
+                {
+                    if (AssignValue(ref destination, input.Value))
+                    {
+                        if (Repeating)
+                        {
+                            Console.WriteLine("Value updated. Hit enter to continue. ");
+                            Console.ReadLine();
+                            continue;
+                        }
+                        else { return; }
+                    }
+                }
+
+                Console.WriteLine("Input not recognized. Hit enter to continue. ");
+                Console.ReadLine();
+            }
         }
 
-        protected void OpeningDisplay()
+        public bool AssignValue(ref T destination, string value)
+        {
+            T convertedValue = ValueConverter(value);
+            if (ValueValidator(convertedValue))
+            {
+                destination = convertedValue;
+                return true;
+            }
+            return false;
+        }
+
+        protected override void OpeningDisplay()
         {
             Console.Clear();
             Console.WriteLine(StartingText);
-            Console.WriteLine(AssignmentMenuOption.Description);
+            Console.Write(AssignmentDescription);
             DisplayMenuOptions();
             Console.Write(": ");
         }

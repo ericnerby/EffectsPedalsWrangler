@@ -12,7 +12,7 @@ namespace EffectsPedalsKeeper.CommandLineUtils
         public Action CallingStatement { get; set; }
         public List<MenuOption> MenuOptions { get; protected set; }
 
-        public MenuPage(string startingText, MenuOption[] menuOptions)
+        public MenuPage(string startingText, MenuOption[] menuOptions = null)
         {
             StartingText = startingText;
             GlobalOptions = new MenuOption[]
@@ -21,64 +21,44 @@ namespace EffectsPedalsKeeper.CommandLineUtils
                 new MenuOption(ResponseType.DashOption, () => Program.CheckForQuitOrHelp("-h"), "-h", null),
                 new MenuOption(ResponseType.DashOption, CallingStatement, "-b", "'-b' to go back to previous screen'")
             };
-            MenuOptions = new List<MenuOption>(menuOptions);
-        }
-
-        public MenuPage(string startingText)
-        {
-            StartingText = startingText;
-            GlobalOptions = new MenuOption[]
+            if (menuOptions != null)
             {
-                new MenuOption(ResponseType.DashOption, () => Program.CheckForQuitOrHelp("-q"), "-q", null),
-                new MenuOption(ResponseType.DashOption, () => Program.CheckForQuitOrHelp("-h"), "-h", null),
-                new MenuOption(ResponseType.DashOption, CallingStatement, "-b", "'-b' to go back to previous screen'")
-            };
-            MenuOptions = new List<MenuOption>();
-        }
-
-        public virtual void InputLoop(Action callingStatement)
-        {
-            InputLoop<object>(callingStatement);
-        }
-
-        public virtual void InputLoop<T>(Action callingStatement, NumberedMenuOption<T> numberedMenuOption = null)
-        {
-            CallingStatement = callingStatement;
-
-            OpeningDisplay(numberedMenuOption);
-
-            InputResponse input = NewInputValidator.ParseInput(Console.ReadLine());
-            if (ProcessInput(input, callingStatement, numberedMenuOption))
+                MenuOptions = new List<MenuOption>(menuOptions);
+            }
+            else
             {
-                return;
+                MenuOptions = new List<MenuOption>();
+            }
+        }
+
+        public virtual void InputLoop(Action callingStatement = null)
+        {
+            if (callingStatement != null)
+            {
+                CallingStatement = callingStatement;
             }
 
-            Console.WriteLine("Input not recognized. Hit enter to continue. ");
-            Console.ReadLine();
-            InputLoop(callingStatement, numberedMenuOption);
+            while (true)
+            {
+                OpeningDisplay();
+
+                InputResponse input = NewInputValidator.ParseInput(Console.ReadLine());
+                if (ProcessInput(input, CallingStatement))
+                {
+                    return;
+                }
+
+                Console.WriteLine("Input not recognized. Hit enter to continue. ");
+                Console.ReadLine();
+            }
         }
 
-        protected virtual void OpeningDisplay<T>(NumberedMenuOption<T> numberedMenuOption)
+        protected virtual void OpeningDisplay()
         {
             Console.Clear();
             Console.WriteLine(StartingText);
-            if (numberedMenuOption != null)
-            {
-                DisplayNumberedOptions(numberedMenuOption);
-            }
             DisplayMenuOptions();
             Console.Write(": ");
-        }
-
-        protected void DisplayNumberedOptions<T>(NumberedMenuOption<T> numberedMenuOption)
-        {
-            var index = 1;
-            foreach (object item in numberedMenuOption.Items)
-            {
-                Console.WriteLine($"{index}. {item}");
-                index++;
-            }
-            Console.WriteLine(numberedMenuOption.Description);
         }
 
         protected void DisplayMenuOptions()
@@ -101,16 +81,7 @@ namespace EffectsPedalsKeeper.CommandLineUtils
             }
         }
 
-        protected bool CheckNumberedOption<T>(string input, NumberedMenuOption<T> numberedMenuOption)
-        {
-            if (numberedMenuOption.ActOnItem(int.Parse(input)))
-            {
-                return true;
-            }
-            return false;
-        }
-
-        protected bool ProcessInput<T>(InputResponse input, Action callingStatement, NumberedMenuOption<T> numberedMenuOption = null)
+        protected bool ProcessInput(InputResponse input, Action callingStatement)
         {
             List<MenuOption> optionsOfMatchingType = new List<MenuOption>(GlobalOptions.Where(option => option.ResponseType == input.ResponseType));
             optionsOfMatchingType.AddRange(MenuOptions.Where(option => option.ResponseType == input.ResponseType));
@@ -121,15 +92,6 @@ namespace EffectsPedalsKeeper.CommandLineUtils
                     if (input.Value == option.Command)
                     {
                         option.Action();
-                        return true;
-                    }
-                }
-
-                if (input.ResponseType == ResponseType.Int
-                    && numberedMenuOption != null)
-                {
-                    if (CheckNumberedOption(input.Value, numberedMenuOption))
-                    {
                         return true;
                     }
                 }
