@@ -7,7 +7,6 @@ namespace EffectsPedalsKeeper.CommandLineUtils
     {
         public IList<T> Items;
         public Action<T> ItemAction;
-        public override Action Action => () => ActOnItem(0);
         public NumberedMenuOption(ref IList<T> items, string description, Action<T> itemAction)
             : base(ResponseType.Int, () => { }, "", description)
         {
@@ -17,7 +16,7 @@ namespace EffectsPedalsKeeper.CommandLineUtils
 
         public bool ActOnItem(int index)
         {
-            if (index < 0 || index >= Items.Count)
+            if (index < 1 || index >= Items.Count)
             {
                 return false;
             }
