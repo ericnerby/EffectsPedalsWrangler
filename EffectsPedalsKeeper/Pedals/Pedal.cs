@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using EffectsPedalsKeeper.CommandLineUtils;
 using EffectsPedalsKeeper.PedalBoards;
 using EffectsPedalsKeeper.Settings;
 
@@ -14,20 +15,35 @@ namespace EffectsPedalsKeeper.Pedals
         public EffectType EffectType { get; }
 
         public List<ISetting> Settings { get; private set; }
+        public ListMenuPage<ISetting> PedalEditor { get; }
 
         public Pedal(string maker, string name, EffectType effectType)
         {
+            var menuOptions = new MenuOption[]
+            {
+                new MenuOption(
+                    ResponseType.DashOption,
+                    () => this.ToggleEngaged(),
+                    "-e", "'-e' to toggle engaged status")
+            };
             Maker = maker;
             Name = name;
             EffectType = effectType;
             Settings = new List<ISetting>();
+            PedalEditor = new ListMenuPage<ISetting>(
+                MenuHeader,
+                "To Edit a Setting, please select a number from the list.",
+                Settings,
+                setting => setting.InteractiveViewEdit(input => { }, new Dictionary<string, object>()),
+                menuOptions
+            );
         }
 
         public bool AddSettings(IList<ISetting> settings)
         {
             var startingCount = Settings.Count;
             Settings.AddRange(settings);
-            if(startingCount + settings.Count == Settings.Count)
+            if (startingCount + settings.Count == Settings.Count)
             {
                 return true;
             }
@@ -48,7 +64,7 @@ namespace EffectsPedalsKeeper.Pedals
         public string[] PrintSettingDetails()
         {
             var output = new string[Settings.Count];
-            for(var i = 0; i < Settings.Count; i++)
+            for (var i = 0; i < Settings.Count; i++)
             {
                 output[i] = Settings[i].ToString();
             }
@@ -66,7 +82,7 @@ namespace EffectsPedalsKeeper.Pedals
             newPedal.Engaged = Engaged;
 
             var newSettings = new ISetting[Settings.Count];
-            for(var i = 0; i < Settings.Count; i++)
+            for (var i = 0; i < Settings.Count; i++)
             {
                 var oldSetting = Settings[i];
                 newSettings[i] = (ISetting)oldSetting.Copy();
@@ -74,6 +90,21 @@ namespace EffectsPedalsKeeper.Pedals
             newPedal.AddSettings(newSettings);
 
             return newPedal;
+        }
+
+        public string MenuHeader => $"{this}\n-{(Engaged ? "Engaged" : "Not Engaged")}";
+        public bool ToggleEngaged()
+        {
+            if (Engaged)
+            {
+                Engaged = false;
+                return false;
+            }
+            else
+            {
+                Engaged = true;
+                return true;
+            }
         }
 
         public void InteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)

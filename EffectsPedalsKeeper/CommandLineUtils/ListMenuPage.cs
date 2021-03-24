@@ -18,9 +18,12 @@ namespace EffectsPedalsKeeper.CommandLineUtils
             Items = items;
             ItemAction = itemAction;
         }
-        public override void InputLoop(Action callingStatement)
+        public override void InputLoop(Action callingStatement = null)
         {
-            CallingStatement = callingStatement;
+            if (callingStatement != null)
+            {
+                CallingStatement = callingStatement;
+            }
 
             OpeningDisplay();
 
