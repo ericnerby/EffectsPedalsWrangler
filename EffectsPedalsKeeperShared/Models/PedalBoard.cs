@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace EffectsPedalsKeeperShared.Models
 {
-    public class PedalBoard : IList<IPedal>
+    public class PedalBoard : IList<Pedal>
     {
         public string Name { get; set; }
         public List<PedalBoardPreset> Presets { get; private set; }
@@ -14,15 +14,15 @@ namespace EffectsPedalsKeeperShared.Models
         public PedalBoard(string name)
         {
             Name = name;
-            _pedals = new List<IPedal>();
+            _pedals = new List<Pedal>();
             Presets = new List<PedalBoardPreset>();
         }
 
-        public PedalBoard(string name, IList<IPedal> pedals)
+        public PedalBoard(string name, IList<Pedal> pedals)
         {
             Name = name;
-            if(pedals.Count > 0) { _pedals = new List<IPedal>(pedals); }
-            else { _pedals = new List<IPedal>(); }
+            if(pedals.Count > 0) { _pedals = new List<Pedal>(pedals); }
+            else { _pedals = new List<Pedal>(); }
             Presets = new List<PedalBoardPreset>();
         }
 
@@ -42,11 +42,11 @@ namespace EffectsPedalsKeeperShared.Models
 
         public void PresetRemoveAt(int index) => Presets.RemoveAt(index);
 
-        private void AddPresetOptions(IPedal pedal)
+        private void AddPresetOptions(Pedal pedal)
         {
             foreach (PedalBoardPreset preset in Presets)
             {
-                preset.AddPedals(new IPedal[] { pedal });
+                preset.AddPedals(new Pedal[] { pedal });
             }
         }
 
@@ -58,7 +58,7 @@ namespace EffectsPedalsKeeperShared.Models
             }
         }
 
-        private void InsertPresetOptions(IPedal pedal, int position)
+        private void InsertPresetOptions(Pedal pedal, int position)
         {
             foreach (PedalBoardPreset preset in Presets)
             {
@@ -75,9 +75,9 @@ namespace EffectsPedalsKeeperShared.Models
         }
 
         //IList Implementation
-        protected List<IPedal> _pedals;
+        protected List<Pedal> _pedals;
 
-        public IPedal this[int index]
+        public Pedal this[int index]
         {
             get => _pedals[index];
             set
@@ -98,7 +98,7 @@ namespace EffectsPedalsKeeperShared.Models
 
         public bool IsReadOnly => false;
 
-        public void Add(IPedal item)
+        public void Add(Pedal item)
         {
             AddPresetOptions(item);
             _pedals.Add(item);
@@ -110,25 +110,25 @@ namespace EffectsPedalsKeeperShared.Models
             Presets.Clear();
         }
 
-        public bool Contains(IPedal item) => _pedals.Contains(item);
+        public bool Contains(Pedal item) => _pedals.Contains(item);
 
-        public void CopyTo(IPedal[] array, int arrayIndex)
+        public void CopyTo(Pedal[] array, int arrayIndex)
         {
             _pedals.CopyTo(array, arrayIndex);
         }
 
-        public IEnumerator<IPedal> GetEnumerator() => _pedals.GetEnumerator();
+        public IEnumerator<Pedal> GetEnumerator() => _pedals.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public int IndexOf(IPedal item) => _pedals.IndexOf(item);
+        public int IndexOf(Pedal item) => _pedals.IndexOf(item);
 
-        public void Insert(int index, IPedal item)
+        public void Insert(int index, Pedal item)
         {
             AddPresetOptions(item);
             _pedals.Insert(index, item);
         }
 
-        public bool Remove(IPedal item)
+        public bool Remove(Pedal item)
         {
             var index = _pedals.IndexOf(item);
             if (index == -1)
@@ -164,9 +164,9 @@ namespace EffectsPedalsKeeperShared.Models
             _pedals.Insert(newIndex, pedalToMove);
             MovePresetOptions(currentIndex, newIndex);
         }
-        public void AddRange(List<IPedal> pedalsToAdd)
+        public void AddRange(List<Pedal> pedalsToAdd)
         {
-            foreach (IPedal pedal in pedalsToAdd)
+            foreach (Pedal pedal in pedalsToAdd)
             {
                 Add(pedal);
             }

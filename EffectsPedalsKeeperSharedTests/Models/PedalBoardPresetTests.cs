@@ -30,7 +30,7 @@ namespace EffectsPedalsKeeperShared.Models.Tests
 
         private int _startingValue = 3;
 
-        private List<IPedal> _pedals;
+        private List<Pedal> _pedals;
         private string _presetName = "Testing Presets";
         private PedalBoardPreset _preset;
 
@@ -56,7 +56,7 @@ namespace EffectsPedalsKeeperShared.Models.Tests
             _testPedalOne.Settings.ForEach(setting => setting.CurrentValue = _startingValue);
             _testPedalTwo.Settings.ForEach(setting => setting.CurrentValue = _startingValue);
 
-            _pedals = new List<IPedal>(2) { _testPedalOne, _testPedalTwo };
+            _pedals = new List<Pedal>(2) { _testPedalOne, _testPedalTwo };
             _preset = new PedalBoardPreset(_presetName, _pedals);
         }
 

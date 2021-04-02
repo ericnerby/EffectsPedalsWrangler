@@ -33,7 +33,7 @@ namespace EffectsPedalsKeeperShared.PedalBoards.Tests
 
         private int _startingValue = 3;
 
-        private List<IPedal> _pedals;
+        private List<Pedal> _pedals;
         private string _boardName = "My Awesome PedalBoard";
         private PedalBoard _pedalBoard;
 
@@ -59,8 +59,8 @@ namespace EffectsPedalsKeeperShared.PedalBoards.Tests
             _testPedalOne.Settings.ForEach(setting => setting.CurrentValue = _startingValue);
             _testPedalTwo.Settings.ForEach(setting => setting.CurrentValue = _startingValue);
 
-            _pedals = new List<IPedal>(2) { _testPedalOne, _testPedalTwo };
-            _pedalBoard = new PedalBoard(_boardName, new IPedal[] { _testPedalOne });
+            _pedals = new List<Pedal>(2) { _testPedalOne, _testPedalTwo };
+            _pedalBoard = new PedalBoard(_boardName, new Pedal[] { _testPedalOne });
         }
 
         [Fact()]
@@ -113,7 +113,7 @@ namespace EffectsPedalsKeeperShared.PedalBoards.Tests
         {
             _pedalBoard.Add(_testPedalTwo);
 
-            var newList = new IPedal[_pedalBoard.Count];
+            var newList = new Pedal[_pedalBoard.Count];
             _pedalBoard.CopyTo(newList, 0);
 
             var target = newList.Count();
@@ -125,7 +125,7 @@ namespace EffectsPedalsKeeperShared.PedalBoards.Tests
         [Fact()]
         public void GetEnumeratorTest()
         {
-            Assert.IsAssignableFrom<IEnumerator<IPedal>>(_pedalBoard.GetEnumerator());
+            Assert.IsAssignableFrom<IEnumerator<Pedal>>(_pedalBoard.GetEnumerator());
         }
 
         [Fact()]

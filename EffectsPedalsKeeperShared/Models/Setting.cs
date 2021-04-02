@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace EffectsPedalsKeeperShared.Models
 {
-    public class Setting : ISetting
+    public class Setting : IBoundedValue
     {
         protected static Regex _clockFormat = new Regex(@"(\d+):(\d{2})");
         protected static ClockFaceConverter _clockFaceConverter = new ClockFaceConverter(PrecisionValue.Five);
@@ -117,5 +117,13 @@ namespace EffectsPedalsKeeperShared.Models
         {
             return new Setting(label, SettingType.Switch, new string[] { "Off", "On" });
         }
+    }
+
+    public enum SettingType
+    {
+        ClockFace,
+        Numbered,
+        Named,
+        Switch
     }
 }

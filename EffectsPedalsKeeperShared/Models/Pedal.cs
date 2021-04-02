@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EffectsPedalsKeeperShared.Models
 {
-    public class Pedal : IPedal
+    public class Pedal
     {
         public bool Engaged { get; set; }
 
@@ -11,17 +11,17 @@ namespace EffectsPedalsKeeperShared.Models
         public string Name { get; }
         public EffectType EffectType { get; }
 
-        public List<ISetting> Settings { get; private set; }
+        public List<Setting> Settings { get; private set; }
 
         public Pedal(string maker, string name, EffectType effectType)
         {
             Maker = maker;
             Name = name;
             EffectType = effectType;
-            Settings = new List<ISetting>();
+            Settings = new List<Setting>();
         }
 
-        public bool AddSettings(IList<ISetting> settings)
+        public bool AddSettings(IList<Setting> settings)
         {
             var startingCount = Settings.Count;
             Settings.AddRange(settings);
@@ -32,7 +32,7 @@ namespace EffectsPedalsKeeperShared.Models
             return false;
         }
 
-        public bool AddSettings(params ISetting[] settings)
+        public bool AddSettings(params Setting[] settings)
         {
             var startingCount = Settings.Count;
             Settings.AddRange(settings);
@@ -63,15 +63,24 @@ namespace EffectsPedalsKeeperShared.Models
             var newPedal = new Pedal(Maker, Name, EffectType);
             newPedal.Engaged = Engaged;
 
-            var newSettings = new ISetting[Settings.Count];
+            var newSettings = new Setting[Settings.Count];
             for(var i = 0; i < Settings.Count; i++)
             {
                 var oldSetting = Settings[i];
-                newSettings[i] = (ISetting)oldSetting.Copy();
+                newSettings[i] = (Setting)oldSetting.Copy();
             }
             newPedal.AddSettings(newSettings);
 
             return newPedal;
         }
+    }
+
+    public enum EffectType
+    {
+        Drive,
+        Mod,
+        Multi,
+        Delay,
+        Reverb
     }
 }

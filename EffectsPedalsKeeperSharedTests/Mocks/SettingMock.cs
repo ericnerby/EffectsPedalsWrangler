@@ -4,23 +4,23 @@ using System.Collections.Generic;
 
 namespace EffectsPedalsKeeperSharedTests.Mocks
 {
-    public class SettingMock : ISetting
+    public class SettingMock : Setting
     {
         private string _valueDisplayText;
 
         public SettingMock(string label, string valueDisplayText)
+            : base(label, SettingType.Numbered, new List<string>())
         {
-            Label = label;
             _valueDisplayText = valueDisplayText;
         }
 
         public SettingMock(string label, IList<string> options)
+            : base(label, SettingType.Numbered, options)
         {
-            Label = label;
             Options = new List<string>(options);
         }
 
-        public string CurrentValueDisplay
+        public new string CurrentValueDisplay
         {
             get
             {
@@ -32,52 +32,6 @@ namespace EffectsPedalsKeeperSharedTests.Mocks
             }
         }
 
-        public string Label { get; private set; }
-
-        public SettingType SettingType => throw new NotImplementedException();
-
-        public int MinValue => 0;
-        public int MaxValue => Options.Count - 1;
-
-        public List<string> Options { get; }
-
-        protected int _currentValue;
-        public int CurrentValue
-        {
-            get { return _currentValue; }
-            set
-            {
-                if (value < MinValue || value > MaxValue)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-
-                _currentValue = value;
-            }
-        }
-
-        public int UniqueID => throw new NotImplementedException();
-
         public override string ToString() => $"{Label}: {CurrentValueDisplay}";
-
-        public string ToString(int valueToDisplay)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string[] Display()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void InteractiveViewEdit(Action<string> checkQuit, Dictionary<string, object> additionalArgs)
-        {
-            throw new NotImplementedException();
-        }
-
-        public object Copy()
-        {
-            return (SettingMock)MemberwiseClone();
-        }
     }
 }

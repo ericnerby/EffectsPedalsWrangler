@@ -12,7 +12,7 @@ namespace EffectsPedalsKeeperShared.Models
         public List<bool> EngagedList;
         public int PedalsEngaged => EngagedList.Where(engaged => engaged).Count();
 
-        public PedalBoardPreset(string name, IList<IPedal> pedals)
+        public PedalBoardPreset(string name, IList<Pedal> pedals)
         {
             Name = name;
             EngagedList = new List<bool>();
@@ -29,13 +29,13 @@ namespace EffectsPedalsKeeperShared.Models
 
         }
 
-        public void AddPedals(IList<IPedal> pedals)
+        public void AddPedals(IList<Pedal> pedals)
         {
-            foreach (IPedal pedal in pedals)
+            foreach (Pedal pedal in pedals)
             {
                 var pedalKeeper = new PedalKeeper(pedal.Settings.Count);
                 EngagedList.Add(pedal.Engaged);
-                foreach (ISetting setting in pedal.Settings)
+                foreach (Setting setting in pedal.Settings)
                 {
                     pedalKeeper.Add(new ValueKeeper(setting));
                 }
@@ -60,11 +60,11 @@ namespace EffectsPedalsKeeperShared.Models
             EngagedList.Insert(newIndex, engagedValue);
         }
 
-        public void InsertPedal(IPedal pedal, int position)
+        public void InsertPedal(Pedal pedal, int position)
         {
             var pedalKeeper = new PedalKeeper(pedal.Settings.Count);
             EngagedList.Insert(position, pedal.Engaged);
-            foreach (ISetting setting in pedal.Settings)
+            foreach (Setting setting in pedal.Settings)
             {
                 pedalKeeper.Add(new ValueKeeper(setting));
             }
