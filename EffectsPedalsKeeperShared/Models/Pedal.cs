@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using EffectsPedalsKeeperShared.Settings;
 
-namespace EffectsPedalsKeeperShared.Pedals
+namespace EffectsPedalsKeeperShared.Models
 {
     public class Pedal : IPedal
     {

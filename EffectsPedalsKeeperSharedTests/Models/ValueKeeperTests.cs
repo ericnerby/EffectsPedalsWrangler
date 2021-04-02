@@ -2,7 +2,7 @@
 using System;
 using EffectsPedalsKeeperSharedTests.Mocks;
 
-namespace EffectsPedalsKeeperShared.Utils.Tests
+namespace EffectsPedalsKeeperShared.Models.Tests
 {
     public class ValueKeeperTests
     {

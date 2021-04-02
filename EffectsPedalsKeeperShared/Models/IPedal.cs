@@ -1,8 +1,6 @@
-﻿using EffectsPedalsKeeperShared.PedalBoards;
-using EffectsPedalsKeeperShared.Settings;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace EffectsPedalsKeeperShared.Pedals
+namespace EffectsPedalsKeeperShared.Models
 {
     public interface IPedal
     {

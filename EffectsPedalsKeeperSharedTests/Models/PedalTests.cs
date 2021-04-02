@@ -1,7 +1,7 @@
 ﻿using EffectsPedalsKeeperSharedTests.Mocks;
 using Xunit;
 
-namespace EffectsPedalsKeeperShared.Pedals.Tests
+namespace EffectsPedalsKeeperShared.Models.Tests
 {
     public class PedalTests
     {

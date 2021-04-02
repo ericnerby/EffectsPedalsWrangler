@@ -1,11 +1,9 @@
-﻿using EffectsPedalsKeeperShared.PedalBoards;
-using Xunit;
+﻿using Xunit;
 using System.Collections.Generic;
 using System.Linq;
 using EffectsPedalsKeeperSharedTests.Mocks;
-using EffectsPedalsKeeperShared.Pedals;
 
-namespace EffectsPedalsKeeperShared.PedalBoards.Tests
+namespace EffectsPedalsKeeperShared.Models.Tests
 {
     public class PedalBoardPresetTests
     {

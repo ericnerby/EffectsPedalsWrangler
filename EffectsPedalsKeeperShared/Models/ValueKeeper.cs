@@ -1,6 +1,7 @@
-﻿using System;
+﻿using EffectsPedalsKeeperShared.Utils;
+using System;
 
-namespace EffectsPedalsKeeperShared.Utils
+namespace EffectsPedalsKeeperShared.Models
 {
     public class ValueKeeper
     {

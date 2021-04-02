@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace EffectsPedalsKeeperShared.Settings
+namespace EffectsPedalsKeeperShared.Models
 {
     public interface ISetting : IBoundedValue
     {

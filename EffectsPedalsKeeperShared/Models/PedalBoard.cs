@@ -1,12 +1,10 @@
-﻿using EffectsPedalsKeeperShared.Pedals;
-using EffectsPedalsKeeperShared.Settings;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace EffectsPedalsKeeperShared.PedalBoards
+namespace EffectsPedalsKeeperShared.Models
 {
     public class PedalBoard : IList<IPedal>
     {

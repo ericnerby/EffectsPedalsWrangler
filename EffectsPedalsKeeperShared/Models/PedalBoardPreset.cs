@@ -1,11 +1,9 @@
-﻿using EffectsPedalsKeeperShared.Pedals;
-using EffectsPedalsKeeperShared.Settings;
-using EffectsPedalsKeeperShared.Utils;
+﻿using EffectsPedalsKeeperShared.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EffectsPedalsKeeperShared.PedalBoards
+namespace EffectsPedalsKeeperShared.Models
 {
     public class PedalBoardPreset
     {

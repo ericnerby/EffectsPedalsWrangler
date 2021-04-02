@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace EffectsPedalsKeeperShared.Settings.Tests
+namespace EffectsPedalsKeeperShared.Models.Tests
 {
     public class SettingTests
     {
