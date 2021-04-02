@@ -9,7 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EffectsPedalsKeeperTests", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8C22BCE1-1453-4BBF-90E5-67A8BF7E75BF}"
 	ProjectSection(SolutionItems) = preProject
-		notes.md = notes.md
 		README.md = README.md
 	EndProjectSection
 EndProject
