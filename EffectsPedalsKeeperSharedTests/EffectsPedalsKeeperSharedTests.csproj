@@ -19,4 +19,9 @@
     <ProjectReference Include="..\EffectsPedalsKeeperShared\EffectsPedalsKeeperShared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Mocks\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>
