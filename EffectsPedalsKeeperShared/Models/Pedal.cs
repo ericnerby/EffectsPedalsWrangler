@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EffectsPedalsKeeperShared.Models.Settings;
+using System;
 using System.Collections.Generic;
 
 namespace EffectsPedalsKeeperShared.Models
@@ -10,12 +11,16 @@ namespace EffectsPedalsKeeperShared.Models
         public string Name { get; }
         public EffectType EffectType { get; set; }
 
-        public IList<Setting> Settings { get; set; }
-
-        public override string ToString()
+        public Pedal()
         {
-            return $"{Name} by {Maker} ({EffectType})";
+            Settings = new List<Setting>();
+            OptionSettings = new List<OptionSetting>();
         }
+
+        public IList<Setting> Settings { get; set; }
+        public IList<OptionSetting> OptionSettings { get; set; }
+
+        public override string ToString() => $"{Name} by {Maker} ({EffectType})";
     }
 
     public enum EffectType

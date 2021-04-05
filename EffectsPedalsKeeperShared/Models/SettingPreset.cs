@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EffectsPedalsKeeperShared.Models.Settings;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +13,6 @@ namespace EffectsPedalsKeeperShared.Models
         public int Value { get; set; }
 
         public Setting Setting { get; set; }
+        public PedalPreset PedalPreset { get; set; }
     }
 }

@@ -8,6 +8,11 @@ namespace EffectsPedalsKeeperShared.Models
         public int Id { get; set; }
         public string Name { get; set; }
 
+        public Preset()
+        {
+            PedalPresets = new List<PedalPreset>();
+        }
+
         public PedalBoard PedalBoard { get; set; }
         public ICollection<PedalPreset> PedalPresets { get; set; }
     }

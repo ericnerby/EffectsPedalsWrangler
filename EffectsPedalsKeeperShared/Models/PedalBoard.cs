@@ -11,9 +11,15 @@ namespace EffectsPedalsKeeperShared.Models
         public int Id { get; set; }
         public string Name { get; set; }
 
+        public PedalBoard()
+        {
+            Pedals = new List<PedalBoardPedal>();
+            Presets = new List<Preset>();
+        }
+
         public override string ToString() => $"{Name} | Number of Pedals: {Pedals.Count}";
 
-        public ICollection<Pedal> Pedals;
+        public ICollection<PedalBoardPedal> Pedals;
         public IList<Preset> Presets { get; private set; }
     }
 }

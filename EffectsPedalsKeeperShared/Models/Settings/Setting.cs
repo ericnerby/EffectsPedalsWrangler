@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace EffectsPedalsKeeperShared.Models
+namespace EffectsPedalsKeeperShared.Models.Settings
 {
     public class Setting
     {
