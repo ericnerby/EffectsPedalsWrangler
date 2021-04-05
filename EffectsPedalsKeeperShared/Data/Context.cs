@@ -20,6 +20,11 @@ namespace EffectsPedalsKeeperShared.Data
         public DbSet<Setting> Settings { get; set; }
         public DbSet<Option> Options { get; set; }
         public DbSet<OptionSetting> OptionSettings { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite(@"Server=(localdb)\mssqllocaldb;Database=EffectsPedals;Integrated Security=True");
+        }
     }
 }
 
