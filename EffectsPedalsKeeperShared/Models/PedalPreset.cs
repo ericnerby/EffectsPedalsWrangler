@@ -8,8 +8,8 @@ namespace EffectsPedalsKeeperShared.Models
 {
     public class PedalPreset
     {
-        int Id { get; set; }
-        bool Engaged { get; set; }
+        public int Id { get; set; }
+        public bool Engaged { get; set; }
 
         public Preset Preset { get; set; }
         public Pedal Pedal { get; set; }

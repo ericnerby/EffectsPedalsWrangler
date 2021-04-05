@@ -9,8 +9,6 @@ namespace EffectsPedalsKeeperShared.Models
     public class SettingPreset
     {
         public int Id { get; set; }
-
-        protected int _value;
         public int Value { get; set; }
 
         public Setting Setting { get; set; }
