@@ -54,7 +54,7 @@ namespace EffectsPedalsKeeperWebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Maker,EffectType")] Pedal pedal)
+        public async Task<IActionResult> Create([Bind("Id,Maker,EffectType,Name")] Pedal pedal)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace EffectsPedalsKeeperWebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Maker,EffectType")] Pedal pedal)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Maker,EffectType,Name")] Pedal pedal)
         {
             if (id != pedal.Id)
             {

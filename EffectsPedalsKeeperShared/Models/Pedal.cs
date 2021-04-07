@@ -1,14 +1,19 @@
 ﻿using EffectsPedalsKeeperShared.Models.Settings;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace EffectsPedalsKeeperShared.Models
 {
     public class Pedal
     {
         public int Id { get; set; }
+        [Required,StringLength(30, MinimumLength = 3)]
         public string Maker { get; set; }
+        [Required,StringLength(30, MinimumLength = 3)]
         public string Name { get; set; }
+        [Required, DisplayName("Effect Type")]
         public EffectType EffectType { get; set; }
 
         public Pedal()
