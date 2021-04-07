@@ -9,8 +9,13 @@ using System.Threading.Tasks;
 
 namespace EffectsPedalsKeeperShared.Data
 {
-    public class Context : DbContext
+    public class EffectsPedalsContext : DbContext
     {
+        public EffectsPedalsContext(DbContextOptions<EffectsPedalsContext> options)
+            : base(options)
+        {
+        }
+
         public DbSet<Pedal> Pedals { get; set; }
         public DbSet<PedalBoard> PedalBoards { get; set; }
         public DbSet<PedalBoardPedal> PedalBoardPedals { get; set; }

@@ -8,7 +8,7 @@ namespace EffectsPedalsKeeperShared.Models
     {
         public int Id { get; set; }
         public string Maker { get; set; }
-        public string Name { get; }
+        public string Name { get; set; }
         public EffectType EffectType { get; set; }
 
         public Pedal()
