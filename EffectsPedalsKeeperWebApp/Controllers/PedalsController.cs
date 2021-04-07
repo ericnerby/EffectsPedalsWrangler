@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EffectsPedalsKeeperShared.Data;
 using EffectsPedalsKeeperShared.Models;
+using EffectsPedalsKeeperShared.Models.ViewModels;
 
 namespace EffectsPedalsKeeperWebApp.Controllers
 {
@@ -34,13 +35,17 @@ namespace EffectsPedalsKeeperWebApp.Controllers
             }
 
             var pedal = await _context.Pedals
+                .Include(p => p.Settings)
+                .Include(p => p.OptionSettings)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (pedal == null)
             {
                 return NotFound();
             }
 
-            return View(pedal);
+            var viewModel = new PedalDetailsViewModel(pedal);
+
+            return View(viewModel);
         }
 
         // GET: Pedals/Create

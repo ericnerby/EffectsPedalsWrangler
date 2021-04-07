@@ -13,7 +13,7 @@ namespace EffectsPedalsKeeperShared.Models
         public string Maker { get; set; }
         [Required,StringLength(30, MinimumLength = 3)]
         public string Name { get; set; }
-        [Required, DisplayName("Effect Type")]
+        [DisplayName("Effect Type")]
         public EffectType EffectType { get; set; }
 
         public Pedal()
