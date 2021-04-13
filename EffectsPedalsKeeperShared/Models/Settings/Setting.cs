@@ -12,6 +12,7 @@ namespace EffectsPedalsKeeperShared.Models.Settings
         public SettingType SettingType { get; set; }
         public virtual int MinValue { get; set; }
         public virtual int MaxValue { get; set; }
+
         public int PedalId { get; set; }
 
         public Pedal Pedal { get; set; }

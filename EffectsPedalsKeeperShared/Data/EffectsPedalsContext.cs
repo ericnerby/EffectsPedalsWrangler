@@ -24,6 +24,15 @@ namespace EffectsPedalsKeeperShared.Data
         public DbSet<SettingPreset> SettingPresets { get; set; }
         public DbSet<Setting> Settings { get; set; }
         public DbSet<Option> Options { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<Setting>()
+                .HasOne(s => s.Pedal)
+                .WithMany(p => p.Settings)
+                .OnDelete(DeleteBehavior.ClientCascade);
+        }
     }
 }
 

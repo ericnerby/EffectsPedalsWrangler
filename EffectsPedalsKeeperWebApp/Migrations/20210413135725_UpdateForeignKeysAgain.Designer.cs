@@ -3,14 +3,16 @@ using EffectsPedalsKeeperShared.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EffectsPedalsKeeperWebApp.Migrations
 {
     [DbContext(typeof(EffectsPedalsContext))]
-    partial class EffectsPedalsContextModelSnapshot : ModelSnapshot
+    [Migration("20210413135725_UpdateForeignKeysAgain")]
+    partial class UpdateForeignKeysAgain
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
