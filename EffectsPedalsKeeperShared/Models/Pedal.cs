@@ -19,11 +19,9 @@ namespace EffectsPedalsKeeperShared.Models
         public Pedal()
         {
             Settings = new List<Setting>();
-            OptionSettings = new List<OptionSetting>();
         }
 
         public IList<Setting> Settings { get; set; }
-        public IList<OptionSetting> OptionSettings { get; set; }
 
         public override string ToString() => $"{Name} by {Maker} ({EffectType})";
     }

@@ -10,6 +10,8 @@ namespace EffectsPedalsKeeperShared.Models
     {
         public int Id { get; set; }
         public bool Engaged { get; set; }
+        public int PresetId { get; set; }
+        public int PedalId { get; set; }
 
         public PedalPreset()
         {

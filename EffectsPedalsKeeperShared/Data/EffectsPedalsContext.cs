@@ -24,7 +24,6 @@ namespace EffectsPedalsKeeperShared.Data
         public DbSet<SettingPreset> SettingPresets { get; set; }
         public DbSet<Setting> Settings { get; set; }
         public DbSet<Option> Options { get; set; }
-        public DbSet<OptionSetting> OptionSettings { get; set; }
     }
 }
 

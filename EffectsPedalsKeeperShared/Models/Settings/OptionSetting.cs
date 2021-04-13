@@ -13,6 +13,9 @@ namespace EffectsPedalsKeeperShared.Models.Settings
             Options = new List<Option>();
         }
 
+        public override int MinValue => 0;
+        public override int MaxValue => Options.Count - 1;
+
         public IList<Option> Options { get; set; }
     }
 }

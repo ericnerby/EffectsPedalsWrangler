@@ -36,7 +36,6 @@ namespace EffectsPedalsKeeperWebApp.Controllers
 
             var pedal = await _context.Pedals
                 .Include(p => p.Settings)
-                .Include(p => p.OptionSettings)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (pedal == null)
             {

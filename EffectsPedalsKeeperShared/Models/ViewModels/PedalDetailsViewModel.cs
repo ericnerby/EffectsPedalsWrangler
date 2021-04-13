@@ -15,7 +15,7 @@ namespace EffectsPedalsKeeperShared.Models.ViewModels
         public PedalDetailsViewModel(Pedal pedal)
         {
             Pedal = pedal;
-            PedalSettings = new List<Setting>(pedal.Settings.Union(pedal.OptionSettings));
+            PedalSettings = new List<Setting>(pedal.Settings);
         }
     }
 }
